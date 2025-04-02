@@ -1,0 +1,183 @@
+body {
+    background-color: rgb(37, 37, 37);
+    color: white;
+    font-family: 'Anta', sans-serif;
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
+    min-height: 100vh; /* Ensures full viewport height */
+    margin: 0;
+}
+
+hr {
+    height: 2px;
+    border: none;
+    background: linear-gradient(to right, white 20%, #4c3667 40%);
+}
+
+h2 {
+    color: white;
+    font-weight: normal;
+    font-size: 30px;
+
+}
+
+.content{
+    background-color: #141010;
+    width: 90%;
+    max-width: 1200px;
+    min-height: 400px;
+}
+
+#name {
+    margin-left: 40px;
+}
+
+/*nav section*/
+nav {
+    display: flex;
+    align-items: center;  /* Aligns items vertically */
+    justify-content: space-between;  /* Pushes name left and links right */
+    padding: 10px 40px;  /* Add some padding */
+
+}
+
+
+.nav-links {
+    list-style: none;
+    display: flex; /* Aligns list items in a row */
+    gap: 20px; /* Adds space between items */
+}
+
+.nav-links li {
+    margin: 0; /* Removes default margin */
+}
+
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.nav-links a:hover{
+    color: grey;
+    font-size: 21px;
+}
+
+.nav-links .cv-button {
+    color: black !important; /*overrides higher specificity*/
+}
+
+.cv-button {
+    background-color: white;
+    color: #141010;
+    border-radius: 30px;
+    padding: 7px;
+}
+
+.cv-button a {
+    color: black !important;
+}
+
+/*intro section*/
+.intro {
+    display: flex; /* Create a flex container */
+    justify-content: flex-start; /* Align items horizontally */
+    align-items: center; /* Vertically align items */
+    font-size: 20px;
+    width: 100%;
+    height: auto;
+    background: linear-gradient(to bottom, #141010 90%, #4c3667);
+}
+
+.image-container {
+    align-self: flex-end; /* Aligns the image to the right */
+    margin-bottom: 20px; /* Adds space between the image and the next div */
+}
+
+.image-container img {
+    width: 350px;
+    height: auto;
+    float: right;
+    border-radius: 50%;
+    margin: 10px;
+}
+
+.text {
+    padding: 20px;
+    margin-bottom: 10px;
+    flex: 1;
+}
+
+/*projects section*/
+.projects {
+    display: flex; /* Create a flex container */
+    justify-content: flex-start; /* Align items horizontally */
+    background-color: white;
+    color: black;
+    height: auto;
+    padding: 30px;
+}
+
+.project-item {
+    display: flex; /* Use flexbox for layout */
+    align-items: flex-start; /* Align items to the top */
+    margin-top: 90px; /* Add some space between project items */
+}
+
+.pomodoro-txt {
+    flex: 1; /* Allow text to take up available space */
+    text-align: left; /* Align text to the left */
+    padding-right: 20px; /* Add some space between text and image */
+}
+
+.pomodoro-txt ul {
+    list-style: none;
+}
+
+.pomodoro-img {
+    flex: 1; /* Allow image to take up available space */
+    text-align: right; /* Align image to the right */
+  }
+  
+  .pomodoro-img img {
+    max-width: 100%; /* Ensure image fits within its container */
+    height: 300px; /* Maintain aspect ratio */
+    margin-right: 100px;
+  }
+
+/*connect section*/
+.connect {
+    background: linear-gradient(to top,#141010 90%, #4c3667);
+    height: 250px;
+    font-size: 20px;
+    text-align: center;
+    padding: 70px;
+    margin: 0 auto;
+}
+
+.connect img {
+    width: 60px;
+    padding: 7px;
+}
+
+#scrollToTopBtn {
+    position: fixed; /* This makes the button fixed to the viewport */
+    bottom: 20px; 
+    right: 20px; 
+    /* Add any other styling you want */
+    background-color: #764cac; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    margin-right: 4%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 1s ease
+  }
