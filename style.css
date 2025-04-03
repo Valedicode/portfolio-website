@@ -1,3 +1,8 @@
+html {
+    scroll-behavior: smooth;
+}
+
+
 body {
     background-color: rgb(37, 37, 37);
     color: white;
@@ -65,6 +70,8 @@ nav {
     color: grey;
     font-size: 21px;
 }
+
+.nav-links a:click
 
 .nav-links .cv-button {
     color: black !important; /*overrides higher specificity*/
