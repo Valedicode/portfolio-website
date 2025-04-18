@@ -38,6 +38,7 @@ h2 {
     margin-left: 40px;
 }
 
+
 /*nav section*/
 nav {
     display: flex;
@@ -71,21 +72,15 @@ nav {
     font-size: 21px;
 }
 
-.nav-links a:click
-
-.nav-links .cv-button {
-    color: black !important; /*overrides higher specificity*/
-}
-
 .cv-button {
     background-color: white;
-    color: #141010;
+    color: #141010 !important;
     border-radius: 30px;
     padding: 7px;
 }
 
-.cv-button a {
-    color: black !important;
+.cv-button:hover {
+    color: grey !important;
 }
 
 /*intro section*/
@@ -122,38 +117,46 @@ nav {
 .projects {
     display: flex; /* Create a flex container */
     justify-content: flex-start; /* Align items horizontally */
+    flex-direction: column;
     background-color: white;
     color: black;
     height: auto;
     padding: 30px;
 }
 
-.project-item {
-    display: flex; /* Use flexbox for layout */
-    align-items: flex-start; /* Align items to the top */
-    margin-top: 90px; /* Add some space between project items */
+.projects hr {
+        border: 1px solid #141010; /* Set the border color */
+        margin: 20px 0; /* Optional: Add margin for spacing */
+        border-style:groove;
 }
 
-.pomodoro-txt {
+.item {
+    display: flex; /* Use flexbox for layout */
+    align-items: flex-start; /* Align items to the top */
+    margin-top: 30px; /* Add some space between project items */
+}
+
+.item-txt {
     flex: 1; /* Allow text to take up available space */
     text-align: left; /* Align text to the left */
     padding-right: 20px; /* Add some space between text and image */
 }
 
-.pomodoro-txt ul {
+.item ul {
     list-style: none;
 }
 
-.pomodoro-img {
+.item-img {
     flex: 1; /* Allow image to take up available space */
     text-align: right; /* Align image to the right */
   }
   
-  .pomodoro-img img {
+.item-img img {
     max-width: 100%; /* Ensure image fits within its container */
     height: 300px; /* Maintain aspect ratio */
     margin-right: 100px;
-  }
+
+}
 
 /*connect section*/
 .connect {
@@ -170,21 +173,26 @@ nav {
     padding: 7px;
 }
 
+/*Top arrow button*/
 #scrollToTopBtn {
     position: fixed; /* This makes the button fixed to the viewport */
     bottom: 20px; 
     right: 20px; 
     /* Add any other styling you want */
     background-color: #764cac; /* Green */
+    width: 50px;
     border: none;
-    color: white;
-    padding: 15px 32px;
+    padding: 10px;
     margin-right: 4%;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 1s ease
   }
+
+  .arrow {
+    width: 30px;
+    
+}
