@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet" />
+    <title>Kevin Ha</title>
+</head>
+<body>
+    <div class="content">
+        <nav>
+            <h2 id="name">Kevin Ha</h2>
+            <ul class="nav-links">
+                <li>
+                    <a href=#project>Projects</a>
+                </li>
+                <li>
+                    <a href=#contact class="button">Contact</a>
+                </li>
+                <li>
+                    <a href="CV.pdf" class="cv-button">Download</a>
+                </li>
+            </ul>
+        </nav>
+        <hr>
+        <div class="intro">
+            <div class="text">
+                <h3>Hi, I'm Kevin</h3>
+            <p>
+                I'm a Computer Science student at RWTH Aachen University. <br>
+                My main interest lies in developing and applying AI agents and generative agents to create intelligent, autonomous systems that enable smarter decision-making and innovative user experiences.
+            </p>
+            </div>
+            <div class="image-container">
+                <img src="pics/Profile.jpeg" alt="Profile">
+            </div>
+        </div>
+        <div class="projects" id="project">
+            <h3>Projects</h3>
+            <div class="item">
+                <div class="item-txt">
+                    <p>
+                        The <b>Pomodoro Scheduler</b> is a simple yet effective terminal-based tool that automates your daily workflow using 50-minute focus sessions, 10-minute short breaks, and 20-minute long breaks after a full cycle.
+                        Designed to enhance productivity, it seamlessly integrates essential activities like meals, exercise, and study sessions, making it perfect for exam preparation or structured workdays.
+                        <ul>
+                            <li>
+                                🔹 Automated Scheduling – No need to manually plan your day; the tool generates a structured schedule for you.
+                            </li>
+                            <li>
+                                🔹 Automated Scheduling – No need to manually plan your day; the tool generates a structured schedule for you.
+                            </li>
+                            <li>
+                                🔹 Customizable Activities – Includes predefined slots for lunch, dinner, and optional gym or sport sessions.
+                            </li>
+                            <li>
+                                🔹 Lightweight & Terminal-Based – Runs directly in the command line, keeping things simple and distraction-free.
+                            </li>
+                        </ul>
+                    </p>
+                </div>
+                <div class="item-img">
+                    <a href="https://github.com/Valedicode/pomodoro-scheduler" target="_blank">
+                        <img alt="pomodoro" src="pics/pomodoro.png">
+                    </a>
+                </div>
+            </div>
+            <hr>
+            <div class="item">
+                <div class="item-txt">
+                    <p>
+                        The <b>TOTP-Generator programm</b> is a Time-based One-Time Password (TOTP) generator, similar to the ones used in two-factor authentication apps like Google Authenticator.
+                        It uses only standard libraries and follows the RFC 6238 specification to generate secure, time-based codes.
+                        The project solely serves for education purposes and runs on the console. 
+                </div>
+                <div class="item-img">
+                    <a href="https://github.com/Valedicode/totp-generator" target="_blank">
+                        <img alt="totp" src="pics/totp.webp">
+                    </a>
+                </div>
+            </div>
+            <hr>
+            <div class="item">
+                <div class="item-txt">
+                    <p>
+                        The <b>Caculator app</b> is a simple and intuitive calculator built with React. It allows you to perform basic arithmetic operations such as addition, subtraction, multiplication, and division.
+                        The current result is always displayed at the top, and you can enter a new number, perform operations, or reset the result with ease. Perfect for quick calculations with a clean and responsive UI                   
+                    </p>
+                </div>
+                <div class="item-img">
+                    <a href="https://github.com/Valedicode/totp-generator" target="_blank">
+                        <img alt="totp" src="pics/calculator.png">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="connect" id="contact">
+            <h3>Let's work together</h3>
+            <a href="https://github.com/Valedicode" target="_blank">
+                <img alt="github" src="pics/GitHub-Logo.png">
+            </a>
+            <a href="https://www.linkedin.com/in/kevin-ha-6a17aa333/" target="_blank">
+                <img alt="linkedIn" src="pics/linkedin.webp">
+            </a>
+            <p>
+                Feel free to reach out to me at kevin.ha@rwth-aachen.de for any collaboration opportunities!
+            </p>
+        </div>
+    </div>
+    <button id="scrollToTopBtn" title="Go to top">
+        <img class ="arrow" src="pics/top_arrow.webp">
+    </button>
+    <script src="toTopButton.js"></script>
+</body>
+</html>
