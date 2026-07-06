@@ -1,0 +1,69 @@
+{
+  "name": "Kevin Ha",
+  "tagline": "Building systems where multiple agents think together.",
+  "role": "Computer Science M.Sc. student · Multi-Agent Systems & ML",
+  "location": "Aachen, Germany",
+  "email": "kevinhachong@gmail.com",
+  "links": {
+    "github": "https://github.com/Valedicode",
+    "linkedin": "https://www.linkedin.com/in/chongkevinha/",
+    "resume": "/CV.pdf"
+  },
+  "bio": [
+    "I'm a Computer Science student at RWTH Aachen University, currently pursuing my M.Sc. after completing my B.Sc. in 2025.",
+    "My main interest is designing multi-agent and LLM-based systems: autonomous agents that plan, retrieve, and reason together to solve problems no single model handles well alone. I care about the engineering around the models as much as the models themselves — clean data flow, observable pipelines, and interfaces that make complex systems feel simple.",
+    "When I approach a problem, I start by splitting it into roles rather than features: who plans, who gathers evidence, who decides. The demo on this page is built exactly that way."
+  ],
+  "stats": [
+    { "label": "Projects shipped", "value": "8+" },
+    { "label": "Years programming", "value": "4+" },
+    { "label": "Agent pipelines built", "value": "3" }
+  ],
+  "entries": [
+    {
+      "id": "msc-rwth",
+      "type": "education",
+      "title": "M.Sc. Computer Science — RWTH Aachen University",
+      "description": "Master's degree focusing on artificial intelligence, multi-agent systems, and machine learning.",
+      "tags": ["ml", "multi-agent", "education"],
+      "period": "2025 — expected 2028",
+      "year": 2027
+    },
+    {
+      "id": "bsc-rwth",
+      "type": "education",
+      "title": "B.Sc. Computer Science — RWTH Aachen University",
+      "description": "Bachelor's degree in Computer Science, graduated September 2025 with grade 2.0.",
+      "tags": ["education"],
+      "period": "2022 — 2025",
+      "year": 2025
+    },
+    {
+      "id": "fraunhofer-ipt",
+      "type": "experience",
+      "title": "Software Development Intern — Fraunhofer IPT",
+      "description": "Developed YAMS, a dynamic management website, with Python, Django, and PostgreSQL. Improved usability and cross-device accessibility with responsive Bootstrap layouts.",
+      "tags": ["django", "python", "postgresql", "full-stack", "internship"],
+      "period": "Apr 2024 — Jul 2024",
+      "year": 2024
+    },
+    {
+      "id": "math-tutor",
+      "type": "experience",
+      "title": "Private Tutor — Mathematics",
+      "description": "Designed personalized lesson plans for high school students; helped students improve their grades by at least one level.",
+      "tags": ["teaching"],
+      "period": "Apr 2022 — Dec 2024",
+      "year": 2024
+    },
+    {
+      "id": "digital-cafe",
+      "type": "experience",
+      "title": "Deputy Course Instructor — Digital Cafe, Mehrgenerationenhaus",
+      "description": "Taught senior citizens how to use digital devices in a relaxed café setting, with one-on-one support for online safety, troubleshooting, and everyday technology.",
+      "tags": ["teaching", "community"],
+      "period": "Jul 2022 — Jan 2025",
+      "year": 2025
+    }
+  ]
+}

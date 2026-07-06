@@ -1,0 +1,42 @@
+[
+  {
+    "id": "skills-languages",
+    "type": "skill",
+    "title": "Languages",
+    "description": "Programming languages used across coursework, internships, and personal projects.",
+    "tags": ["python", "java", "c", "javascript", "typescript"],
+    "items": ["Python", "Java", "TypeScript", "JavaScript", "C"]
+  },
+  {
+    "id": "skills-ai-agents",
+    "type": "skill",
+    "title": "AI & Agent Frameworks",
+    "description": "Frameworks for building LLM applications and orchestrating multi-agent workflows.",
+    "tags": ["multi-agent", "llm", "ml", "langchain", "langgraph"],
+    "items": ["LangChain", "LangGraph", "AI SDK", "FinBERT"]
+  },
+  {
+    "id": "skills-web",
+    "type": "skill",
+    "title": "Web & Frontend",
+    "description": "Building responsive, modern interfaces.",
+    "tags": ["react", "next.js", "typescript", "full-stack"],
+    "items": ["React", "Next.js", "Tailwind CSS", "HTML", "CSS"]
+  },
+  {
+    "id": "skills-backend",
+    "type": "skill",
+    "title": "Backend & Data",
+    "description": "APIs, server frameworks, and persistence.",
+    "tags": ["fastapi", "django", "postgresql", "python", "systems"],
+    "items": ["FastAPI", "Django", "PostgreSQL"]
+  },
+  {
+    "id": "skills-tools",
+    "type": "skill",
+    "title": "Tools",
+    "description": "Everyday engineering tooling.",
+    "tags": ["git", "tools"],
+    "items": ["Git", "Linux", "Conda"]
+  }
+]
