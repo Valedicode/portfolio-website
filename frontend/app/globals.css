@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens. Dark is the default (:root); light mode is opted into
+ * via <html data-theme="light">, toggled by ThemeToggle.
+ * Palette: near-black surfaces + a single signal-green accent.
+ */
+:root {
+  --bg: #0a0c0b;
+  --panel: #101413;
+  --line: #222a27;
+  --fg: #e6ede9;
+  --muted: #8a998f;
+  --accent: #34d97e;
+  --accent-bright: #5cee9c;
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --bg: #f7f8f7;
+  --panel: #ffffff;
+  --line: #dde3df;
+  --fg: #172019;
+  --muted: #5c6b60;
+  --accent: #0c8f52;
+  --accent-bright: #0a7343;
+  color-scheme: light;
+}
+
+/* Expose tokens as Tailwind utilities (bg-panel, text-muted, border-line, …). */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-line: var(--line);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-bright: var(--accent-bright);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: var(--accent);
+  color: var(--bg);
+}
