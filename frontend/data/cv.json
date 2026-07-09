@@ -15,9 +15,9 @@
     "When I approach a problem, I start by splitting it into roles rather than features: who plans, who gathers evidence, who decides. The demo on this page is built exactly that way."
   ],
   "stats": [
-    { "label": "Projects shipped", "value": "8+" },
+    { "label": "Projects built", "value": "17" },
     { "label": "Years programming", "value": "4+" },
-    { "label": "Agent pipelines built", "value": "3" }
+    { "label": "Agent pipelines built", "value": "5" }
   ],
   "entries": [
     {
