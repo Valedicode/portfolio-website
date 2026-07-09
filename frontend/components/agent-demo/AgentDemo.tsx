@@ -131,7 +131,7 @@ export default function AgentDemo() {
         <div className="flex gap-2">
           <button
             type="submit"
-            className="rounded-lg bg-accent px-5 py-3 font-mono text-sm font-medium text-bg transition-colors hover:bg-accent-bright focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className="rounded-lg bg-accent px-5 py-3 font-mono text-sm font-medium text-on-accent transition-colors hover:bg-accent-bright focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             Run agents
           </button>

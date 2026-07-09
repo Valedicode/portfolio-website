@@ -40,7 +40,7 @@ export default function ResumeSection() {
           <a
             href="/CV.pdf"
             download
-            className="mt-5 inline-block rounded-lg bg-accent px-6 py-3 font-mono text-sm font-medium text-bg transition-colors hover:bg-accent-bright"
+            className="mt-5 inline-block rounded-lg bg-accent px-6 py-3 font-mono text-sm font-medium text-on-accent transition-colors hover:bg-accent-bright"
           >
             Download CV ↓
           </a>

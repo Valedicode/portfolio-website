@@ -5,8 +5,8 @@
  * drift slowly, link up when close, and quietly pulse — plus one node
  * that eases toward the visitor's cursor.
  *
- * Deliberately not WebGL: ~45 nodes with O(n²) edge checks is cheap.
- * With prefers-reduced-motion a single static frame is drawn instead.
+ * Uses --graph-* CSS tokens (not --accent) so light mode can use darker,
+ * higher-contrast strokes without changing button/link colors.
  */
 import { useEffect, useRef } from "react";
 import { useReducedMotion } from "framer-motion";
@@ -17,23 +17,79 @@ interface Node {
   vx: number;
   vy: number;
   radius: number;
-  /** Phase offset so nodes pulse out of sync. */
   phase: number;
+  layer: "regular" | "hub";
 }
 
-const LINK_DISTANCE = 150;
-const NODE_DENSITY = 1 / 24_000; // nodes per px² — ~45 nodes at 1440×760
+const LINK_DISTANCE = 180;
+const NODE_DENSITY = 1 / 18_000;
+const HUB_RATIO = 0.14;
+
+/**
+ * Keeps the hero copy readable by making the left-center text zone sparser,
+ * while allowing stronger clustering toward the outer edges.
+ */
+function samplePoint(width: number, height: number) {
+  for (let attempt = 0; attempt < 24; attempt++) {
+    const x = Math.random() * width;
+    const y = Math.random() * height;
+
+    const inQuietZone =
+      x < width * 0.44 && y > height * 0.2 && y < height * 0.74;
+
+    // Carve out a calmer area around the headline block.
+    if (inQuietZone && Math.random() < 0.8) continue;
+
+    // Nudge density toward edges/corners so the network frames the content.
+    const edgeFactorX = Math.abs(x / width - 0.5) * 2;
+    const edgeFactorY = Math.abs(y / height - 0.5) * 2;
+    const edgeBias = (edgeFactorX + edgeFactorY) / 2;
+    if (Math.random() > 0.45 + edgeBias * 0.55) continue;
+
+    return { x, y };
+  }
+
+  return { x: Math.random() * width, y: Math.random() * height };
+}
 
 function createNodes(width: number, height: number): Node[] {
-  const count = Math.min(70, Math.max(20, Math.round(width * height * NODE_DENSITY)));
-  return Array.from({ length: count }, () => ({
-    x: Math.random() * width,
-    y: Math.random() * height,
-    vx: (Math.random() - 0.5) * 0.3,
-    vy: (Math.random() - 0.5) * 0.3,
-    radius: 1 + Math.random() * 1.5,
-    phase: Math.random() * Math.PI * 2,
-  }));
+  const count = Math.min(92, Math.max(28, Math.round(width * height * NODE_DENSITY)));
+  return Array.from({ length: count }, (_, index) => {
+    const { x, y } = samplePoint(width, height);
+    const isHub = index < Math.round(count * HUB_RATIO);
+
+    return {
+      x,
+      y,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      radius: isHub ? 4.8 + Math.random() * 2.6 : 2 + Math.random() * 2.2,
+      phase: Math.random() * Math.PI * 2,
+      layer: isHub ? "hub" : "regular",
+    };
+  });
+}
+
+function readGraphTokens() {
+  const root = getComputedStyle(document.documentElement);
+  const num = (name: string, fallback: number) => {
+    const raw = root.getPropertyValue(name).trim();
+    const v = parseFloat(raw);
+    return Number.isFinite(v) ? v : fallback;
+  };
+  return {
+    stroke:
+      root.getPropertyValue("--graph-stroke").trim() ||
+      root.getPropertyValue("--accent").trim() ||
+      "#34d97e",
+    node:
+      root.getPropertyValue("--graph-node").trim() ||
+      root.getPropertyValue("--accent").trim() ||
+      "#34d97e",
+    edgeOpacity: num("--graph-edge-opacity", 0.18),
+    nodeOpacityMin: num("--graph-node-opacity-min", 0.35),
+    nodeOpacityRange: num("--graph-node-opacity-range", 0.4),
+  };
 }
 
 export default function NetworkCanvas() {
@@ -50,13 +106,8 @@ export default function NetworkCanvas() {
     let width = 0;
     let height = 0;
     let rafId = 0;
-    // Cursor node target; starts offscreen until the pointer moves.
     const mouse = { x: -1000, y: -1000 };
     const cursorNode = { x: -1000, y: -1000 };
-
-    const readAccent = () =>
-      getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() ||
-      "#34d97e";
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
@@ -70,11 +121,10 @@ export default function NetworkCanvas() {
     };
 
     const drawFrame = (time: number) => {
+      const tokens = readGraphTokens();
       ctx.clearRect(0, 0, width, height);
-      const accent = readAccent();
 
-      // Edges: connect nearby nodes; opacity falls off with distance.
-      ctx.lineWidth = 1;
+      ctx.lineWidth = document.documentElement.dataset.theme === "light" ? 2.6 : 2;
       const all = [...nodes, cursorNode];
       for (let i = 0; i < all.length; i++) {
         for (let j = i + 1; j < all.length; j++) {
@@ -82,8 +132,8 @@ export default function NetworkCanvas() {
           const dy = all[i].y - all[j].y;
           const dist = Math.hypot(dx, dy);
           if (dist < LINK_DISTANCE) {
-            ctx.globalAlpha = (1 - dist / LINK_DISTANCE) * 0.18;
-            ctx.strokeStyle = accent;
+            ctx.globalAlpha = (1 - dist / LINK_DISTANCE) * tokens.edgeOpacity;
+            ctx.strokeStyle = tokens.stroke;
             ctx.beginPath();
             ctx.moveTo(all[i].x, all[i].y);
             ctx.lineTo(all[j].x, all[j].y);
@@ -92,11 +142,14 @@ export default function NetworkCanvas() {
         }
       }
 
-      // Nodes, with a slow sinusoidal pulse.
       for (const node of nodes) {
         const pulse = 0.55 + 0.45 * Math.sin(time / 900 + node.phase);
-        ctx.globalAlpha = 0.35 + 0.4 * pulse;
-        ctx.fillStyle = accent;
+        const baseOpacity =
+          tokens.nodeOpacityMin +
+          tokens.nodeOpacityRange * pulse +
+          (node.layer === "hub" ? 0.12 : 0);
+        ctx.globalAlpha = Math.min(1, baseOpacity);
+        ctx.fillStyle = tokens.node;
         ctx.beginPath();
         ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
         ctx.fill();
@@ -108,11 +161,9 @@ export default function NetworkCanvas() {
       for (const node of nodes) {
         node.x += node.vx;
         node.y += node.vy;
-        // Bounce softly off the edges.
         if (node.x < 0 || node.x > width) node.vx *= -1;
         if (node.y < 0 || node.y > height) node.vy *= -1;
       }
-      // The cursor node lags behind the pointer for an organic feel.
       cursorNode.x += (mouse.x - cursorNode.x) * 0.08;
       cursorNode.y += (mouse.y - cursorNode.y) * 0.08;
 
@@ -126,11 +177,21 @@ export default function NetworkCanvas() {
       mouse.y = e.clientY - rect.top;
     };
 
+    // Re-read graph tokens when the theme toggles.
+    const onThemeChange = () => {
+      if (prefersReducedMotion) drawFrame(0);
+    };
+    const themeObserver = new MutationObserver(onThemeChange);
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+
     resize();
     window.addEventListener("resize", resize);
 
     if (prefersReducedMotion) {
-      drawFrame(0); // static snapshot, no animation loop
+      drawFrame(0);
     } else {
       window.addEventListener("pointermove", onPointerMove);
       rafId = requestAnimationFrame(step);
@@ -138,6 +199,7 @@ export default function NetworkCanvas() {
 
     return () => {
       cancelAnimationFrame(rafId);
+      themeObserver.disconnect();
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onPointerMove);
     };

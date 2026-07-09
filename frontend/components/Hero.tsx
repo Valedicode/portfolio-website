@@ -20,10 +20,7 @@ export default function Hero() {
     <section id="top" className="relative flex min-h-svh items-center overflow-hidden">
       <NetworkCanvas />
       {/* Soft radial fade so text stays readable over the network */}
-      <div
-        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--bg)_0%,transparent_75%)]"
-        aria-hidden="true"
-      />
+      <div className="hero-network-wash absolute inset-0" aria-hidden="true" />
 
       <div className="relative mx-auto w-full max-w-6xl px-4 py-28 sm:px-6">
         <motion.p {...fadeUp(0)} className="mb-4 font-mono text-sm text-accent">
@@ -43,7 +40,7 @@ export default function Hero() {
         <motion.div {...fadeUp(0.16)} className="mt-10 flex flex-wrap gap-3">
           <a
             href="#projects"
-            className="rounded-lg bg-accent px-6 py-3 font-mono text-sm font-medium text-bg transition-colors hover:bg-accent-bright"
+            className="rounded-lg bg-accent px-6 py-3 font-mono text-sm font-medium text-on-accent transition-colors hover:bg-accent-bright"
           >
             View Projects
           </a>

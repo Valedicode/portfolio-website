@@ -3,7 +3,9 @@
 /*
  * Design tokens. Dark is the default (:root); light mode is opted into
  * via <html data-theme="light">, toggled by ThemeToggle.
- * Palette: near-black surfaces + a single signal-green accent.
+ *
+ * Graph/network visuals use separate --graph-* tokens so background
+ * animations stay readable in light mode without washing out UI accent.
  */
 :root {
   --bg: #0a0c0b;
@@ -13,21 +15,44 @@
   --muted: #8a998f;
   --accent: #34d97e;
   --accent-bright: #5cee9c;
+  --on-accent: #0a0c0b;
+
+  /* Ambient network canvas + skill hub graphs */
+  --graph-stroke: #34d97e;
+  --graph-node: #34d97e;
+  --graph-edge-opacity: 0.23;
+  --graph-node-opacity-min: 0.44;
+  --graph-node-opacity-range: 0.38;
+
+  /* Hero radial wash over the network (higher = more of the bg shows through) */
+  --hero-wash-fade: 88%;
+
   color-scheme: dark;
 }
 
 [data-theme="light"] {
-  --bg: #f7f8f7;
+  --bg: #f3f6f4;
   --panel: #ffffff;
-  --line: #dde3df;
-  --fg: #172019;
-  --muted: #5c6b60;
-  --accent: #0c8f52;
-  --accent-bright: #0a7343;
+  --line: #b4c2b8;
+  --fg: #0d1812;
+  --muted: #3a4d40;
+  --accent: #0a7d4a;
+  --accent-bright: #066339;
+  --on-accent: #ffffff;
+
+  /* Darker graph ink — readable on near-white without neon washout */
+  --graph-stroke: #0b5c38;
+  --graph-node: #0a7d4a;
+  --graph-edge-opacity: 0.44;
+  --graph-node-opacity-min: 0.6;
+  --graph-node-opacity-range: 0.34;
+
+  /* Let more of the network show through in light mode */
+  --hero-wash-fade: 96%;
+
   color-scheme: light;
 }
 
-/* Expose tokens as Tailwind utilities (bg-panel, text-muted, border-line, …). */
 @theme inline {
   --color-bg: var(--bg);
   --color-panel: var(--panel);
@@ -36,6 +61,7 @@
   --color-muted: var(--muted);
   --color-accent: var(--accent);
   --color-accent-bright: var(--accent-bright);
+  --color-on-accent: var(--on-accent);
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
 }
@@ -59,5 +85,44 @@ body {
 
 ::selection {
   background-color: var(--accent);
-  color: var(--bg);
+  color: var(--on-accent);
+}
+
+/* Hero network overlay — theme-tuned so nodes stay visible in light mode */
+.hero-network-wash {
+  background: radial-gradient(
+    ellipse at center,
+    var(--bg) 0%,
+    color-mix(in srgb, var(--bg) 34%, transparent) 38%,
+    transparent var(--hero-wash-fade)
+  );
+}
+
+/* Light mode: slightly stronger graph edges in skill cards */
+[data-theme="light"] .skill-graph-edge {
+  stroke: var(--graph-stroke);
+  stroke-width: 1.8;
+  opacity: 0.95;
+}
+
+[data-theme="light"] .skill-graph-node {
+  fill: var(--graph-node);
+}
+
+[data-theme="light"] .skill-graph-hub {
+  stroke: var(--graph-stroke);
+  stroke-width: 2.6;
+}
+
+[data-theme="light"] .skill-graph-hub-core {
+  fill: var(--graph-node);
+}
+
+/* Agent pipeline glow reads better on white with a deeper shadow color */
+[data-theme="light"] .agent-glow-active {
+  box-shadow: 0 0 20px -6px color-mix(in srgb, var(--graph-node) 45%, transparent);
+}
+
+[data-theme="light"] .agent-packet-glow {
+  box-shadow: 0 0 6px color-mix(in srgb, var(--graph-node) 70%, transparent);
 }

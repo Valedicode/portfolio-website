@@ -47,8 +47,9 @@ function ClusterGraph({
               y1={HUB.y}
               x2={x}
               y2={ITEM_Y}
-              stroke="var(--line)"
-              strokeWidth="1"
+              className="skill-graph-edge"
+              stroke="var(--graph-stroke)"
+              strokeWidth="1.8"
               initial={animate ? { pathLength: 0, opacity: 0 } : false}
               whileInView={{ pathLength: 1, opacity: 1 }}
               viewport={{ once: true }}
@@ -57,8 +58,9 @@ function ClusterGraph({
             <motion.circle
               cx={x}
               cy={ITEM_Y}
-              r="3.5"
-              fill="var(--accent)"
+              r="5.5"
+              className="skill-graph-node"
+              fill="var(--graph-node)"
               initial={animate ? { scale: 0, opacity: 0 } : false}
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true }}
@@ -83,8 +85,22 @@ function ClusterGraph({
         );
       })}
       {/* Hub node drawn last so it sits above the edges */}
-      <circle cx={HUB.x} cy={HUB.y} r="6" fill="var(--panel)" stroke="var(--accent)" strokeWidth="1.5" />
-      <circle cx={HUB.x} cy={HUB.y} r="2.5" fill="var(--accent)" />
+      <circle
+        cx={HUB.x}
+        cy={HUB.y}
+        r="9"
+        className="skill-graph-hub"
+        fill="var(--panel)"
+        stroke="var(--graph-stroke)"
+        strokeWidth="2.2"
+      />
+      <circle
+        cx={HUB.x}
+        cy={HUB.y}
+        r="4"
+        className="skill-graph-hub-core"
+        fill="var(--graph-node)"
+      />
     </svg>
   );
 }

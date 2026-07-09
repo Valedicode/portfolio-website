@@ -90,7 +90,7 @@ function AgentAvatar({
             }}
           >
             <span className="absolute inset-0 rounded-full border border-dashed border-accent/60" />
-            <span className="absolute left-1/2 top-0 h-1.5 w-1.5 -ml-[3px] -mt-[3px] rounded-full bg-accent shadow-[0_0_6px_var(--accent)]" />
+            <span className="absolute left-1/2 top-0 h-1.5 w-1.5 -ml-[3px] -mt-[3px] rounded-full bg-accent agent-packet-glow shadow-[0_0_6px_var(--graph-node)]" />
           </motion.div>
         )}
       </AnimatePresence>
@@ -130,18 +130,19 @@ function Connector({
   reduced: boolean;
   axis: "vertical" | "horizontal";
 }) {
-  const packet = "absolute rounded-full bg-accent shadow-[0_0_8px_var(--accent)]";
+  const packet =
+    "agent-packet-glow absolute rounded-full bg-accent shadow-[0_0_8px_var(--graph-node)]";
   const isVertical = axis === "vertical";
 
   return (
     <div
       className={`relative shrink-0 self-center ${
-        isVertical ? "h-5 w-px" : "h-px w-5 lg:w-8"
+        isVertical ? "h-6 w-[2px]" : "h-[2px] w-6 lg:w-9"
       }`}
     >
       <div
         className={`absolute inset-0 transition-colors duration-300 ${
-          lit ? "bg-accent/70" : "bg-line"
+          lit ? "bg-accent/80" : "bg-line"
         }`}
       />
       <AnimatePresence>
@@ -165,8 +166,8 @@ function Connector({
                     opacity: { duration: 0.15 },
                   }
             }
-            className={`${packet} h-1.5 w-1.5`}
-            style={isVertical ? { left: -2.5 } : { top: -2.5 }}
+            className={`${packet} h-2 w-2`}
+            style={isVertical ? { left: -3 } : { top: -3 }}
           />
         )}
       </AnimatePresence>
@@ -196,7 +197,7 @@ function AgentCard({
       transition={{ duration: 0.25, delay: index * 0.08 }}
       className={`flex min-w-0 flex-1 items-center gap-2 rounded-lg border px-2.5 py-2.5 transition-[border-color,background-color,box-shadow] duration-200 sm:gap-3 sm:px-3 sm:py-3 lg:px-4 ${
         isActive
-          ? "border-accent bg-accent/10 shadow-[0_0_24px_-8px_var(--accent)]"
+          ? "agent-glow-active border-accent bg-accent/10 shadow-[0_0_24px_-8px_var(--graph-node)]"
           : isDone
             ? "border-accent/40 bg-panel"
             : "border-line bg-panel"
