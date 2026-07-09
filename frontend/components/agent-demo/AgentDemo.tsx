@@ -107,7 +107,7 @@ export default function AgentDemo() {
     : [];
 
   return (
-    <div className="rounded-xl border border-line bg-panel p-5 sm:p-8">
+    <div className="min-w-0 overflow-hidden rounded-xl border border-line bg-panel p-5 sm:p-8">
       {/* Query input */}
       <form
         className="flex flex-col gap-3 sm:flex-row"
