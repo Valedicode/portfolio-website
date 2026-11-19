@@ -23,3 +23,6 @@ backend/.env
 *.pem
 npm-debug.log*
 .vercel
+
+# --- local AI-use log ---
+docs/ai-log.md
