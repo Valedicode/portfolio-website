@@ -28,7 +28,7 @@ class QueryPlan(BaseModel):
     )
     sort: SortMode = Field(description="How the final results should be ordered")
     trace: str = Field(
-        description="One terse log line (<120 chars) explaining the parsed intent"
+        description="Terse log line, at most 15 words, e.g. 'tag=fastapi, sort=relevance'"
     )
 
 
@@ -45,7 +45,7 @@ class SynthesisOutput(BaseModel):
         )
     )
     trace: str = Field(
-        description="One terse log line (<120 chars) explaining the ranking"
+        description="Terse log line, at most 15 words, e.g. 'ranked 4 by relevance, kept 3'"
     )
 
 
