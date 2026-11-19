@@ -1,0 +1,283 @@
+[
+  {
+    "id": "roomedit",
+    "type": "project",
+    "title": "RoomEdit",
+    "description": "Research experiment on multi-turn language editing of 3D rooms: a 2x2 design comparing direct pose patches against typed actions with a solver, with and without checker feedback. Scored against hidden constraint sets by an independent evaluator, with a Next.js viewer.",
+    "tags": [
+      "ml",
+      "llm",
+      "research",
+      "python",
+      "typescript",
+      "next.js",
+      "evaluation"
+    ],
+    "featured": true,
+    "year": 2026,
+    "complexity": 5,
+    "links": {
+      "repo": null,
+      "demo": null
+    }
+  },
+  {
+    "id": "biaslens",
+    "type": "project",
+    "title": "BiasLens",
+    "description": "Explainable multimodal bias analysis pipeline for short-form video, built for the Gemma 4 Developer Competition. Local detectors feed two Gemma agents with human-in-the-loop review, producing bias reports and annotated video.",
+    "tags": [
+      "multi-agent",
+      "llm",
+      "multimodal",
+      "ml",
+      "python",
+      "computer-vision"
+    ],
+    "featured": true,
+    "year": 2026,
+    "complexity": 5,
+    "links": {
+      "repo": null,
+      "demo": null
+    }
+  },
+  {
+    "id": "jarvis",
+    "type": "project",
+    "title": "Jarvis",
+    "description": "Personal command center inspired by Iron Man's J.A.R.V.I.S.: an animated HUD dashboard over my connected tools (Notion, Slack, Linear, Calendar), driven by clicking into areas or by a voice assistant. Both routes go through the same LangGraph agent behind a FastAPI backend.",
+    "tags": [
+      "multi-agent",
+      "llm",
+      "langgraph",
+      "next.js",
+      "fastapi",
+      "full-stack",
+      "typescript",
+      "python"
+    ],
+    "featured": true,
+    "year": 2026,
+    "complexity": 4,
+    "links": {
+      "repo": null,
+      "demo": null
+    }
+  },
+  {
+    "id": "hanzisave",
+    "type": "project",
+    "title": "HanziSave",
+    "description": "Turns the Chinese I am reading into flashcards: paste text or photograph a page, see words coloured by HSK level, and generate cards in a fixed format. Includes FSRS spaced repetition, stroke-order writing practice, and Anki export.",
+    "tags": [
+      "llm",
+      "full-stack",
+      "next.js",
+      "typescript",
+      "education",
+      "ocr"
+    ],
+    "featured": true,
+    "year": 2026,
+    "complexity": 4,
+    "links": {
+      "repo": null,
+      "demo": null
+    }
+  },
+  {
+    "id": "fixray",
+    "type": "project",
+    "title": "FixRay",
+    "description": "AR repair assistant: point the phone camera at something broken and get a highlighted region, a direction arrow and one instruction on the live feed, gated by a green/amber/red safety rating.",
+    "tags": [
+      "full-stack",
+      "next.js",
+      "typescript",
+      "computer-vision",
+      "mobile"
+    ],
+    "year": 2026,
+    "complexity": 3,
+    "links": {
+      "repo": "https://github.com/Valedicode/fixray",
+      "demo": null
+    }
+  },
+  {
+    "id": "ethical-interface-workbench",
+    "type": "project",
+    "title": "Ethical Interface Workbench",
+    "description": "Interactive AI face simulator and design-ethics lab. Eight live sliders drive an animated face, while an analysis panel rates each design choice as Ethical, Caution or Risk across healthcare, education and security scenarios.",
+    "tags": [
+      "react",
+      "typescript",
+      "framer-motion",
+      "ethics",
+      "hci"
+    ],
+    "year": 2026,
+    "complexity": 3,
+    "links": {
+      "repo": "https://github.com/Valedicode/ethical-interface-workbench",
+      "demo": null
+    }
+  },
+  {
+    "id": "scrumix",
+    "type": "project",
+    "title": "ScrumiX",
+    "description": "AI-powered Scrum management system that enhances agile team productivity through intelligent automation and AI-agent assistance. Next.js frontend talking to a FastAPI backend that orchestrates the business logic and AI workflows.",
+    "tags": [
+      "multi-agent",
+      "llm",
+      "next.js",
+      "fastapi",
+      "full-stack",
+      "python",
+      "typescript"
+    ],
+    "featured": true,
+    "year": 2025,
+    "complexity": 5,
+    "links": {
+      "repo": "https://github.com/Valedicode/ScrumiX",
+      "demo": null
+    }
+  },
+  {
+    "id": "resume-agent",
+    "type": "project",
+    "title": "Resume Agent",
+    "description": "Autonomous human-in-the-loop AI agent that rewrites and optimizes resumes against a target job description. Covers automated JD scraping, PDF resume parsing, gap analysis, iterative rewriting, and user-guided refinement.",
+    "tags": [
+      "multi-agent",
+      "llm",
+      "langgraph",
+      "python",
+      "automation"
+    ],
+    "featured": true,
+    "year": 2025,
+    "complexity": 5,
+    "links": {
+      "repo": "https://github.com/Valedicode/JobWriterAI",
+      "demo": null
+    }
+  },
+  {
+    "id": "moat-stock-explainer",
+    "type": "project",
+    "title": "MOAT Stock Explainer",
+    "description": "Multimodal LLM-based system that explains historical stock behavior of MOAT-rated tech companies to non-experts. Fuses financial news with price time-series data to generate plain-language causal narratives.",
+    "tags": [
+      "ml",
+      "llm",
+      "multimodal",
+      "nlp",
+      "python",
+      "finance"
+    ],
+    "year": 2025,
+    "complexity": 4,
+    "links": {
+      "repo": "https://github.com/Valedicode/moat-tutor",
+      "demo": null
+    }
+  },
+  {
+    "id": "financial-sentiment-analyzer",
+    "type": "project",
+    "title": "Financial Sentiment Analyzer",
+    "description": "AI-powered financial sentiment analysis platform built for the Aachen Investment Club. FinBERT processes text and PDF reports, a FastAPI backend serves sentiment inference, and a chatbot delivers interactive financial insights.",
+    "tags": [
+      "ml",
+      "nlp",
+      "fastapi",
+      "python",
+      "finance",
+      "full-stack"
+    ],
+    "year": 2024,
+    "complexity": 4,
+    "links": {
+      "repo": null,
+      "demo": null
+    }
+  },
+  {
+    "id": "dragflow",
+    "type": "project",
+    "title": "DragFlow",
+    "description": "Interactive web-based drag-and-drop workflow builder in React and Next.js. A FastAPI backend manages roles and persists workflow state, enabling dynamic assignment and reordering inside a visual planning area.",
+    "tags": [
+      "full-stack",
+      "react",
+      "next.js",
+      "fastapi",
+      "typescript"
+    ],
+    "year": 2024,
+    "complexity": 3,
+    "links": {
+      "repo": "https://github.com/Valedicode/DragFlow-SCRUM",
+      "demo": null
+    }
+  },
+  {
+    "id": "yams",
+    "type": "project",
+    "title": "YAMS",
+    "description": "Management platform developed in a team at Fraunhofer IPT with Python, Django, and PostgreSQL. Stores inquiries, acquisitions, and related records behind an intuitive interface for creating and sharing entries.",
+    "tags": [
+      "full-stack",
+      "django",
+      "postgresql",
+      "python",
+      "systems"
+    ],
+    "year": 2024,
+    "complexity": 3,
+    "links": {
+      "repo": null,
+      "demo": null
+    }
+  },
+  {
+    "id": "totp-generator",
+    "type": "project",
+    "title": "TOTP Generator",
+    "description": "Time-based one-time password generator following RFC 6238, like the codes in two-factor authentication apps. Built with standard libraries only, as a console tool for educational purposes.",
+    "tags": [
+      "systems",
+      "security",
+      "python",
+      "cli"
+    ],
+    "year": 2025,
+    "complexity": 2,
+    "links": {
+      "repo": "https://github.com/Valedicode/totp-generator",
+      "demo": null
+    }
+  },
+  {
+    "id": "pomodoro-scheduler",
+    "type": "project",
+    "title": "Pomodoro Scheduler",
+    "description": "Personalized Pomodoro day-scheduler in Java: 50-minute focus blocks, short and long breaks, and predefined slots for meals and exercise, all generated automatically in a clear console interface.",
+    "tags": [
+      "systems",
+      "java",
+      "cli",
+      "automation"
+    ],
+    "year": 2024,
+    "complexity": 2,
+    "links": {
+      "repo": "https://github.com/Valedicode/pomodoro-scheduler",
+      "demo": null
+    }
+  }
+]

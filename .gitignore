@@ -1,0 +1,28 @@
+# --- frontend (Next.js / pnpm) ---
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/next-env.d.ts
+frontend/*.tsbuildinfo
+
+# --- backend (Python) ---
+backend/__pycache__/
+backend/**/__pycache__/
+backend/.venv/
+backend/*.egg-info/
+
+# --- env files ---
+.env
+.env*.local
+frontend/.env
+frontend/.env*.local
+backend/.env
+
+# --- misc ---
+.DS_Store
+*.pem
+npm-debug.log*
+.vercel
+
+# --- local AI-use log ---
+docs/ai-log.md
