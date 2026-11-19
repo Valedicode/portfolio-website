@@ -5,6 +5,7 @@
  * (education + experience from data/cv.json) for visitors who don't
  * want to open the PDF.
  */
+import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { CV, type KnowledgeEntry } from "@/lib/knowledge";
 import SectionHeading from "./SectionHeading";
@@ -13,12 +14,15 @@ interface TimelineEntry extends KnowledgeEntry {
   period?: string;
 }
 
-const HIGHLIGHTS = (CV.entries as TimelineEntry[]).filter((e) =>
+const ALL_ENTRIES = (CV.entries as TimelineEntry[]).filter((e) =>
   ["education", "experience"].includes(e.type)
 );
+const FEATURED_COUNT = ALL_ENTRIES.filter((e) => e.featured).length;
 
 export default function ResumeSection() {
   const prefersReducedMotion = useReducedMotion();
+  const [showAll, setShowAll] = useState(false);
+  const entries = showAll ? ALL_ENTRIES : ALL_ENTRIES.filter((e) => e.featured);
 
   return (
     <section id="resume" className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
@@ -47,7 +51,7 @@ export default function ResumeSection() {
         </motion.div>
 
         <ol className="relative space-y-6 border-l border-line ps-6">
-          {HIGHLIGHTS.map((entry, i) => (
+          {entries.map((entry, i) => (
             <motion.li
               key={entry.id}
               initial={prefersReducedMotion ? false : { opacity: 0, x: 12 }}
@@ -70,6 +74,18 @@ export default function ResumeSection() {
           ))}
         </ol>
       </div>
+      {ALL_ENTRIES.length > FEATURED_COUNT && (
+        <div className="mt-8 flex justify-center lg:justify-end">
+          <button
+            type="button"
+            onClick={() => setShowAll((v) => !v)}
+            aria-expanded={showAll}
+            className="rounded-full border border-line px-5 py-2 font-mono text-xs text-muted transition-colors hover:border-accent hover:text-fg"
+          >
+            {showAll ? "Show highlights only" : "Earlier & other experience"}
+          </button>
+        </div>
+      )}
     </section>
   );
 }

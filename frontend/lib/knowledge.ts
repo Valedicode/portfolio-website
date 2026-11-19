@@ -25,6 +25,8 @@ export interface KnowledgeEntry {
   /** Skill category items, e.g. ["React", "Next.js"] (skills only). */
   items?: string[];
   links?: { repo: string | null; demo: string | null };
+  /** Shown by default; non-featured entries sit behind a "show all" toggle. */
+  featured?: boolean;
 }
 
 export interface ProjectEntry extends KnowledgeEntry {

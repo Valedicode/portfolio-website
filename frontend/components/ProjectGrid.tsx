@@ -22,6 +22,7 @@ export default function ProjectGrid() {
   const { run, setRun } = useAgents();
   const prefersReducedMotion = useReducedMotion();
   const [activeTag, setActiveTag] = useState<string | null>(null);
+  const [showAll, setShowAll] = useState(false);
 
   const agentFiltered = run !== null;
 
@@ -34,8 +35,12 @@ export default function ProjectGrid() {
       );
     }
     if (activeTag) return PROJECTS.filter((p) => p.tags.includes(activeTag));
-    return PROJECTS;
-  }, [run, activeTag]);
+    return showAll ? PROJECTS : PROJECTS.filter((p) => p.featured);
+  }, [run, activeTag, showAll]);
+
+  // Agent results and tag filters already search every project; the
+  // featured/all toggle only applies to the unfiltered default view.
+  const showToggle = !agentFiltered && activeTag === null;
 
   return (
     <section id="projects" className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
@@ -160,6 +165,21 @@ export default function ProjectGrid() {
           ))}
         </AnimatePresence>
       </ul>
+
+      {showToggle && (
+        <div className="mt-8 flex justify-center">
+          <button
+            type="button"
+            onClick={() => setShowAll((v) => !v)}
+            aria-expanded={showAll}
+            className="rounded-full border border-line px-5 py-2 font-mono text-xs text-muted transition-colors hover:border-accent hover:text-fg"
+          >
+            {showAll
+              ? "Show featured only"
+              : `Show all projects (${PROJECTS.length})`}
+          </button>
+        </div>
+      )}
     </section>
   );
 }

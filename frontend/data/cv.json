@@ -42,6 +42,7 @@
         "backend",
         "automotive"
       ],
+      "featured": true,
       "period": "Sep 2026 — present",
       "year": 2026
     },
@@ -54,6 +55,7 @@
         "education",
         "exchange"
       ],
+      "featured": true,
       "period": "Aug 2026 — Dec 2026",
       "year": 2026
     },
@@ -66,6 +68,7 @@
         "education",
         "exchange"
       ],
+      "featured": true,
       "period": "Mar 2026 — Aug 2026",
       "year": 2026
     },
@@ -79,6 +82,7 @@
         "multi-agent",
         "education"
       ],
+      "featured": true,
       "period": "2025 — expected 2028",
       "year": 2027
     },
@@ -94,6 +98,7 @@
         "python",
         "leadership"
       ],
+      "featured": true,
       "period": "Oct 2025 — present",
       "year": 2026
     },
@@ -122,6 +127,7 @@
         "full-stack",
         "internship"
       ],
+      "featured": true,
       "period": "Apr 2024 — Jul 2024",
       "year": 2024
     },
