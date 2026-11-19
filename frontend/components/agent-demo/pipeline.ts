@@ -14,7 +14,8 @@ import { retrieve } from "./retriever";
 import { synthesize } from "./synthesizer";
 import type { PipelineRun } from "./types";
 
-const LLM_TIMEOUT_MS = 12_000;
+/** Slightly above the proxy's own backend timeout (app/api/agent-demo/route.ts). */
+const LLM_TIMEOUT_MS = 30_000;
 
 export function runRulePipeline(query: string): PipelineRun {
   const queryPlan = plan(query);

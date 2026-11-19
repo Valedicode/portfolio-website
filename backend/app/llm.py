@@ -9,9 +9,11 @@ import os
 
 from langchain_openai import ChatOpenAI
 
-DEFAULT_MODEL = "deepseek/deepseek-chat"
+DEFAULT_MODEL = "deepseek/deepseek-v4-flash"
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
-LLM_TIMEOUT_S = 10
+# Per call. Two sequential calls must fit the proxy's timeout
+# (frontend/app/api/agent-demo/route.ts).
+LLM_TIMEOUT_S = 12
 MAX_TOKENS = 600
 
 

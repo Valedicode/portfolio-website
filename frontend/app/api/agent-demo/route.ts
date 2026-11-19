@@ -8,7 +8,11 @@
  * pipeline.
  */
 const BACKEND_URL = process.env.AGENT_BACKEND_URL ?? "http://127.0.0.1:8000";
-const BACKEND_TIMEOUT_MS = 11_000;
+// Two sequential LLM calls of up to 12s each (backend/app/llm.py) plus overhead.
+const BACKEND_TIMEOUT_MS = 28_000;
+
+/** Vercel function limit in seconds; must exceed BACKEND_TIMEOUT_MS. */
+export const maxDuration = 30;
 const MAX_BODY_CHARS = 1_000;
 
 function clientIp(request: Request): string {
