@@ -46,4 +46,6 @@ export interface PipelineRun {
   synthesis: SynthesisResult;
   /** Which engine produced this run. */
   engine: "rules" | "llm";
+  /** The backend refused the question; `synthesis.summary` is its fixed message. */
+  declined?: boolean;
 }

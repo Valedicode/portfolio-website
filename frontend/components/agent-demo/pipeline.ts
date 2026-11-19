@@ -36,6 +36,7 @@ interface LlmResponse {
   synthesizerTrace: string;
   summary: string;
   matchedIds: string[];
+  declined?: boolean;
 }
 
 export async function runLlmPipeline(query: string): Promise<PipelineRun> {
@@ -63,6 +64,7 @@ export async function runLlmPipeline(query: string): Promise<PipelineRun> {
     return {
       query,
       engine: "llm",
+      declined: data.declined === true,
       plan: {
         tags: [],
         keywords: [],
