@@ -82,6 +82,8 @@ def _tracked_llm():
 
 
 app_main.build_llm = _tracked_llm  # count tokens of the real endpoint too
+# Entered once for the whole run: one event loop, like the real server, so
+# the async HTTP connection pool is reused across requests.
 client = TestClient(app_main.app)
 
 
@@ -154,6 +156,7 @@ def main() -> None:
         cases = [c for c in cases if c["id"] in wanted]
 
     report: dict[str, dict] = {}
+    client.__enter__()
     for engine in args.engines.split(","):
         rows = []
         for case in cases:
@@ -199,6 +202,7 @@ def main() -> None:
             f"{summary['avg_output_tokens']:7}  ${summary['avg_cost_usd']:.5f}"
         )
 
+    client.__exit__(None, None, None)
     out_dir = HERE / "results"
     out_dir.mkdir(exist_ok=True)
     stamp = time.strftime("%Y%m%d-%H%M%S")
