@@ -13,6 +13,8 @@ const VIEW_W = 320;
 const VIEW_H = 150;
 const HUB = { x: VIEW_W / 2, y: 28 };
 const ITEM_Y = 104;
+/** Items beyond this many are listed as chips below the graph. */
+const GRAPH_MAX = 5;
 
 /** Evenly spaces n items across the bottom of the viewBox. */
 function itemX(index: number, total: number): number {
@@ -23,19 +25,20 @@ function itemX(index: number, total: number): number {
 
 function ClusterGraph({
   title,
-  items,
+  items: allItems,
   animate,
 }: {
   title: string;
   items: string[];
   animate: boolean;
 }) {
+  const items = allItems.slice(0, GRAPH_MAX);
   return (
     <svg
       viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
       className="w-full"
       role="img"
-      aria-label={`${title}: ${items.join(", ")}`}
+      aria-label={`${title}: ${allItems.join(", ")}`}
     >
       {items.map((item, i) => {
         const x = itemX(i, items.length);
@@ -130,6 +133,18 @@ export default function SkillsGraph() {
               items={category.items ?? []}
               animate={!prefersReducedMotion}
             />
+            {(category.items?.length ?? 0) > GRAPH_MAX && (
+              <ul className="mt-2 flex flex-wrap gap-1.5">
+                {category.items!.slice(GRAPH_MAX).map((item) => (
+                  <li
+                    key={item}
+                    className="rounded-full border border-line px-2 py-0.5 font-mono text-[11px] text-muted"
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            )}
           </motion.div>
         ))}
       </div>

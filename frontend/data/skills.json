@@ -4,39 +4,140 @@
     "type": "skill",
     "title": "Languages",
     "description": "Programming languages used across coursework, internships, and personal projects.",
-    "tags": ["python", "java", "c", "javascript", "typescript"],
-    "items": ["Python", "Java", "TypeScript", "JavaScript", "C"]
+    "tags": [
+      "python",
+      "java",
+      "c",
+      "javascript",
+      "typescript"
+    ],
+    "items": [
+      "Python",
+      "TypeScript",
+      "JavaScript",
+      "Java",
+      "C"
+    ]
   },
   {
     "id": "skills-ai-agents",
     "type": "skill",
     "title": "AI & Agent Frameworks",
-    "description": "Frameworks for building LLM applications and orchestrating multi-agent workflows.",
-    "tags": ["multi-agent", "llm", "ml", "langchain", "langgraph"],
-    "items": ["LangChain", "LangGraph", "AI SDK", "FinBERT"]
+    "description": "Frameworks and APIs for building LLM applications and orchestrating multi-agent workflows.",
+    "tags": [
+      "multi-agent",
+      "llm",
+      "langchain",
+      "langgraph",
+      "mcp"
+    ],
+    "items": [
+      "LangChain",
+      "LangGraph",
+      "AI SDK",
+      "MCP",
+      "OpenAI API",
+      "Anthropic API",
+      "Gemini / Gemma",
+      "Pipecat"
+    ]
+  },
+  {
+    "id": "skills-ml",
+    "type": "skill",
+    "title": "ML & Computer Vision",
+    "description": "Models and libraries for NLP, multimodal analysis, and evaluation.",
+    "tags": [
+      "ml",
+      "nlp",
+      "multimodal",
+      "computer-vision",
+      "research"
+    ],
+    "items": [
+      "PyTorch",
+      "FinBERT",
+      "scikit-learn",
+      "Whisper",
+      "YOLOv8",
+      "Hugging Face Transformers",
+      "OpenCV",
+      "EasyOCR",
+      "pandas",
+      "NumPy",
+      "SciPy",
+      "statsmodels"
+    ]
   },
   {
     "id": "skills-web",
     "type": "skill",
     "title": "Web & Frontend",
     "description": "Building responsive, modern interfaces.",
-    "tags": ["react", "next.js", "typescript", "full-stack"],
-    "items": ["React", "Next.js", "Tailwind CSS", "HTML", "CSS"]
+    "tags": [
+      "react",
+      "next.js",
+      "typescript",
+      "full-stack"
+    ],
+    "items": [
+      "React",
+      "Next.js",
+      "Tailwind CSS",
+      "HTML",
+      "CSS",
+      "Framer Motion",
+      "three.js",
+      "React Flow",
+      "dnd-kit",
+      "Zustand",
+      "Recharts",
+      "Zod"
+    ]
   },
   {
     "id": "skills-backend",
     "type": "skill",
     "title": "Backend & Data",
     "description": "APIs, server frameworks, and persistence.",
-    "tags": ["fastapi", "django", "postgresql", "python", "systems"],
-    "items": ["FastAPI", "Django", "PostgreSQL"]
+    "tags": [
+      "fastapi",
+      "django",
+      "postgresql",
+      "python",
+      "systems"
+    ],
+    "items": [
+      "FastAPI",
+      "Django",
+      "PostgreSQL",
+      "SQLite",
+      "Pydantic",
+      "SQLAlchemy",
+      "Alembic",
+      "pgvector",
+      "Supabase"
+    ]
   },
   {
     "id": "skills-tools",
     "type": "skill",
     "title": "Tools",
     "description": "Everyday engineering tooling.",
-    "tags": ["git", "tools"],
-    "items": ["Git", "Linux", "Conda"]
+    "tags": [
+      "git",
+      "tools"
+    ],
+    "items": [
+      "Git",
+      "Linux",
+      "Conda",
+      "Docker",
+      "pnpm",
+      "uv",
+      "pytest",
+      "ESLint",
+      "Ruff"
+    ]
   }
 ]
