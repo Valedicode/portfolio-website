@@ -14,7 +14,8 @@ OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 # Per call. Two sequential calls must fit the proxy's timeout
 # (frontend/app/api/agent-demo/route.ts).
 LLM_TIMEOUT_S = 12
-MAX_TOKENS = 600
+# Headroom for a 2-4 sentence answer plus JSON; output costs ~$0.0002 at most.
+MAX_TOKENS = 900
 
 
 def llm_configured() -> bool:
@@ -33,5 +34,10 @@ def build_llm() -> ChatOpenAI:
         # Filter extraction and a short answer need no chain of thought.
         # Hybrid models (DeepSeek V4 included) otherwise "think" first, which
         # adds latency and can use up max_tokens before any answer is written.
-        extra_body={"reasoning": {"enabled": False}},
+        # The same model is served by several providers with very different
+        # speeds; prefer the fastest to first token.
+        extra_body={
+            "reasoning": {"enabled": False},
+            "provider": {"sort": "latency"},
+        },
     )
