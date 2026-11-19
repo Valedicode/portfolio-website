@@ -43,7 +43,7 @@ components/agent-demo/   # structured by agent ROLE, not by data domain
 ## Backend
 
 The demo's **"AI reasoning"** mode is served by a Python LangChain pipeline:
-a Planner agent (`ChatAnthropic` + structured output) parses the question,
+a Planner agent (OpenRouter chat model + structured output) parses the question,
 the deterministic Retriever scores the knowledge base (same weights as the
 frontend's simulated tier), and a Synthesizer agent ranks the candidates and
 writes the answer. It reads the same JSON knowledge base from
@@ -53,13 +53,16 @@ writes the answer. It reads the same JSON knowledge base from
 cd backend
 conda activate portfolio
 pip install -r requirements.txt
-cp .env.example .env                  # add your ANTHROPIC_API_KEY
+cp .env.example .env                  # add your OPENROUTER_API_KEY
 uvicorn app.main:app --reload         # http://127.0.0.1:8000
 ```
 
 ```
 app/
   main.py                # FastAPI app: POST /agent-demo, GET /health
+  llm.py                 # OpenRouter chat model factory (LLM_MODEL env)
+  guardrail.py           # input/output guardrails + prompt fencing
+  security.py            # shared-secret check, per-IP and global rate limits
   knowledge.py           # loads ../frontend/data as the shared knowledge base
   schemas.py             # pydantic models (double as LLM structured-output schemas)
   agents/
@@ -70,26 +73,51 @@ app/
 
 ## How the two connect
 
-The frontend proxies `/api/agent-demo` to the backend via a Next.js rewrite
-(`frontend/next.config.mjs`, configurable with `AGENT_BACKEND_URL`). If the
-backend is down, unreachable, slow, or has no API key, the frontend silently
-falls back to its client-side rule-based pipeline — the demo never breaks,
-the LLM tier only upgrades it.
+The frontend proxies `/api/agent-demo` to the backend through a server route
+(`frontend/app/api/agent-demo/route.ts`, configurable with `AGENT_BACKEND_URL`),
+which adds a shared secret and the visitor's IP. If the backend is down,
+unreachable, slow, has no API key, or blocks the request, the frontend
+silently falls back to its client-side rule-based pipeline — the demo never
+breaks, the LLM tier only upgrades it.
+
+## Abuse protection
+
+The LLM key costs money, so the public endpoint is layered (cheapest first):
+
+1. **Shared secret** (`INTERNAL_API_KEY`): only the Next.js proxy can call the backend.
+2. **Input guardrail**: rejects control characters and prompt-injection phrasing before any tokens are spent.
+3. **Rate limits** (Upstash Redis): 5/min and 30/day per IP, 300/day globally. Fails closed.
+4. **Prompt fencing + output guardrail**: visitor text is fenced as data; summaries are capped, link-stripped and checked for prompt leaks.
+5. **Hard spend cap**: use a dedicated OpenRouter key with a low credit limit.
+
+Tests: `cd backend && python -m pytest tests`.
+
+## Deploying (Vercel)
+
+Two Vercel projects from this repo: `frontend/` (root directory `frontend`) and
+`backend/` (root directory `backend`, which carries `vercel.json` to copy
+`frontend/data` in at build). Set the backend env vars from `backend/.env.example`
+(including Upstash) and, on the frontend, `AGENT_BACKEND_URL` and the same
+`INTERNAL_API_KEY`.
 
 ## Demo modes
 
 - **Simulated** (default): deterministic rule-based pipeline, fully
   client-side, instant. Works everywhere, no backend needed.
 - **AI reasoning**: the LangChain pipeline described above. Requires the
-  backend running with `ANTHROPIC_API_KEY` set.
+  backend running with `OPENROUTER_API_KEY` set.
 
 ## Configuration
 
 | Where | Variable | Purpose |
 | --- | --- | --- |
-| `backend/.env` | `ANTHROPIC_API_KEY` | Enables the LangChain agents |
+| `backend/.env` | `OPENROUTER_API_KEY` | Enables the LangChain agents |
+| `backend/.env` | `LLM_MODEL` | OpenRouter model id (default `deepseek/deepseek-chat`) |
+| both `.env` files | `INTERNAL_API_KEY` | Shared secret between proxy and backend |
+| `backend/.env` | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | Rate-limit counters (required in production) |
+| `backend/.env` | `RATE_LIMIT_PER_MINUTE`, `RATE_LIMIT_PER_DAY`, `GLOBAL_DAILY_CAP` | Limits (optional) |
 | `backend/.env` | `KNOWLEDGE_DIR` | Override knowledge base location (optional) |
-| `frontend/.env.local` | `AGENT_BACKEND_URL` | Backend URL for the proxy (default `http://127.0.0.1:8000`) |
+| `frontend/.env.local` | `AGENT_BACKEND_URL` | Backend URL for the proxy route (default `http://127.0.0.1:8000`) |
 | `frontend/.env.local` | `NEXT_PUBLIC_CONTACT_FORM_ENDPOINT` | Formspree-style endpoint for the contact form; without it the form opens a mail draft |
 
 ## Accessibility & performance
