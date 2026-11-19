@@ -30,4 +30,8 @@ def build_llm() -> ChatOpenAI:
         temperature=0,
         timeout=LLM_TIMEOUT_S,
         max_retries=0,  # a retry doubles the cost of a failing request
+        # Filter extraction and a short answer need no chain of thought.
+        # Hybrid models (DeepSeek V4 included) otherwise "think" first, which
+        # adds latency and can use up max_tokens before any answer is written.
+        extra_body={"reasoning": {"enabled": False}},
     )
