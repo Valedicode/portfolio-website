@@ -86,19 +86,31 @@ The LLM key costs money, so the public endpoint is layered (cheapest first):
 
 1. **Shared secret** (`INTERNAL_API_KEY`): only the Next.js proxy can call the backend.
 2. **Input guardrail**: rejects control characters and prompt-injection phrasing before any tokens are spent.
-3. **Rate limits** (Upstash Redis): 5/min and 30/day per IP, 300/day globally. Fails closed.
+3. **Rate limits**: 6/min and 30/day per IP, 300/day globally, in memory (single process) or optionally Upstash Redis. Fails closed.
 4. **Prompt fencing + output guardrail**: visitor text is fenced as data; summaries are capped, link-stripped and checked for prompt leaks.
 5. **Hard spend cap**: use a dedicated OpenRouter key with a low credit limit.
 
 Tests: `cd backend && python -m pytest tests`.
 
-## Deploying (Vercel)
+## Deploying
 
-Two Vercel projects from this repo: `frontend/` (root directory `frontend`) and
-`backend/` (root directory `backend`, which carries `vercel.json` to copy
-`frontend/data` in at build). Set the backend env vars from `backend/.env.example`
-(including Upstash) and, on the frontend, `AGENT_BACKEND_URL` and the same
-`INTERNAL_API_KEY`.
+Frontend on **Vercel**, backend on **Render** as one long-running process
+(no Redis needed, and Render checks out the whole repo, so the backend reads
+`frontend/data` directly).
+
+1. **OpenRouter**: create a dedicated API key with a low credit limit (the hard spend cap).
+2. **Secret**: generate one long random string for `INTERNAL_API_KEY`, e.g.
+   `python -c "import secrets; print(secrets.token_urlsafe(32))"`.
+3. **Backend (Render)**: New → Blueprint → this repo. `render.yaml` defines the
+   service; enter `OPENROUTER_API_KEY` and `INTERNAL_API_KEY` when prompted.
+   Check `https://<service>.onrender.com/health` shows `"llm_configured": true`.
+4. **Frontend (Vercel)**: import the repo with root directory `frontend`, and set
+   `AGENT_BACKEND_URL=https://<service>.onrender.com` and the same `INTERNAL_API_KEY`.
+
+Render's free tier sleeps after ~15 minutes idle and takes up to a minute to
+wake. The page pings the backend on load to wake it early; a visitor who asks
+before it is up gets the rule-based answer. The paid Starter plan removes the
+sleep entirely.
 
 ## Demo modes
 
@@ -112,9 +124,9 @@ Two Vercel projects from this repo: `frontend/` (root directory `frontend`) and
 | Where | Variable | Purpose |
 | --- | --- | --- |
 | `backend/.env` | `OPENROUTER_API_KEY` | Enables the LangChain agents |
-| `backend/.env` | `LLM_MODEL` | OpenRouter model id (default `deepseek/deepseek-chat`) |
-| both `.env` files | `INTERNAL_API_KEY` | Shared secret between proxy and backend |
-| `backend/.env` | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | Rate-limit counters (required in production) |
+| `backend/.env` | `LLM_MODEL` | OpenRouter model id (default `deepseek/deepseek-v4-flash`) |
+| both `.env` files | `INTERNAL_API_KEY` | Shared secret between proxy and backend (required in production) |
+| `backend/.env` | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | Shared rate-limit counters (only for serverless or multi-instance) |
 | `backend/.env` | `RATE_LIMIT_PER_MINUTE`, `RATE_LIMIT_PER_DAY`, `GLOBAL_DAILY_CAP` | Limits (optional) |
 | `backend/.env` | `KNOWLEDGE_DIR` | Override knowledge base location (optional) |
 | `frontend/.env.local` | `AGENT_BACKEND_URL` | Backend URL for the proxy route (default `http://127.0.0.1:8000`) |

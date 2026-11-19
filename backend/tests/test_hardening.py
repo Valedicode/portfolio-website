@@ -15,7 +15,7 @@ client = TestClient(app)
 
 @pytest.fixture(autouse=True)
 def _env(monkeypatch):
-    for name in ("VERCEL", "UPSTASH_REDIS_REST_URL", "UPSTASH_REDIS_REST_TOKEN"):
+    for name in ("VERCEL", "RENDER", "UPSTASH_REDIS_REST_URL", "UPSTASH_REDIS_REST_TOKEN"):
         monkeypatch.delenv(name, raising=False)
     monkeypatch.setenv("OPENROUTER_API_KEY", "test-key")
     monkeypatch.setenv("INTERNAL_API_KEY", "secret")
@@ -94,6 +94,18 @@ def test_fails_closed_on_vercel_without_redis(monkeypatch):
     with pytest.raises(HTTPException) as exc:
         security.enforce_limits("1.1.1.1")
     assert exc.value.status_code == 503
+
+
+def test_render_uses_in_memory_limiter(monkeypatch):
+    monkeypatch.setenv("RENDER", "true")
+    security.enforce_limits("1.1.1.1")  # single process: memory is fine
+
+
+def test_production_without_secret_refuses(monkeypatch):
+    monkeypatch.setenv("RENDER", "true")
+    monkeypatch.delenv("INTERNAL_API_KEY")
+    res = client.post("/agent-demo", json={"query": "hi"})
+    assert res.status_code == 503
 
 
 # --- endpoint gating --------------------------------------------------------
