@@ -39,7 +39,10 @@ class SynthesisOutput(BaseModel):
         description="IDs of matching PROJECT entries, best first, max 6, may be empty"
     )
     summary: str = Field(
-        description="1-2 sentence friendly, concrete answer to the visitor"
+        description=(
+            "2-4 sentence conversational answer in plain prose that names "
+            "the specific projects or roles and why they fit"
+        )
     )
     trace: str = Field(
         description="One terse log line (<120 chars) explaining the ranking"

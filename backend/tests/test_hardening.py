@@ -7,7 +7,12 @@ from fastapi import HTTPException
 from fastapi.testclient import TestClient
 
 from app import security
-from app.guardrail import GuardrailViolation, check_input, check_output
+from app.guardrail import (
+    MAX_SUMMARY_CHARS,
+    GuardrailViolation,
+    check_input,
+    check_output,
+)
 from app.main import app
 
 client = TestClient(app)
@@ -57,9 +62,9 @@ def test_input_allowed(query):
 
 
 def test_output_strips_links_and_truncates():
-    out = check_output("See https://evil.example now. " + "x" * 600)
+    out = check_output("See https://evil.example now. " + "x" * 2000)
     assert "http" not in out
-    assert len(out) <= 400
+    assert len(out) <= MAX_SUMMARY_CHARS
 
 
 def test_output_blocks_prompt_leak():
