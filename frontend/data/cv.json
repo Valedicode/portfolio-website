@@ -1,7 +1,7 @@
 {
   "name": "Kevin Ha",
   "tagline": "Building systems where multiple agents think together.",
-  "role": "Computer Science M.Sc. student · Multi-Agent Systems & ML",
+  "role": "Computer Science M.Sc. student · AI Developer · Multi-Agent Systems & ML",
   "location": "Aachen, Germany",
   "email": "kevinhachong@gmail.com",
   "links": {
@@ -10,31 +10,103 @@
     "resume": "/CV.pdf"
   },
   "bio": [
-    "I'm a Computer Science student at RWTH Aachen University, currently pursuing my M.Sc. after completing my B.Sc. in 2025.",
-    "My main interest is designing multi-agent and LLM-based systems: autonomous agents that plan, retrieve, and reason together to solve problems no single model handles well alone. I care about the engineering around the models as much as the models themselves — clean data flow, observable pipelines, and interfaces that make complex systems feel simple.",
+    "I'm a Computer Science M.Sc. student at RWTH Aachen University (B.Sc. completed in 2025) and a working student AI developer at Eka Labs, where I build the cloud backend of an in-car voice assistant. Right now I'm on exchange in China, at Shanghai Jiao Tong University and then CUHK-Shenzhen.",
+    "My main interest is designing multi-agent and LLM-based systems: autonomous agents that plan, retrieve, and reason together to solve problems no single model handles well alone. I care about the engineering around the models as much as the models themselves — clean data flow, observable pipelines, and interfaces that make complex systems feel simple. My team's BiasLens, a multimodal bias analysis system for short-form video, was a national finalist in the Google Gemma 4 Developer Competition and won an Outstanding Work Award.",
     "When I approach a problem, I start by splitting it into roles rather than features: who plans, who gathers evidence, who decides. The demo on this page is built exactly that way."
   ],
   "stats": [
-    { "label": "Projects built", "value": "17" },
-    { "label": "Years programming", "value": "4+" },
-    { "label": "Agent pipelines built", "value": "5" }
+    {
+      "label": "Projects built",
+      "value": "17"
+    },
+    {
+      "label": "Years programming",
+      "value": "4+"
+    },
+    {
+      "label": "Agent pipelines built",
+      "value": "5"
+    }
   ],
   "entries": [
+    {
+      "id": "eka-labs",
+      "type": "experience",
+      "title": "Working Student, AI Developer — Eka Labs GmbH",
+      "description": "Edge AI for automotive and industry. Implement features and fixes in the cloud backend of a multi-domain in-car voice assistant where an LLM planner routes requests to weather, knowledge, phone and audio domains, and ground answers in provider data. Built offline worldwide reverse geocoding without third-party APIs, replay logged in-car failures to debug production issues, and benchmark multilingual embedding models and ONNX backends for few-shot retrieval.",
+      "tags": [
+        "llm",
+        "multi-agent",
+        "python",
+        "onnx",
+        "backend",
+        "automotive"
+      ],
+      "period": "Sep 2026 — present",
+      "year": 2026
+    },
+    {
+      "id": "cuhk-shenzhen",
+      "type": "education",
+      "title": "Exchange Semester — The Chinese University of Hong Kong, Shenzhen",
+      "description": "Exchange semester in Computer Science.",
+      "tags": [
+        "education",
+        "exchange"
+      ],
+      "period": "Aug 2026 — Dec 2026",
+      "year": 2026
+    },
+    {
+      "id": "sjtu",
+      "type": "education",
+      "title": "Exchange Semester — Shanghai Jiao Tong University",
+      "description": "Exchange semester in Computer Science, completed with grade 1.0 (German system).",
+      "tags": [
+        "education",
+        "exchange"
+      ],
+      "period": "Mar 2026 — Aug 2026",
+      "year": 2026
+    },
     {
       "id": "msc-rwth",
       "type": "education",
       "title": "M.Sc. Computer Science — RWTH Aachen University",
-      "description": "Master's degree focusing on artificial intelligence, multi-agent systems, and machine learning.",
-      "tags": ["ml", "multi-agent", "education"],
+      "description": "Master's degree focusing on artificial intelligence, multi-agent systems, and machine learning. Current grade 1.6 (German system).",
+      "tags": [
+        "ml",
+        "multi-agent",
+        "education"
+      ],
       "period": "2025 — expected 2028",
       "year": 2027
+    },
+    {
+      "id": "aachen-investment-club",
+      "type": "experience",
+      "title": "Project Manager, Sentiment Analysis Initiative — Aachen Investment Club",
+      "description": "Led a 5-person team building a financial sentiment platform that feeds the club newsletter. Built the FastAPI backend and FinBERT-based text/PDF sentiment pipeline, and owned planning, task allocation and weekly reviews.",
+      "tags": [
+        "fastapi",
+        "nlp",
+        "finance",
+        "python",
+        "leadership"
+      ],
+      "period": "Oct 2025 — present",
+      "year": 2026
     },
     {
       "id": "bsc-rwth",
       "type": "education",
       "title": "B.Sc. Computer Science — RWTH Aachen University",
-      "description": "Bachelor's degree in Computer Science, graduated September 2025 with grade 2.0.",
-      "tags": ["education"],
+      "description": "Bachelor's degree in Computer Science, graduated September 2025 with grade 2.0. Thesis: ScrumiX, an AI-assisted Scrum management platform (grade 1.7).",
+      "tags": [
+        "education",
+        "multi-agent",
+        "full-stack"
+      ],
       "period": "2022 — 2025",
       "year": 2025
     },
@@ -42,26 +114,49 @@
       "id": "fraunhofer-ipt",
       "type": "experience",
       "title": "Software Development Intern — Fraunhofer IPT",
-      "description": "Developed YAMS, a dynamic management website, with Python, Django, and PostgreSQL. Improved usability and cross-device accessibility with responsive Bootstrap layouts.",
-      "tags": ["django", "python", "postgresql", "full-stack", "internship"],
+      "description": "Built the backend of YAMS, an internal web application (Python, Django, PostgreSQL) used by institute staff to manage inquiries and acquisition data: data model and schema with migrations, business logic, a REST API, role-based permissions, search and filtering, and data import.",
+      "tags": [
+        "django",
+        "python",
+        "postgresql",
+        "full-stack",
+        "internship"
+      ],
       "period": "Apr 2024 — Jul 2024",
       "year": 2024
+    },
+    {
+      "id": "theatre-service",
+      "type": "experience",
+      "title": "Theatre Service Staff — Theater Krefeld und Mönchengladbach",
+      "description": "Managed audience services and customer inquiries in a high-pressure, team-based live-event environment.",
+      "tags": [
+        "customer-service",
+        "teamwork"
+      ],
+      "period": "Oct 2022 — Aug 2025",
+      "year": 2025
     },
     {
       "id": "math-tutor",
       "type": "experience",
       "title": "Private Tutor — Mathematics",
-      "description": "Designed personalized lesson plans for high school students; helped students improve their grades by at least one level.",
-      "tags": ["teaching"],
+      "description": "Designed personalized lesson plans for high school students; students improved by at least one grade level.",
+      "tags": [
+        "teaching"
+      ],
       "period": "Apr 2022 — Dec 2024",
       "year": 2024
     },
     {
       "id": "digital-cafe",
       "type": "experience",
-      "title": "Deputy Course Instructor — Digital Cafe, Mehrgenerationenhaus",
-      "description": "Taught senior citizens how to use digital devices in a relaxed café setting, with one-on-one support for online safety, troubleshooting, and everyday technology.",
-      "tags": ["teaching", "community"],
+      "title": "Deputy Course Instructor — Digital Café, Mehrgenerationenhaus",
+      "description": "One-on-one digital literacy support for senior citizens on smartphones, computers and online safety.",
+      "tags": [
+        "teaching",
+        "community"
+      ],
       "period": "Jul 2022 — Jan 2025",
       "year": 2025
     }
