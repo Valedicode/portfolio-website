@@ -34,6 +34,16 @@ def knowledge_base() -> list[dict]:
     return [*projects, *skills, *cv["entries"]]
 
 
+_PROMPT_FIELDS = ("id", "type", "title", "description", "tags", "year", "complexity")
+
+
+@lru_cache(maxsize=1)
+def knowledge_base_json() -> str:
+    """The whole knowledge base as compact JSON for a prompt (~3k tokens)."""
+    rows = [{k: e[k] for k in _PROMPT_FIELDS if k in e} for e in knowledge_base()]
+    return json.dumps(rows, ensure_ascii=False, separators=(",", ":"))
+
+
 @lru_cache(maxsize=1)
 def all_tags() -> list[str]:
     """Every distinct tag in the knowledge base (used to ground the Planner)."""
