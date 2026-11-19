@@ -1,0 +1,3 @@
+{
+  "buildCommand": "node -e \"require('fs').cpSync('../frontend/data','data',{recursive:true})\""
+}
