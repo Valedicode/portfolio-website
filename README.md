@@ -112,12 +112,13 @@ wake. The page pings the backend on load to wake it early; a visitor who asks
 before it is up gets the rule-based answer. The paid Starter plan removes the
 sleep entirely.
 
-## Demo modes
+## How the demo answers
 
-- **Simulated** (default): deterministic rule-based pipeline, fully
-  client-side, instant. Works everywhere, no backend needed.
-- **AI reasoning**: the LangChain pipeline described above. Requires the
-  backend running with `OPENROUTER_API_KEY` set.
+Every question goes to the LangChain pipeline described above, which writes
+a conversational answer. If the backend is unavailable (asleep, rate
+limited, blocked by a guardrail, or not configured), the client-side
+rule-based pipeline answers instead, and the answer is marked as a quick
+offline answer. The page pings the backend on load to wake it early.
 
 ## Configuration
 

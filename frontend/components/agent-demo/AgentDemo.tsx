@@ -13,7 +13,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useAgents } from "./AgentContext";
 import AgentPipeline, { AGENT_ROLES } from "./AgentPipeline";
-import { runLlmPipeline, runRulePipeline } from "./pipeline";
+import { runLlmPipeline, warmUpBackend } from "./pipeline";
 import type { PipelineRun } from "./types";
 
 const EXAMPLE_PROMPTS = [
@@ -25,25 +25,28 @@ const EXAMPLE_PROMPTS = [
 
 /** Delay between one agent finishing and the next lighting up. */
 const STAGE_MS = 650;
-
-type Engine = "rules" | "llm";
+/** After this long, tell the visitor the agents may be waking up. */
+const SLOW_HINT_MS = 5_000;
 
 export default function AgentDemo() {
   const { setRun, setStatus } = useAgents();
   const prefersReducedMotion = useReducedMotion();
 
   const [query, setQuery] = useState("");
-  const [engine, setEngine] = useState<Engine>("rules");
   // -1 = idle, 0..2 = agent index currently active, 3 = pipeline complete
   const [stage, setStage] = useState(-1);
   const [pendingRun, setPendingRun] = useState<PipelineRun | null>(null);
+  const [slow, setSlow] = useState(false);
   const timeouts = useRef<ReturnType<typeof setTimeout>[]>([]);
+  // Bumped by every ask/reset so a slow, superseded request is discarded.
+  const latestRequest = useRef(0);
 
   const clearTimers = () => {
     timeouts.current.forEach(clearTimeout);
     timeouts.current = [];
   };
   useEffect(() => clearTimers, []);
+  useEffect(() => warmUpBackend(), []);
 
   /** Steps through stages 0 → 3, then publishes the run to the page. */
   const playStages = useCallback(
@@ -74,29 +77,34 @@ export default function AgentDemo() {
     async (rawQuery: string) => {
       const q = rawQuery.trim();
       if (!q) return;
+      const requestId = ++latestRequest.current;
       clearTimers();
       setQuery(q);
       setStage(-1);
       setPendingRun(null);
+      setSlow(false);
       setStatus("working");
 
-      if (engine === "llm") {
-        // Show the Planner as "thinking" while the API call is in flight.
-        setStage(0);
-        const run = await runLlmPipeline(q);
-        playStages(run);
-      } else {
-        playStages(runRulePipeline(q));
-      }
+      // Show the Planner as "thinking" while the API call is in flight.
+      setStage(0);
+      const slowTimer = setTimeout(() => setSlow(true), SLOW_HINT_MS);
+      timeouts.current.push(slowTimer);
+      const run = await runLlmPipeline(q);
+      clearTimeout(slowTimer);
+      if (requestId !== latestRequest.current) return;
+      setSlow(false);
+      playStages(run);
     },
-    [engine, playStages, setStatus]
+    [playStages, setStatus]
   );
 
   const reset = useCallback(() => {
+    latestRequest.current++;
     clearTimers();
     setQuery("");
     setStage(-1);
     setPendingRun(null);
+    setSlow(false);
     setRun(null);
     setStatus("idle");
   }, [setRun, setStatus]);
@@ -145,7 +153,7 @@ export default function AgentDemo() {
         </div>
       </form>
 
-      {/* Example prompts + engine toggle */}
+      {/* Example prompts */}
       <div className="mt-4 flex flex-wrap items-center gap-2">
         {EXAMPLE_PROMPTS.map((prompt) => (
           <button
@@ -157,28 +165,6 @@ export default function AgentDemo() {
             {prompt}
           </button>
         ))}
-        <div className="ms-auto flex items-center gap-2" role="group" aria-label="Reasoning engine">
-          {(
-            [
-              ["rules", "Simulated"],
-              ["llm", "AI reasoning"],
-            ] as const
-          ).map(([value, label]) => (
-            <button
-              key={value}
-              type="button"
-              aria-pressed={engine === value}
-              onClick={() => setEngine(value)}
-              className={`rounded-full px-3 py-1.5 font-mono text-xs transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
-                engine === value
-                  ? "bg-accent/15 text-accent"
-                  : "text-muted hover:text-fg"
-              }`}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
       </div>
 
       {/* Animated pipeline visualization */}
@@ -200,6 +186,7 @@ export default function AgentDemo() {
         {stage === 0 && !pendingRun && (
           <p className="text-muted">
             <span className="text-accent">planner</span> thinking…
+            {slow && " (the agents may need a moment to wake up)"}
           </p>
         )}
         <AnimatePresence>
@@ -221,24 +208,33 @@ export default function AgentDemo() {
               )
           )}
         </AnimatePresence>
+      </div>
+
+      {/* Final answer: prose, kept apart from the terse agent log */}
+      <div aria-live="polite">
         {done && pendingRun && (
-          <motion.p
+          <motion.div
             initial={prefersReducedMotion ? false : { opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2 }}
-            className="mt-2 border-t border-line pt-2 text-fg"
+            transition={{ duration: 0.25 }}
+            className="mt-4 rounded-lg border border-accent/30 bg-bg p-4"
           >
-            <span className="text-accent">answer</span> {pendingRun.synthesis.summary}
-            {pendingRun.engine === "llm" ? " (via Claude)" : ""}
-          </motion.p>
+            <p className="font-mono text-xs text-accent">answer</p>
+            <p className="mt-2 leading-relaxed text-fg">
+              {pendingRun.synthesis.summary}
+            </p>
+            {pendingRun.engine === "rules" && (
+              <p className="mt-2 font-mono text-xs text-muted">
+                quick offline answer: the AI agents are unavailable right now
+              </p>
+            )}
+          </motion.div>
         )}
       </div>
 
       <p className="mt-4 text-xs text-muted">
         A Planner, Retriever, and Synthesizer agent work together over my real
-        project data — the grid below re-filters with the result.
-        {engine === "llm" &&
-          " AI mode calls a serverless route; if it fails, the rule-based pipeline answers instead."}
+        project data, and the grid below re-filters with the result.
       </p>
     </div>
   );

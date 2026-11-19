@@ -21,6 +21,23 @@ function clientIp(request: Request): string {
   return request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "";
 }
 
+/**
+ * Warm-up ping. The free backend host sleeps when idle and takes a while to
+ * wake, so the demo calls this on page load: by the time a visitor asks a
+ * question, the backend is usually up. Hits only the free /health endpoint.
+ */
+export async function GET(): Promise<Response> {
+  try {
+    const res = await fetch(`${BACKEND_URL}/health`, {
+      signal: AbortSignal.timeout(BACKEND_TIMEOUT_MS),
+      cache: "no-store",
+    });
+    return Response.json({ awake: res.ok }, { status: res.ok ? 200 : 503 });
+  } catch {
+    return Response.json({ awake: false }, { status: 503 });
+  }
+}
+
 export async function POST(request: Request): Promise<Response> {
   const raw = await request.text();
   if (raw.length > MAX_BODY_CHARS) {
