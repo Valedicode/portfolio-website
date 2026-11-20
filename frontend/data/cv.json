@@ -89,7 +89,7 @@
       "id": "sjtu-textbook-chapter",
       "type": "experience",
       "title": "Technical Lead, Textbook Chapter on Large Models for Audio-Video — Shanghai Jiao Tong University",
-      "description": "Technical lead on the handbook chapter \"Large Models for Processing Audio-Video Modalities\", written with another student under Dr. Kuanyong Qiu, who set the requirements. Organised and delegated the work and wrote the key technical sections: the chapter introduction, video frame object detection and scene recognition, audio-video fusion, and the BiasLens case study. Recognised as an excellent project on the Shanghai Jiao Tong University Press website; the textbook is not yet published.",
+      "description": "Technical lead on the handbook chapter \"Large Models for Processing Audio-Video Modalities\", written with another student under Dr. Kuanyong Qiu, who set the requirements. Organised and delegated the work and wrote the key technical sections: the chapter introduction, video frame object detection and scene recognition, audio-video fusion, and the BiasLens case study. Recognised as an excellent project on the Shanghai Jiao Tong University Press website; the textbook is not yet published. The DH LLM Course was created as work associated with this project.",
       "tags": [
         "research",
         "llm",
@@ -127,7 +127,7 @@
       ],
       "featured": true,
       "period": "2025 — expected 2028",
-      "year": 2027
+      "year": 2028
     },
     {
       "id": "aachen-investment-club",

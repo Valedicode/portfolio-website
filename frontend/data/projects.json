@@ -292,7 +292,7 @@
     "id": "dh-llm-course",
     "type": "project",
     "title": "DH LLM Course",
-    "description": "Hands-on 10-lecture course on using large and multimodal language models for Digital Humanities research, from transcribing and analyzing historical materials to evaluating and visualizing results. The Jupyter notebooks run in Google Colab, including on a free T4 GPU.",
+    "description": "Hands-on 10-lecture course on using large and multimodal language models for Digital Humanities research, from transcribing and analyzing historical materials to evaluating and visualizing results. The Jupyter notebooks run in Google Colab, including on a free T4 GPU. Created by Kevin as work associated with the Shanghai Jiao Tong University textbook project.",
     "tags": [
       "llm",
       "multimodal",
