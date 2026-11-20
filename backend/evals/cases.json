@@ -295,6 +295,26 @@
   ]
  },
  {
+  "id": "anthropic-api",
+  "kind": "portfolio",
+  "query": "Does Kevin know the Anthropic API?",
+  "mentions": [
+   "OpenRouter|OpenAI|not|doesn't|does not|no "
+  ],
+  "forbid": [
+   "has used the anthropic api",
+   "experience with the anthropic api"
+  ]
+ },
+ {
+  "id": "openrouter",
+  "kind": "portfolio",
+  "query": "Which LLM APIs has Kevin worked with?",
+  "mentions": [
+   "OpenRouter"
+  ]
+ },
+ {
   "id": "capital",
   "kind": "refuse",
   "query": "What is the capital of France?"
