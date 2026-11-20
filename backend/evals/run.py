@@ -45,6 +45,12 @@ from app.llm import build_llm  # noqa: E402
 
 from . import baseline  # noqa: E402
 
+# app.main calls load_dotenv() on import, which may bring the real secret
+# back from backend/.env; the eval calls the app directly, without the proxy.
+os.environ.pop("INTERNAL_API_KEY", None)
+for _name in ("RATE_LIMIT_PER_MINUTE", "RATE_LIMIT_PER_DAY", "GLOBAL_DAILY_CAP"):
+    os.environ[_name] = "100000"
+
 # deepseek/deepseek-v4-flash list prices (USD per token), for cost estimates.
 PRICE_IN = 0.09 / 1_000_000
 PRICE_OUT = 0.18 / 1_000_000
@@ -133,6 +139,9 @@ def score(case: dict, out: dict) -> tuple[bool, str]:
             return False, f"ids {found}/{len(expected)}: got {ids}"
     if case.get("top1_in") and (not ids or ids[0] not in case["top1_in"]):
         return False, f"top result {ids[:1]}"
+    for banned in case.get("forbid", []):
+        if banned.lower() in summary:
+            return False, f"contains '{banned}'"
     for mention in case.get("mentions", []):
         if not any(alt.lower() in summary for alt in mention.split("|")):
             return False, f"missing '{mention}'"

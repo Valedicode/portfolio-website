@@ -10,22 +10,33 @@
     "resume": "/CV.pdf"
   },
   "bio": [
-    "I'm a Computer Science M.Sc. student at RWTH Aachen University (B.Sc. completed in 2025) and a working student AI developer at Eka Labs, where I build the cloud backend of an in-car voice assistant. Right now I'm on exchange in China, at Shanghai Jiao Tong University and then CUHK-Shenzhen.",
+    "I'm a Computer Science M.Sc. student at RWTH Aachen University (B.Sc. completed in 2025) and a working student AI developer at Eka Labs, where I build the cloud backend of an in-car voice assistant. I completed an exchange semester at Shanghai Jiao Tong University and am currently at CUHK-Shenzhen until the end of December.",
     "My main interest is designing multi-agent and LLM-based systems: autonomous agents that plan, retrieve, and reason together to solve problems no single model handles well alone. I care about the engineering around the models as much as the models themselves — clean data flow, observable pipelines, and interfaces that make complex systems feel simple. My team's BiasLens, a multimodal bias analysis system for short-form video, was a national finalist in the Google Gemma 4 Developer Competition and won an Outstanding Work Award.",
     "When I approach a problem, I start by splitting it into roles rather than features: who plans, who gathers evidence, who decides. The demo on this page is built exactly that way."
   ],
+  "profile": {
+    "languages": [
+      "German (native)",
+      "English (C1)",
+      "Mandarin (conversational)",
+      "Cantonese (conversational)"
+    ],
+    "availability": "Open to internships, research and collaboration. Not currently looking for full-time or working-student roles.",
+    "interests": [
+      "Going to the gym",
+      "Playing piano",
+      "Table tennis",
+      "Running",
+      "Going out with friends",
+      "Coding: building solutions for everyday problems, such as HanziSave for learning Chinese characters and FixRay for repairs"
+    ],
+    "age": "Kevin does not share his age or other personal details such as his address or phone number.",
+    "contact": "Visitors can use the contact section on the page or download the CV. The email address is shown there."
+  },
   "stats": [
-    {
-      "label": "Projects built",
-      "value": "17"
-    },
     {
       "label": "Years programming",
       "value": "4+"
-    },
-    {
-      "label": "Agent pipelines built",
-      "value": "5"
     }
   ],
   "entries": [

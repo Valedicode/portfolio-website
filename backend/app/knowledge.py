@@ -34,7 +34,11 @@ def knowledge_base() -> list[dict]:
     return [*projects, *skills, *cv["entries"]]
 
 
-_PROMPT_FIELDS = ("id", "type", "title", "description", "tags", "year", "complexity")
+# `period` matters: without it the model cannot tell an ongoing exchange
+# semester from a finished one.
+_PROMPT_FIELDS = (
+    "id", "type", "title", "description", "tags", "period", "year", "complexity",
+)
 
 
 @lru_cache(maxsize=1)
@@ -42,6 +46,20 @@ def knowledge_base_json() -> str:
     """The whole knowledge base as compact JSON for a prompt (~3k tokens)."""
     rows = [{k: e[k] for k in _PROMPT_FIELDS if k in e} for e in knowledge_base()]
     return json.dumps(rows, ensure_ascii=False, separators=(",", ":"))
+
+
+@lru_cache(maxsize=1)
+def profile_json() -> str:
+    """Who Kevin is and the personal basics a visitor may ask about."""
+    cv: dict = _load("cv.json")
+    profile = {
+        "name": cv["name"],
+        "role": cv["role"],
+        "location": cv["location"],
+        "about": cv["bio"],
+        **cv["profile"],
+    }
+    return json.dumps(profile, ensure_ascii=False, separators=(",", ":"))
 
 
 @lru_cache(maxsize=1)

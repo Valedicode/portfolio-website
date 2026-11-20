@@ -258,3 +258,26 @@ def test_agent_failure_is_a_502_for_the_frontend_fallback(monkeypatch):
     monkeypatch.setattr(app_main, "synthesize", _fake_synth([], "x", delay=0.2))
     res = client.post("/agent-demo", json={"query": "Tell me about Jarvis"}, headers=HEADERS)
     assert res.status_code == 502
+
+
+# --- profile and time awareness ----------------------------------------------
+
+
+def test_profile_covers_the_personal_basics():
+    from app.knowledge import profile_json
+
+    profile = profile_json()
+    for fact in ("German (native)", "Mandarin", "Cantonese", "piano", "internships", "Aachen"):
+        assert fact in profile
+
+
+def test_prompt_carries_periods_so_ongoing_is_not_completed():
+    from app.knowledge import knowledge_base_json
+
+    kb = knowledge_base_json()
+    assert "Aug 2026 — Dec 2026" in kb  # CUHK-Shenzhen, so the model can compare to today
+
+
+def test_age_question_is_not_blocked_by_the_input_screen():
+    assert check_input("How old is Kevin?")
+    assert check_input("Which languages does he speak and what are his hobbies?")

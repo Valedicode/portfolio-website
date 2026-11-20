@@ -40,6 +40,19 @@ export const PROJECTS = projects as ProjectEntry[];
 export const SKILLS = skills as KnowledgeEntry[];
 export const CV = cv;
 
+/**
+ * About-section callouts. Counts are derived from the project data so they
+ * cannot go stale; only "years programming" is written by hand in cv.json.
+ */
+export const STATS: { label: string; value: string }[] = [
+  { label: "Projects built", value: String(PROJECTS.length) },
+  ...cv.stats,
+  {
+    label: "Multi-agent systems built",
+    value: String(PROJECTS.filter((p) => p.tags.includes("multi-agent")).length),
+  },
+];
+
 /** Flat, unified knowledge base: projects + skills + CV entries. */
 export const KNOWLEDGE_BASE: KnowledgeEntry[] = [
   ...PROJECTS,
