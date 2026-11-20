@@ -14,10 +14,23 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+const TITLE = "Kevin Ha — Multi-Agent Systems & ML";
+const DESCRIPTION =
+  "Portfolio of Kevin Ha, Computer Science M.Sc. student at RWTH Aachen building multi-agent and LLM-based systems. Ask the on-page agents about his work.";
+
+// Link previews (LinkedIn, Slack, X). The preview image comes from
+// app/opengraph-image.tsx; on Vercel, Next.js resolves its absolute URL from
+// the production domain automatically.
 export const metadata: Metadata = {
-  title: "Kevin Ha — Multi-Agent Systems & ML",
-  description:
-    "Portfolio of Kevin Ha, Computer Science student at RWTH Aachen building multi-agent and LLM-based systems. Ask the on-page agents about his work.",
+  title: TITLE,
+  description: DESCRIPTION,
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION },
 };
 
 /**
