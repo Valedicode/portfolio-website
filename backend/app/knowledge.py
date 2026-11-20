@@ -35,9 +35,9 @@ def knowledge_base() -> list[dict]:
 
 
 # `period` matters: without it the model cannot tell an ongoing exchange
-# semester from a finished one.
+# semester from a finished one. `items` holds the actual skill names.
 _PROMPT_FIELDS = (
-    "id", "type", "title", "description", "tags", "period", "year", "complexity",
+    "id", "type", "title", "description", "items", "tags", "period", "year", "complexity",
 )
 
 
