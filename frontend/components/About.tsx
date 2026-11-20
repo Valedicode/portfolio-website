@@ -4,7 +4,7 @@
  * Short narrative bio plus a few real stat callouts, sourced from data/cv.json.
  */
 import { motion, useReducedMotion } from "framer-motion";
-import { CV } from "@/lib/knowledge";
+import { CV, STATS } from "@/lib/knowledge";
 import SectionHeading from "./SectionHeading";
 
 export default function About() {
@@ -30,7 +30,7 @@ export default function About() {
         </motion.div>
 
         <div className="grid content-start gap-4 sm:grid-cols-3 lg:grid-cols-1">
-          {CV.stats.map((stat, i) => (
+          {STATS.map((stat, i) => (
             <motion.div
               key={stat.label}
               initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
