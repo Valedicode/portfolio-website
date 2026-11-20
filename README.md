@@ -75,18 +75,18 @@ input screen (regex, instant: injection, clearly harmful requests)
 
 `backend/evals` scores the pipeline against the strongest simple alternative:
 **one zero-shot call with the whole knowledge base in the prompt**, same model
-and settings. 23 portfolio questions (expected projects, top result, names that
+and settings. 28 portfolio questions (expected projects, top result, names that
 must appear) and 10 that must be refused (off-topic, injection, harmful,
 including 3 harmful ones that avoid every filter keyword).
 
 | | portfolio | refused | median answer | refusals | cost / question |
 | --- | --- | --- | --- | --- | --- |
-| this pipeline | 23/23 | 10/10 | 1.8s | 0.3s | $0.00025 |
-| zero-shot call | 23/23 | 10/10 | 1.5s | 1.1s | $0.00029 |
+| this pipeline | 28/28 | 10/10 | 2.1s | 0.5s | $0.00028 |
+| zero-shot call | 27/28 | 10/10 | 2.0s | 2.0s | $0.00031 |
 
-Accuracy is equal on this set; answers take ~0.3s longer (they are slightly
-richer, and two parallel calls wait for the slower one), while refusals are 3-4x
-faster and ~15% cheaper overall, since clearly harmful input never reaches a
+Accuracy is equal on this set; answers take 0.1-0.4s longer depending on the run (they are slightly
+richer, and two parallel calls wait for the slower one), while refusals are about 4x
+faster and ~10% cheaper overall, since clearly harmful input never reaches a
 model. What the numbers do not show: refusals are fixed text rather than
 model-written, and the project grid is verified against the data. The first
 version of this pipeline (sequential Planner → keyword Retriever → Synthesizer)

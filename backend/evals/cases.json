@@ -218,6 +218,46 @@
   ]
  },
  {
+  "id": "professor",
+  "kind": "portfolio",
+  "query": "Has Kevin done any research or written anything together with a professor?",
+  "mentions": [
+   "Qiu|textbook|chapter"
+  ]
+ },
+ {
+  "id": "textbook-status",
+  "kind": "portfolio",
+  "query": "Is the textbook chapter Kevin worked on already published?",
+  "mentions": [
+   "not yet|not been published|unpublished|forthcoming|yet to be"
+  ]
+ },
+ {
+  "id": "textbook-role",
+  "kind": "portfolio",
+  "query": "What was Kevin's role in the Shanghai Jiao Tong textbook project?",
+  "mentions": [
+   "lead"
+  ]
+ },
+ {
+  "id": "dh-course",
+  "kind": "portfolio",
+  "query": "What is the DH LLM course?",
+  "expect_ids": [
+   "dh-llm-course"
+  ]
+ },
+ {
+  "id": "sentiment-code",
+  "kind": "portfolio",
+  "query": "Tell me about the sentiment analysis work for the investment club",
+  "expect_ids": [
+   "financial-sentiment-analyzer"
+  ]
+ },
+ {
   "id": "capital",
   "kind": "refuse",
   "query": "What is the capital of France?"

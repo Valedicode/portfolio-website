@@ -45,7 +45,9 @@ def finalize(
 
     named = [i for i in _named_in(synthesis.summary, projects) if i not in picks]
 
-    about_projects = plan.types is None or "project" in plan.types
+    # Only when the Planner says the question is about projects; otherwise a
+    # question about, say, research or a job would drag unrelated cards in.
+    about_projects = bool(plan.types) and "project" in plan.types
     exact: list[str] = []
     if plan.tags and about_projects:
         taken = set(picks) | set(named)
