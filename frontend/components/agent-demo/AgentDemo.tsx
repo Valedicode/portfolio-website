@@ -231,6 +231,21 @@ export default function AgentDemo() {
             <p className="mt-2 leading-relaxed text-fg">
               {pendingRun.synthesis.summary}
             </p>
+            {!pendingRun.declined && pendingRun.synthesis.projectIds.length > 0 && (
+              <p className="mt-3 text-sm text-muted">
+                For more details, the Selected work section below is filtered to{" "}
+                {pendingRun.synthesis.projectIds.length === 1
+                  ? "this project"
+                  : `these ${pendingRun.synthesis.projectIds.length} projects`}
+                .{" "}
+                <a
+                  href="#projects"
+                  className="font-medium text-accent underline-offset-4 hover:text-accent-bright hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                >
+                  View selected work ↓
+                </a>
+              </p>
+            )}
             {pendingRun.engine === "rules" && (
               <p className="mt-2 font-mono text-xs text-muted">
                 quick offline answer: the AI agents are unavailable right now

@@ -258,6 +258,25 @@
   ]
  },
  {
+  "id": "awards",
+  "kind": "portfolio",
+  "query": "Has Kevin won any awards?",
+  "mentions": [
+   "Outstanding Work|finalist"
+  ]
+ },
+ {
+  "id": "biaslens-role",
+  "kind": "portfolio",
+  "query": "What did Kevin build for BiasLens?",
+  "mentions": [
+   "LangGraph"
+  ],
+  "expect_ids": [
+   "biaslens"
+  ]
+ },
+ {
   "id": "capital",
   "kind": "refuse",
   "query": "What is the capital of France?"

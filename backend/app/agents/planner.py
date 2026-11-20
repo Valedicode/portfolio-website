@@ -11,6 +11,8 @@ finishes before the Synthesizer and never adds latency.
 
 from __future__ import annotations
 
+import re
+
 from langchain_core.language_models.chat_models import BaseChatModel
 
 from ..guardrail import wrap_untrusted
@@ -46,6 +48,16 @@ tags: only tags the question names explicitly, from this list: {tags}\
 """
 
 
+def _squash(text: str) -> str:
+    return re.sub(r"[^a-z0-9]", "", text.lower())
+
+
+def mentions_tag(query: str, tag: str) -> bool:
+    """True if the query contains the tag, ignoring case, spaces and dashes
+    ("Computer Vision" → computer-vision, "Next.js" → next.js)."""
+    return _squash(tag) in _squash(query)
+
+
 def _trace(out: PlannerOutput) -> str:
     if out.scope != "portfolio":
         return f"scope={out.scope} → declined, synthesizer draft discarded"
@@ -66,9 +78,11 @@ async def plan(llm: BaseChatModel, query: str) -> tuple[PlannerOutput, QueryPlan
         ]
     )
     assert isinstance(out, PlannerOutput)
-    # Drop any tags the model invented despite the allow-list.
+    # Keep only real tags the visitor actually mentioned. The model tends to
+    # add tags it associates with a named project ("BiasLens" → next.js),
+    # which would pull unrelated cards into the grid.
     valid = set(all_tags())
-    out.tags = [t for t in out.tags if t in valid]
+    out.tags = [t for t in out.tags if t in valid and mentions_tag(query, t)]
     query_plan = QueryPlan(
         tags=out.tags, keywords=[], types=out.types, sort=out.sort, trace=_trace(out)
     )

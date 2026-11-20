@@ -25,14 +25,18 @@
     "id": "biaslens",
     "type": "project",
     "title": "BiasLens",
-    "description": "Explainable multimodal bias analysis pipeline for short-form video, built for the Gemma 4 Developer Competition. Local detectors feed two Gemma agents with human-in-the-loop review, producing bias reports and annotated video.",
+    "description": "Explainable, human-in-the-loop pipeline that flags possible bias patterns in short-form video, built on Gemma 4. National finalist and Outstanding Work Award at the Gemma 4 Developer Competition 2026 (GDG Shanghai), presented at Google I/O Connect China. Kevin built the full multi-agent system: the LangGraph pipeline, two Gemma 4 agents (one annotates observable facts neutrally, one proposes evidence-anchored bias patterns), a SQLite-checkpointed state machine that lets human review pause for days, a FastAPI backend and a Next.js reviewer UI. Works on a Sino-German corpus of Douyin and TikTok videos.",
     "tags": [
       "multi-agent",
       "llm",
+      "langgraph",
       "multimodal",
       "ml",
       "python",
-      "computer-vision"
+      "computer-vision",
+      "fastapi",
+      "next.js",
+      "research"
     ],
     "featured": true,
     "year": 2026,

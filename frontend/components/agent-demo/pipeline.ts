@@ -8,8 +8,8 @@
  *    only as the fallback when the LLM path fails, is slow, or is rate
  *    limited, so the demo never shows an error to the visitor.
  */
-import { PROJECTS } from "@/lib/knowledge";
-import { plan } from "./planner";
+import { CV, PROJECTS } from "@/lib/knowledge";
+import { isPersonalDataRequest, plan } from "./planner";
 import { retrieve } from "./retriever";
 import { synthesize } from "./synthesizer";
 import type { PipelineRun } from "./types";
@@ -22,7 +22,31 @@ export function warmUpBackend(): void {
   fetch("/api/agent-demo", { method: "GET" }).catch(() => {});
 }
 
+/** Fixed privacy answer, from the same profile text the AI agents use. */
+function declinePersonalData(query: string): PipelineRun {
+  return {
+    query,
+    engine: "rules",
+    declined: true,
+    plan: {
+      tags: [],
+      keywords: [],
+      types: null,
+      sort: "relevance",
+      trace: "personal-data request → declined by the privacy rule",
+    },
+    retrieval: { candidates: [], trace: "skipped: request declined" },
+    synthesis: {
+      results: [],
+      projectIds: [],
+      summary: `${CV.profile.age} ${CV.profile.contact}`,
+      trace: "skipped: fixed privacy message instead of a search",
+    },
+  };
+}
+
 export function runRulePipeline(query: string): PipelineRun {
+  if (isPersonalDataRequest(query)) return declinePersonalData(query);
   const queryPlan = plan(query);
   const retrieval = retrieve(queryPlan);
   const synthesis = synthesize(queryPlan, retrieval);

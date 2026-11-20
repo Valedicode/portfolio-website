@@ -110,8 +110,11 @@ def test_verifier_adds_exact_tag_matches_for_project_questions():
     p = _plan(tags=["next.js"], types=["project"])
     s = SynthesisOutput(matched_ids=["scrumix"], summary="ScrumiX uses Next.js.")
     ids, _ = finalize(p, retrieve(p), s)
+    projects = {e["id"]: e for e in knowledge_base() if e["type"] == "project"}
+    with_tag = [i for i, e in projects.items() if "next.js" in e["tags"]]
     assert ids[0] == "scrumix"
-    assert {"jarvis", "hanzisave", "fixray", "dragflow"} <= set(ids)
+    assert len(ids) == min(6, len(with_tag))
+    assert all("next.js" in projects[i]["tags"] for i in ids)
 
 
 def test_verifier_does_not_add_projects_to_job_answers():
@@ -281,3 +284,12 @@ def test_prompt_carries_periods_so_ongoing_is_not_completed():
 def test_age_question_is_not_blocked_by_the_input_screen():
     assert check_input("How old is Kevin?")
     assert check_input("Which languages does he speak and what are his hobbies?")
+
+
+def test_planner_tags_must_be_mentioned_by_the_visitor():
+    from app.agents.planner import mentions_tag
+
+    assert mentions_tag("Hat Kevin Projekte mit Computer Vision?", "computer-vision")
+    assert mentions_tag("Which projects use Next.js?", "next.js")
+    assert mentions_tag("Show me multi agent projects", "multi-agent")
+    assert not mentions_tag("What did Kevin build for BiasLens?", "next.js")

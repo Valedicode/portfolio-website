@@ -71,6 +71,21 @@
       "year": 2026
     },
     {
+      "id": "gemma-competition",
+      "type": "experience",
+      "title": "National Finalist & Outstanding Work Award — Gemma 4 Developer Competition 2026 (GDG Shanghai)",
+      "description": "BiasLens reached the national finals of the Gemma 4 Developer Competition 2026, organised by GDG Shanghai, and received the Outstanding Work Award, presented live at Google I/O Connect China. Kevin built the full multi-agent system end to end. The project was initiated and supervised by Dr. Kuanyong Qiu (Shanghai Jiao Tong University), with teammate Tang Chenghao (East China Normal University) leading data cleaning and manual review.",
+      "tags": [
+        "multi-agent",
+        "llm",
+        "research",
+        "award"
+      ],
+      "featured": true,
+      "period": "Aug 2026",
+      "year": 2026
+    },
+    {
       "id": "sjtu-textbook-chapter",
       "type": "experience",
       "title": "Technical Lead, Textbook Chapter on Large Models for Audio-Video — Shanghai Jiao Tong University",
