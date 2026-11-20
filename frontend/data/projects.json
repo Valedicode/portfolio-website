@@ -52,7 +52,7 @@
     "title": "Jarvis",
     "description": "Personal command center inspired by Iron Man's J.A.R.V.I.S.: an animated HUD dashboard over my connected tools (Notion, Slack, Linear, Calendar), driven by clicking into areas or by a voice assistant. Both routes go through the same LangGraph agent behind a FastAPI backend.",
     "tags": [
-      "multi-agent",
+      "agent",
       "llm",
       "langgraph",
       "next.js",
@@ -94,7 +94,7 @@
     "id": "fixray",
     "type": "project",
     "title": "FixRay",
-    "description": "AR repair assistant: point the phone camera at something broken and get a highlighted region, a direction arrow and one instruction on the live feed, gated by a green/amber/red safety rating.",
+    "description": "AR repair assistant: point the phone camera at something broken and get a highlighted region, a direction arrow and one instruction on the live feed, gated by a green/amber/red safety rating. A multi-agent version is in progress.",
     "tags": [
       "full-stack",
       "next.js",
@@ -178,9 +178,11 @@
     "id": "moat-stock-explainer",
     "type": "project",
     "title": "MOAT Stock Explainer",
-    "description": "Multimodal LLM-based system that explains historical stock behavior of MOAT-rated tech companies to non-experts. Fuses financial news with price time-series data to generate plain-language causal narratives.",
+    "description": "Multimodal LLM-based system, built around a LangGraph tool-calling agent, that explains historical stock behavior of MOAT-rated tech companies to non-experts. Fuses financial news with price time-series data to generate plain-language causal narratives.",
     "tags": [
+      "agent",
       "ml",
+      "langgraph",
       "llm",
       "multimodal",
       "nlp",
@@ -305,6 +307,28 @@
     "links": {
       "repo": "https://github.com/Valedicode/dh-llm-course",
       "demo": null
+    }
+  },
+  {
+    "id": "agent-demo",
+    "type": "project",
+    "title": "Ask My Agents (this site)",
+    "description": "The live demo on this portfolio: a Planner that routes and guards each question and a Synthesizer that reads the whole knowledge base run in parallel, with a deterministic Retriever and Verifier grounding the result and filtering the project grid. Guarded for public use (rate limits, fixed refusals, privacy rule) and measured against a zero-shot baseline with an eval harness.",
+    "tags": [
+      "multi-agent",
+      "llm",
+      "python",
+      "fastapi",
+      "next.js",
+      "typescript",
+      "evaluation",
+      "full-stack"
+    ],
+    "year": 2026,
+    "complexity": 4,
+    "links": {
+      "repo": "https://github.com/Valedicode/portfolio-website",
+      "demo": "https://kevinha.vercel.app/#agents"
     }
   }
 ]
