@@ -15,6 +15,14 @@ const HUB = { x: VIEW_W / 2, y: 28 };
 const ITEM_Y = 104;
 /** Items beyond this many are listed as chips below the graph. */
 const GRAPH_MAX = 5;
+/**
+ * Labels alternate between two rows below the nodes. Five labels in one row
+ * sit 60 units apart, less than a 10-character label at 10px mono (60
+ * units), so neighbours touched or overlapped. Staggered, labels in the same
+ * row are 120 units apart, which leaves at least 60 units between them for
+ * every current label, the same rhythm on every card.
+ */
+const LABEL_ROWS = [ITEM_Y + 20, ITEM_Y + 35];
 
 /** Evenly spaces n items across the bottom of the viewBox. */
 function itemX(index: number, total: number): number {
@@ -72,7 +80,7 @@ function ClusterGraph({
             />
             <motion.text
               x={x}
-              y={ITEM_Y + 22}
+              y={LABEL_ROWS[i % LABEL_ROWS.length]}
               textAnchor="middle"
               fill="var(--muted)"
               fontSize="10"
