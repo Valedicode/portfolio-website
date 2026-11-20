@@ -13,7 +13,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useAgents } from "./AgentContext";
 import AgentPipeline, { AGENT_ROLES } from "./AgentPipeline";
-import { runLlmPipeline, warmUpBackend } from "./pipeline";
+import { MAX_QUERY_CHARS, clipTrace, runLlmPipeline, warmUpBackend } from "./pipeline";
 import type { PipelineRun } from "./types";
 
 const EXAMPLE_PROMPTS = [
@@ -41,6 +41,7 @@ export default function AgentDemo() {
   const [stage, setStage] = useState(-1);
   const [pendingRun, setPendingRun] = useState<PipelineRun | null>(null);
   const [slow, setSlow] = useState(false);
+  const [notice, setNotice] = useState("");
   const timeouts = useRef<ReturnType<typeof setTimeout>[]>([]);
   // Bumped by every ask/reset so a slow, superseded request is discarded.
   const latestRequest = useRef(0);
@@ -83,6 +84,11 @@ export default function AgentDemo() {
     async (rawQuery: string) => {
       const q = rawQuery.trim();
       if (!q) return;
+      if (q.length > MAX_QUERY_CHARS) {
+        setNotice(`Please keep questions under ${MAX_QUERY_CHARS} characters.`);
+        return;
+      }
+      setNotice("");
       const requestId = ++latestRequest.current;
       clearTimers();
       setQuery(q);
@@ -138,7 +144,21 @@ export default function AgentDemo() {
           id="agent-query"
           type="text"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          maxLength={MAX_QUERY_CHARS}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setNotice("");
+          }}
+          onPaste={(e) => {
+            // maxLength silently cuts pasted text, so say so (e.g. a pasted job description).
+            const pasted = e.clipboardData.getData("text");
+            if (query.length + pasted.length > MAX_QUERY_CHARS) {
+              setNotice(
+                `That text is too long, so it was cut to ${MAX_QUERY_CHARS} characters. Ask a short question, e.g. "Does Kevin fit a backend internship?"`
+              );
+            }
+          }}
+          aria-describedby="agent-query-hint"
           placeholder="Ask about my projects, skills, or experience…"
           autoComplete="off"
           className="min-w-0 flex-1 rounded-lg border border-line bg-bg px-4 py-3 text-sm text-fg placeholder:text-muted focus:border-accent focus:outline-none"
@@ -160,6 +180,18 @@ export default function AgentDemo() {
         </div>
       </form>
 
+      {/* Length hint: counter near the limit, or the reason text was cut */}
+      <p
+        id="agent-query-hint"
+        role="status"
+        className={`mt-2 min-h-4 font-mono text-xs ${notice ? "text-accent" : "text-muted"}`}
+      >
+        {notice ||
+          (query.length > MAX_QUERY_CHARS * 0.8
+            ? `${query.length}/${MAX_QUERY_CHARS} characters`
+            : "")}
+      </p>
+
       {/* Example prompts */}
       <div className="mt-4 flex flex-wrap items-center gap-2">
         {EXAMPLE_PROMPTS.map((prompt) => (
@@ -179,7 +211,7 @@ export default function AgentDemo() {
 
       {/* Log panel */}
       <div
-        className="mt-4 min-h-24 rounded-lg border border-line bg-bg p-4 font-mono text-xs leading-relaxed"
+        className="mt-4 min-h-24 min-w-0 overflow-hidden break-words rounded-lg border border-line bg-bg p-4 font-mono text-xs leading-relaxed [overflow-wrap:anywhere]"
         role="log"
         aria-live="polite"
         aria-label="Agent activity log"
@@ -211,7 +243,7 @@ export default function AgentDemo() {
                   <span className="text-accent">
                     {AGENT_ROLES[i].name.toLowerCase()}
                   </span>{" "}
-                  {trace}
+                  {clipTrace(trace)}
                 </motion.p>
               )
           )}
@@ -228,7 +260,7 @@ export default function AgentDemo() {
             className="mt-4 rounded-lg border border-accent/30 bg-bg p-4"
           >
             <p className="font-mono text-xs text-accent">answer</p>
-            <p className="mt-2 leading-relaxed text-fg">
+            <p className="mt-2 break-words leading-relaxed text-fg [overflow-wrap:anywhere]">
               {pendingRun.synthesis.summary}
             </p>
             {!pendingRun.declined && pendingRun.synthesis.projectIds.length > 0 && (

@@ -50,8 +50,13 @@ export default function ProjectGrid() {
       <div className="mb-8 flex min-h-9 flex-wrap items-center gap-2">
         {agentFiltered ? (
           <>
-            <span className="font-mono text-xs text-accent" role="status">
-              ⚡ filtered by agents · “{run.query}” · {projects.length} match
+            <span
+              className="min-w-0 break-words font-mono text-xs text-accent [overflow-wrap:anywhere]"
+              role="status"
+            >
+              ⚡ filtered by agents · “
+              {run.query.length > 60 ? `${run.query.slice(0, 59)}…` : run.query}” ·{" "}
+              {projects.length} match
               {projects.length === 1 ? "" : "es"}
             </span>
             <button
