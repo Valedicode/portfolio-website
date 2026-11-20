@@ -84,9 +84,9 @@ including 3 harmful ones that avoid every filter keyword).
 | this pipeline | 28/28 | 10/10 | 2.1s | 0.5s | $0.00028 |
 | zero-shot call | 27/28 | 10/10 | 2.0s | 2.0s | $0.00031 |
 
-Accuracy is equal on this set; answers take ~0.3s longer (they are slightly
-richer, and two parallel calls wait for the slower one), while refusals are 3-4x
-faster and ~15% cheaper overall, since clearly harmful input never reaches a
+Accuracy is equal on this set; answers take 0.1-0.4s longer depending on the run (they are slightly
+richer, and two parallel calls wait for the slower one), while refusals are about 4x
+faster and ~10% cheaper overall, since clearly harmful input never reaches a
 model. What the numbers do not show: refusals are fixed text rather than
 model-written, and the project grid is verified against the data. The first
 version of this pipeline (sequential Planner → keyword Retriever → Synthesizer)
