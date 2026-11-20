@@ -29,18 +29,17 @@
       "multi-agent",
       "llm",
       "langchain",
-      "langgraph",
-      "mcp"
+      "langgraph"
     ],
     "items": [
-      "LangChain",
       "LangGraph",
+      "LangChain",
       "AI SDK",
-      "MCP",
+      "OpenRouter",
       "OpenAI API",
-      "Anthropic API",
-      "Gemini / Gemma",
-      "Pipecat"
+      "Gemma",
+      "Claude Code",
+      "Cursor"
     ]
   },
   {
@@ -58,17 +57,12 @@
     "items": [
       "PyTorch",
       "ONNX",
-      "FinBERT",
-      "scikit-learn",
       "Whisper",
       "YOLOv8",
-      "Hugging Face Transformers",
-      "OpenCV",
+      "YuNet",
       "EasyOCR",
-      "pandas",
-      "NumPy",
-      "SciPy",
-      "statsmodels"
+      "FinBERT",
+      "Hugging Face Transformers"
     ]
   },
   {
@@ -86,15 +80,8 @@
       "React",
       "Next.js",
       "Tailwind CSS",
-      "HTML",
-      "CSS",
       "Framer Motion",
-      "three.js",
-      "React Flow",
-      "dnd-kit",
-      "Zustand",
-      "Recharts",
-      "Zod"
+      "HTML/CSS"
     ]
   },
   {
@@ -113,35 +100,29 @@
       "FastAPI",
       "Django",
       "PostgreSQL",
-      "SQLite",
-      "Pydantic",
-      "Keycloak (OAuth2/OIDC)",
       "SQLAlchemy",
       "Alembic",
       "pgvector",
-      "Supabase"
+      "SQLite",
+      "Keycloak (OAuth2/OIDC)"
     ]
   },
   {
     "id": "skills-tools",
     "type": "skill",
-    "title": "Tools",
-    "description": "Everyday engineering tooling.",
+    "title": "Tools & Practice",
+    "description": "Everyday engineering tooling and ways of working.",
     "tags": [
       "git",
       "tools"
     ],
     "items": [
       "Git",
-      "Linux",
-      "Conda",
       "Docker",
       "Vercel",
-      "pnpm",
-      "uv",
+      "Linux",
       "pytest",
-      "ESLint",
-      "Ruff"
+      "Agile/Scrum"
     ]
   }
 ]

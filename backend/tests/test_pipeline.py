@@ -336,3 +336,11 @@ def test_clear_harmful_or_injection_requests_still_blocked(query):
 )
 def test_legitimate_answers_about_biaslens_pass_the_output_screen(answer):
     assert check_output(answer)
+
+
+def test_prompt_carries_skill_items():
+    from app.knowledge import knowledge_base_json
+
+    kb = knowledge_base_json()
+    assert "OpenRouter" in kb and "Keycloak" in kb  # skill names, not just category text
+    assert "Anthropic API" not in kb
