@@ -1,0 +1,310 @@
+[
+  {
+    "id": "roomedit",
+    "type": "project",
+    "title": "RoomEdit",
+    "description": "Research experiment on multi-turn language editing of 3D rooms: a 2x2 design comparing direct pose patches against typed actions with a solver, with and without checker feedback. Scored against hidden constraint sets by an independent evaluator, with a Next.js viewer.",
+    "tags": [
+      "ml",
+      "llm",
+      "research",
+      "python",
+      "typescript",
+      "next.js",
+      "evaluation"
+    ],
+    "featured": true,
+    "year": 2026,
+    "complexity": 5,
+    "links": {
+      "repo": null,
+      "demo": null
+    }
+  },
+  {
+    "id": "biaslens",
+    "type": "project",
+    "title": "BiasLens",
+    "description": "Explainable, human-in-the-loop bias analysis of short-form video on Gemma 4, over a 14k-video German/Chinese corpus from TikTok and Douyin. National finalist and Outstanding Work Award at the Gemma 4 Developer Competition 2026 (GDG Shanghai), presented at Google I/O Connect China. As system architect in a 3-person team, built the full system: a LangGraph state machine with two Gemma 4 agents and two human review gates, local CV/audio preprocessing (YOLOv8, Whisper), a FastAPI backend and a Next.js reviewer UI.",
+    "tags": [
+      "multi-agent",
+      "llm",
+      "langgraph",
+      "multimodal",
+      "ml",
+      "python",
+      "computer-vision",
+      "fastapi",
+      "next.js",
+      "research"
+    ],
+    "featured": true,
+    "year": 2026,
+    "complexity": 5,
+    "links": {
+      "repo": null,
+      "demo": null
+    }
+  },
+  {
+    "id": "jarvis",
+    "type": "project",
+    "title": "Jarvis",
+    "description": "Personal command center inspired by Iron Man's J.A.R.V.I.S.: an animated HUD dashboard over my connected tools (Notion, Slack, Linear, Calendar), driven by clicking into areas or by a voice assistant. Both routes go through the same LangGraph agent behind a FastAPI backend.",
+    "tags": [
+      "multi-agent",
+      "llm",
+      "langgraph",
+      "next.js",
+      "fastapi",
+      "full-stack",
+      "typescript",
+      "python"
+    ],
+    "featured": true,
+    "year": 2026,
+    "complexity": 4,
+    "links": {
+      "repo": null,
+      "demo": null
+    }
+  },
+  {
+    "id": "hanzisave",
+    "type": "project",
+    "title": "HanziSave",
+    "description": "Turns the Chinese I am reading into flashcards: paste text or photograph a page, see words coloured by HSK level, and generate cards in a fixed format. Includes FSRS spaced repetition, stroke-order writing practice, and Anki export.",
+    "tags": [
+      "llm",
+      "full-stack",
+      "next.js",
+      "typescript",
+      "education",
+      "ocr"
+    ],
+    "featured": true,
+    "year": 2026,
+    "complexity": 4,
+    "links": {
+      "repo": null,
+      "demo": null
+    }
+  },
+  {
+    "id": "fixray",
+    "type": "project",
+    "title": "FixRay",
+    "description": "AR repair assistant: point the phone camera at something broken and get a highlighted region, a direction arrow and one instruction on the live feed, gated by a green/amber/red safety rating.",
+    "tags": [
+      "full-stack",
+      "next.js",
+      "typescript",
+      "computer-vision",
+      "mobile"
+    ],
+    "year": 2026,
+    "complexity": 3,
+    "links": {
+      "repo": "https://github.com/Valedicode/fixray",
+      "demo": null
+    }
+  },
+  {
+    "id": "ethical-interface-workbench",
+    "type": "project",
+    "title": "Ethical Interface Workbench",
+    "description": "Interactive AI face simulator and design-ethics lab. Eight live sliders drive an animated face, while an analysis panel rates each design choice as Ethical, Caution or Risk across healthcare, education and security scenarios.",
+    "tags": [
+      "react",
+      "typescript",
+      "framer-motion",
+      "ethics",
+      "hci"
+    ],
+    "year": 2026,
+    "complexity": 3,
+    "links": {
+      "repo": "https://github.com/Valedicode/ethical-interface-workbench",
+      "demo": null
+    }
+  },
+  {
+    "id": "scrumix",
+    "type": "project",
+    "title": "ScrumiX",
+    "description": "B.Sc. thesis at RWTH Aachen (grade 1.7): an AI-assisted Scrum management platform, designed and built end to end. FastAPI REST backend on PostgreSQL (SQLAlchemy, Alembic migrations, pgvector semantic search), JWT and Keycloak OAuth2/OIDC authentication with role-based access control, four role-specific AI agents, a Next.js/TypeScript frontend and Docker Compose deployment.",
+    "tags": [
+      "multi-agent",
+      "llm",
+      "next.js",
+      "fastapi",
+      "full-stack",
+      "python",
+      "typescript",
+      "postgresql"
+    ],
+    "featured": true,
+    "year": 2025,
+    "complexity": 5,
+    "links": {
+      "repo": "https://github.com/Valedicode/ScrumiX",
+      "demo": null
+    }
+  },
+  {
+    "id": "resume-agent",
+    "type": "project",
+    "title": "JobWriterAI",
+    "description": "Multi-agent job-application assistant with supervisor, resume, job-description, scoring and writer agents and human-in-the-loop review, on a FastAPI + LangGraph backend with a Next.js frontend. Currently distilling the scoring agent into a small student model trained on 7,993 resume–job pairs labelled by a frozen teacher model.",
+    "tags": [
+      "multi-agent",
+      "llm",
+      "langgraph",
+      "python",
+      "automation",
+      "fastapi",
+      "next.js",
+      "ml"
+    ],
+    "featured": true,
+    "year": 2025,
+    "complexity": 5,
+    "links": {
+      "repo": "https://github.com/Valedicode/JobWriterAI",
+      "demo": null
+    }
+  },
+  {
+    "id": "moat-stock-explainer",
+    "type": "project",
+    "title": "MOAT Stock Explainer",
+    "description": "Multimodal LLM-based system that explains historical stock behavior of MOAT-rated tech companies to non-experts. Fuses financial news with price time-series data to generate plain-language causal narratives.",
+    "tags": [
+      "ml",
+      "llm",
+      "multimodal",
+      "nlp",
+      "python",
+      "finance"
+    ],
+    "year": 2025,
+    "complexity": 4,
+    "links": {
+      "repo": "https://github.com/Valedicode/moat-tutor",
+      "demo": null
+    }
+  },
+  {
+    "id": "financial-sentiment-analyzer",
+    "type": "project",
+    "title": "Financial Sentiment Analyzer",
+    "description": "AI-powered financial sentiment analysis platform built for the Aachen Investment Club. FinBERT processes text and PDF reports, a FastAPI backend serves sentiment inference, and a chatbot delivers interactive financial insights.",
+    "tags": [
+      "ml",
+      "nlp",
+      "fastapi",
+      "python",
+      "finance",
+      "full-stack"
+    ],
+    "year": 2025,
+    "complexity": 4,
+    "links": {
+      "repo": "https://github.com/aachen-investment-club/sentiment-analysis",
+      "demo": null
+    }
+  },
+  {
+    "id": "dragflow",
+    "type": "project",
+    "title": "DragFlow",
+    "description": "Interactive web-based drag-and-drop workflow builder in React and Next.js. A FastAPI backend manages roles and persists workflow state, enabling dynamic assignment and reordering inside a visual planning area.",
+    "tags": [
+      "full-stack",
+      "react",
+      "next.js",
+      "fastapi",
+      "typescript"
+    ],
+    "year": 2024,
+    "complexity": 3,
+    "links": {
+      "repo": "https://github.com/Valedicode/DragFlow-SCRUM",
+      "demo": null
+    }
+  },
+  {
+    "id": "yams",
+    "type": "project",
+    "title": "YAMS",
+    "description": "Management platform developed in a team at Fraunhofer IPT with Python, Django, and PostgreSQL. Stores inquiries, acquisitions, and related records behind an intuitive interface for creating and sharing entries.",
+    "tags": [
+      "full-stack",
+      "django",
+      "postgresql",
+      "python",
+      "systems"
+    ],
+    "year": 2024,
+    "complexity": 3,
+    "links": {
+      "repo": null,
+      "demo": null
+    }
+  },
+  {
+    "id": "totp-generator",
+    "type": "project",
+    "title": "TOTP Generator",
+    "description": "Time-based one-time password generator following RFC 6238, like the codes in two-factor authentication apps. Built with standard libraries only, as a console tool for educational purposes.",
+    "tags": [
+      "systems",
+      "security",
+      "python",
+      "cli"
+    ],
+    "year": 2025,
+    "complexity": 2,
+    "links": {
+      "repo": "https://github.com/Valedicode/totp-generator",
+      "demo": null
+    }
+  },
+  {
+    "id": "pomodoro-scheduler",
+    "type": "project",
+    "title": "Pomodoro Scheduler",
+    "description": "Personalized Pomodoro day-scheduler in Java: 50-minute focus blocks, short and long breaks, and predefined slots for meals and exercise, all generated automatically in a clear console interface.",
+    "tags": [
+      "systems",
+      "java",
+      "cli",
+      "automation"
+    ],
+    "year": 2024,
+    "complexity": 2,
+    "links": {
+      "repo": "https://github.com/Valedicode/pomodoro-scheduler",
+      "demo": null
+    }
+  },
+  {
+    "id": "dh-llm-course",
+    "type": "project",
+    "title": "DH LLM Course",
+    "description": "Hands-on 10-lecture course on using large and multimodal language models for Digital Humanities research, from transcribing and analyzing historical materials to evaluating and visualizing results. The Jupyter notebooks run in Google Colab, including on a free T4 GPU. Created by Kevin as work associated with the Shanghai Jiao Tong University textbook project.",
+    "tags": [
+      "llm",
+      "multimodal",
+      "research",
+      "education",
+      "python"
+    ],
+    "year": 2026,
+    "complexity": 3,
+    "links": {
+      "repo": "https://github.com/Valedicode/dh-llm-course",
+      "demo": null
+    }
+  }
+]

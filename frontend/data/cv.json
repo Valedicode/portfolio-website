@@ -1,0 +1,213 @@
+{
+  "name": "Kevin Ha",
+  "tagline": "Building systems where multiple agents think together.",
+  "role": "Computer Science M.Sc. student · AI Developer · Multi-Agent Systems & ML",
+  "location": "Aachen, Germany",
+  "email": "kevinhachong@gmail.com",
+  "links": {
+    "github": "https://github.com/Valedicode",
+    "linkedin": "https://www.linkedin.com/in/chongkevinha/",
+    "resume": "/Resume.pdf"
+  },
+  "bio": [
+    "I'm a Computer Science M.Sc. student at RWTH Aachen University (B.Sc. completed in 2025) and a working student AI developer at Eka Labs, where I build the cloud backend of an in-car voice assistant. I completed an exchange semester at Shanghai Jiao Tong University and am currently at CUHK-Shenzhen until the end of December.",
+    "My main interest is designing multi-agent and LLM-based systems: autonomous agents that plan, retrieve, and reason together to solve problems no single model handles well alone. I care about the engineering around the models as much as the models themselves — clean data flow, observable pipelines, and interfaces that make complex systems feel simple. My team's BiasLens, a multimodal bias analysis system for short-form video, was a national finalist in the Google Gemma 4 Developer Competition and won an Outstanding Work Award.",
+    "When I approach a problem, I start by splitting it into roles rather than features: who plans, who gathers evidence, who decides. The demo on this page is built exactly that way."
+  ],
+  "profile": {
+    "languages": [
+      "German (native)",
+      "English (C1)",
+      "Mandarin (conversational)",
+      "Cantonese (conversational)"
+    ],
+    "availability": "Open to internships, research and collaboration. Not currently looking for full-time or working-student roles.",
+    "interests": [
+      "Going to the gym",
+      "Playing piano",
+      "Table tennis",
+      "Running",
+      "Going out with friends",
+      "Coding: building solutions for everyday problems, such as HanziSave for learning Chinese characters and FixRay for repairs"
+    ],
+    "age": "Kevin does not share his age or other personal details such as his address or phone number.",
+    "contact": "Visitors can use the contact section on the page or download the resume. The email address is shown there."
+  },
+  "stats": [
+    {
+      "label": "Years programming",
+      "value": "4+"
+    }
+  ],
+  "entries": [
+    {
+      "id": "eka-labs",
+      "type": "experience",
+      "title": "Working Student, AI Developer — Eka Labs GmbH",
+      "description": "Edge AI for automotive and industry. Implement features and fixes in the cloud backend of a multi-domain in-car voice assistant, where an LLM planner routes requests to weather, knowledge, phone and audio domains; correct misrouted requests and ground answers in provider data. Built offline worldwide reverse geocoding without third-party APIs, debug production issues by replaying logged in-car failures, benchmark multilingual embedding models and ONNX backends for few-shot retrieval, and research small decision models that replace LLM calls in the cloud and on the car's head unit.",
+      "tags": [
+        "llm",
+        "multi-agent",
+        "python",
+        "onnx",
+        "backend",
+        "automotive"
+      ],
+      "featured": true,
+      "period": "Sep 2026 — present",
+      "year": 2026
+    },
+    {
+      "id": "cuhk-shenzhen",
+      "type": "education",
+      "title": "Exchange Semester — The Chinese University of Hong Kong, Shenzhen",
+      "description": "Exchange semester in Computer Science.",
+      "tags": [
+        "education",
+        "exchange"
+      ],
+      "featured": true,
+      "period": "Aug 2026 — Dec 2026",
+      "year": 2026
+    },
+    {
+      "id": "gemma-competition",
+      "type": "experience",
+      "title": "National Finalist & Outstanding Work Award — Gemma 4 Developer Competition 2026 (GDG Shanghai)",
+      "description": "BiasLens reached the national finals of the Gemma 4 Developer Competition 2026, organised by GDG Shanghai, and received the Outstanding Work Award, presented live at Google I/O Connect China. Built the full multi-agent system end to end as system architect. Initiated and supervised by Dr. Kuanyong Qiu (Shanghai Jiao Tong University), with teammate Tang Chenghao (East China Normal University) leading data cleaning and manual review.",
+      "tags": [
+        "multi-agent",
+        "llm",
+        "research",
+        "award"
+      ],
+      "featured": true,
+      "period": "Aug 2026",
+      "year": 2026
+    },
+    {
+      "id": "sjtu-textbook-chapter",
+      "type": "experience",
+      "title": "Technical Lead, Textbook Chapter on Large Models for Audio-Video — Shanghai Jiao Tong University",
+      "description": "Technical lead on the handbook chapter \"Large Models for Processing Audio-Video Modalities\", written with another student under Dr. Kuanyong Qiu, who set the requirements. Organised and delegated the work and wrote the key technical sections: the chapter introduction, video frame object detection and scene recognition, audio-video fusion, and the BiasLens case study. Recognised as an excellent project on the Shanghai Jiao Tong University Press website; the textbook is not yet published. The DH LLM Course was created as work associated with this project.",
+      "tags": [
+        "research",
+        "llm",
+        "multimodal",
+        "computer-vision",
+        "leadership",
+        "education"
+      ],
+      "featured": true,
+      "period": "2026",
+      "year": 2026
+    },
+    {
+      "id": "sjtu",
+      "type": "education",
+      "title": "Exchange Semester — Shanghai Jiao Tong University",
+      "description": "Exchange semester in Computer Science, completed with grade 1.0 (German system).",
+      "tags": [
+        "education",
+        "exchange"
+      ],
+      "featured": true,
+      "period": "Mar 2026 — Aug 2026",
+      "year": 2026
+    },
+    {
+      "id": "msc-rwth",
+      "type": "education",
+      "title": "M.Sc. Computer Science — RWTH Aachen University",
+      "description": "Master's degree focusing on artificial intelligence, multi-agent systems, and machine learning. Current grade 1.6 (German system).",
+      "tags": [
+        "ml",
+        "multi-agent",
+        "education"
+      ],
+      "featured": true,
+      "period": "2025 — expected 2028",
+      "year": 2028
+    },
+    {
+      "id": "aachen-investment-club",
+      "type": "experience",
+      "title": "Project Manager, Sentiment Analysis Initiative — Aachen Investment Club",
+      "description": "Led a 5-person team building a financial sentiment platform that feeds the club newsletter. Built the FastAPI backend and FinBERT-based text/PDF sentiment pipeline, and owned planning, task allocation and weekly reviews.",
+      "tags": [
+        "fastapi",
+        "nlp",
+        "finance",
+        "python",
+        "leadership"
+      ],
+      "featured": true,
+      "period": "Oct 2025 — present",
+      "year": 2026
+    },
+    {
+      "id": "bsc-rwth",
+      "type": "education",
+      "title": "B.Sc. Computer Science — RWTH Aachen University",
+      "description": "Bachelor's degree in Computer Science, graduated September 2025 with grade 2.0. Thesis: ScrumiX, an AI-assisted Scrum management platform (grade 1.7).",
+      "tags": [
+        "education",
+        "multi-agent",
+        "full-stack"
+      ],
+      "period": "2022 — 2025",
+      "year": 2025
+    },
+    {
+      "id": "fraunhofer-ipt",
+      "type": "experience",
+      "title": "Software Development Intern — Fraunhofer IPT",
+      "description": "Built the backend of YAMS, an internal web application (Python, Django, PostgreSQL) used by institute staff to manage inquiries and acquisition data: data model and schema with migrations, business logic, a REST API, role-based permissions, search and filtering, and data import.",
+      "tags": [
+        "django",
+        "python",
+        "postgresql",
+        "full-stack",
+        "internship"
+      ],
+      "featured": true,
+      "period": "Apr 2024 — Jul 2024",
+      "year": 2024
+    },
+    {
+      "id": "theatre-service",
+      "type": "experience",
+      "title": "Theatre Service Staff — Theater Krefeld und Mönchengladbach",
+      "description": "Managed audience services and customer inquiries in a high-pressure, team-based live-event environment.",
+      "tags": [
+        "customer-service",
+        "teamwork"
+      ],
+      "period": "Oct 2022 — Aug 2025",
+      "year": 2025
+    },
+    {
+      "id": "math-tutor",
+      "type": "experience",
+      "title": "Private Tutor — Mathematics",
+      "description": "Designed personalized lesson plans for high school students; students improved by at least one grade level.",
+      "tags": [
+        "teaching"
+      ],
+      "period": "Apr 2022 — Dec 2024",
+      "year": 2024
+    },
+    {
+      "id": "digital-cafe",
+      "type": "experience",
+      "title": "Deputy Course Instructor — Digital Café, Mehrgenerationenhaus",
+      "description": "One-on-one digital literacy support for senior citizens on smartphones, computers and online safety.",
+      "tags": [
+        "teaching",
+        "community"
+      ],
+      "period": "Jul 2022 — Jan 2025",
+      "year": 2025
+    }
+  ]
+}

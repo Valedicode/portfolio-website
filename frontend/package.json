@@ -1,0 +1,36 @@
+{
+  "name": "portfolio-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Personal portfolio of Kevin Ha — multi-agent systems & ML (Next.js frontend)",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "framer-motion": "^12.42.2",
+    "next": "^16.4.6",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.2",
+    "@types/node": "^26.1.0",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "^16.4.6",
+    "postcss": "^8.5.23",
+    "tailwindcss": "^4.3.2",
+    "typescript": "^5.9.3"
+  },
+  "pnpm": {
+    "overrides": {
+      "browserslist": "^4.28.7",
+      "baseline-browser-mapping": "^2.11.0",
+      "source-map-js": "^1.2.2"
+    }
+  }
+}

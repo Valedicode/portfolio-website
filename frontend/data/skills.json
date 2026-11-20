@@ -1,0 +1,128 @@
+[
+  {
+    "id": "skills-languages",
+    "type": "skill",
+    "title": "Languages",
+    "description": "Programming languages used across coursework, internships, and personal projects.",
+    "tags": [
+      "python",
+      "java",
+      "c",
+      "javascript",
+      "typescript"
+    ],
+    "items": [
+      "Python",
+      "TypeScript",
+      "JavaScript",
+      "Java",
+      "C",
+      "SQL"
+    ]
+  },
+  {
+    "id": "skills-ai-agents",
+    "type": "skill",
+    "title": "AI & Agent Frameworks",
+    "description": "Frameworks and APIs for building LLM applications and orchestrating multi-agent workflows.",
+    "tags": [
+      "multi-agent",
+      "llm",
+      "langchain",
+      "langgraph"
+    ],
+    "items": [
+      "LangGraph",
+      "LangChain",
+      "AI SDK",
+      "OpenRouter",
+      "OpenAI API",
+      "Gemma",
+      "Claude Code",
+      "Cursor"
+    ]
+  },
+  {
+    "id": "skills-ml",
+    "type": "skill",
+    "title": "ML & Computer Vision",
+    "description": "Models and libraries for NLP, multimodal analysis, and evaluation.",
+    "tags": [
+      "ml",
+      "nlp",
+      "multimodal",
+      "computer-vision",
+      "research"
+    ],
+    "items": [
+      "PyTorch",
+      "ONNX",
+      "Whisper",
+      "YOLOv8",
+      "YuNet",
+      "EasyOCR",
+      "FinBERT",
+      "Hugging Face Transformers"
+    ]
+  },
+  {
+    "id": "skills-web",
+    "type": "skill",
+    "title": "Web & Frontend",
+    "description": "Building responsive, modern interfaces.",
+    "tags": [
+      "react",
+      "next.js",
+      "typescript",
+      "full-stack"
+    ],
+    "items": [
+      "React",
+      "Next.js",
+      "Tailwind CSS",
+      "Framer Motion",
+      "HTML/CSS"
+    ]
+  },
+  {
+    "id": "skills-backend",
+    "type": "skill",
+    "title": "Backend & Data",
+    "description": "APIs, server frameworks, and persistence.",
+    "tags": [
+      "fastapi",
+      "django",
+      "postgresql",
+      "python",
+      "systems"
+    ],
+    "items": [
+      "FastAPI",
+      "Django",
+      "PostgreSQL",
+      "SQLAlchemy",
+      "Alembic",
+      "pgvector",
+      "SQLite",
+      "Keycloak (OAuth2/OIDC)"
+    ]
+  },
+  {
+    "id": "skills-tools",
+    "type": "skill",
+    "title": "Tools & Practice",
+    "description": "Everyday engineering tooling and ways of working.",
+    "tags": [
+      "git",
+      "tools"
+    ],
+    "items": [
+      "Git",
+      "Docker",
+      "Vercel",
+      "Linux",
+      "pytest",
+      "Agile/Scrum"
+    ]
+  }
+]
