@@ -23,8 +23,12 @@ const EXAMPLE_PROMPTS = [
   "Where has Kevin worked?",
 ];
 
-/** Delay between one agent finishing and the next lighting up. */
-const STAGE_MS = 650;
+/**
+ * Delay between revealing one agent's trace and the next. The agents have
+ * already finished when the response arrives, so this stays short: the
+ * answer appears ~0.4s after the backend responds, not after a fake delay.
+ */
+const STAGE_MS = 120;
 /** After this long, tell the visitor the agents may be waking up. */
 const SLOW_HINT_MS = 5_000;
 
@@ -52,9 +56,11 @@ export default function AgentDemo() {
   const playStages = useCallback(
     (run: PipelineRun) => {
       setPendingRun(run);
+      // A declined question leaves the project grid as it was.
+      const gridRun = run.declined ? null : run;
       if (prefersReducedMotion) {
         setStage(3);
-        setRun(run);
+        setRun(gridRun);
         setStatus("idle");
         return;
       }
@@ -63,7 +69,7 @@ export default function AgentDemo() {
           setTimeout(() => {
             setStage(s);
             if (s === 3) {
-              setRun(run);
+              setRun(gridRun);
               setStatus("idle");
             }
           }, s * STAGE_MS)
@@ -85,7 +91,8 @@ export default function AgentDemo() {
       setSlow(false);
       setStatus("working");
 
-      // Show the Planner as "thinking" while the API call is in flight.
+      // Light up the Planner while the API call is in flight (the backend
+      // runs the Planner and Synthesizer in parallel).
       setStage(0);
       const slowTimer = setTimeout(() => setSlow(true), SLOW_HINT_MS);
       timeouts.current.push(slowTimer);
@@ -185,7 +192,8 @@ export default function AgentDemo() {
         )}
         {stage === 0 && !pendingRun && (
           <p className="text-muted">
-            <span className="text-accent">planner</span> thinking…
+            <span className="text-accent">planner</span> +{" "}
+            <span className="text-accent">synthesizer</span> working in parallel…
             {slow && " (the agents may need a moment to wake up)"}
           </p>
         )}

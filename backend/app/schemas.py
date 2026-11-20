@@ -1,7 +1,9 @@
 """Pydantic schemas shared across the agent pipeline.
 
-QueryPlan and SynthesisOutput double as LangChain structured-output
-schemas — their field descriptions are part of the prompt the LLM sees.
+PlannerOutput and SynthesisOutput double as LangChain structured-output
+schemas: their field descriptions are part of the prompt the LLM sees, and
+they are kept minimal because output tokens are what cost latency. Log
+traces are written by code from these fields, never by the model.
 """
 
 from __future__ import annotations
@@ -12,40 +14,43 @@ from pydantic import BaseModel, Field
 
 EntryType = Literal["project", "skill", "experience", "education"]
 SortMode = Literal["relevance", "recency", "complexity"]
+Scope = Literal["portfolio", "off_topic", "harmful", "self_harm"]
+
+
+class PlannerOutput(BaseModel):
+    """What the Planner (router and guard) returns. Scope comes first."""
+
+    scope: Scope = Field(description="Whether the question may be answered at all")
+    types: Optional[list[EntryType]] = Field(
+        description="Entry kinds the question asks about, or null for several"
+    )
+    sort: SortMode = Field(description="How results should be ordered")
+    tags: list[str] = Field(
+        description="Knowledge-base tags the question names explicitly, else empty"
+    )
 
 
 class QueryPlan(BaseModel):
-    """Structured intent the Planner extracts from a visitor question."""
+    """Structured intent the Retriever matches against the knowledge base."""
 
-    tags: list[str] = Field(
-        description="Canonical knowledge-base tags matching the question"
-    )
-    keywords: list[str] = Field(
-        description="Leftover free-text keywords for fuzzy matching"
-    )
-    types: Optional[list[EntryType]] = Field(
-        description="Restrict results to these entry types, or null for any"
-    )
-    sort: SortMode = Field(description="How the final results should be ordered")
-    trace: str = Field(
-        description="Terse log line, at most 15 words, e.g. 'tag=fastapi, sort=relevance'"
-    )
+    tags: list[str]
+    keywords: list[str]
+    types: Optional[list[EntryType]]
+    sort: SortMode
+    trace: str
 
 
 class SynthesisOutput(BaseModel):
-    """The Synthesizer's ranking decision and visitor-facing answer."""
+    """The Synthesizer's answer and the projects it is about."""
 
     matched_ids: list[str] = Field(
-        description="IDs of matching PROJECT entries, best first, max 6, may be empty"
+        description="IDs of the PROJECT entries the answer is about, best first, max 6"
     )
     summary: str = Field(
         description=(
-            "2-4 sentence conversational answer in plain prose that names "
+            "2-3 sentence conversational answer in plain prose that names "
             "the specific projects or roles and why they fit"
         )
-    )
-    trace: str = Field(
-        description="Terse log line, at most 15 words, e.g. 'ranked 4 by relevance, kept 3'"
     )
 
 
@@ -73,3 +78,5 @@ class AgentDemoResponse(BaseModel):
     synthesizerTrace: str
     summary: str
     matchedIds: list[str]
+    # True when the request was refused; the summary is then a fixed message.
+    declined: bool = False

@@ -42,12 +42,61 @@ components/agent-demo/   # structured by agent ROLE, not by data domain
 
 ## Backend
 
-The demo's **"AI reasoning"** mode is served by a Python LangChain pipeline:
-a Planner agent (OpenRouter chat model + structured output) parses the question,
-the deterministic Retriever scores the knowledge base (same weights as the
-frontend's simulated tier), and a Synthesizer agent ranks the candidates and
-writes the answer. It reads the same JSON knowledge base from
-`frontend/data`, so both tiers answer from identical data.
+The demo is served by a Python LangChain pipeline over the same JSON
+knowledge base as the frontend (`frontend/data`), so both tiers answer from
+identical data.
+
+```
+input screen (regex, instant: injection, clearly harmful requests)
+    │
+    ├── Planner (LLM, 4 short fields)  ──  Retriever (deterministic)
+    │     router + semantic guard            exact tag/type matches
+    │                                               │
+    └── Synthesizer (LLM, whole KB) ────────────────┴── Verifier (deterministic)
+          starts at the same time                      grounds ids, orders, screens output
+```
+
+- **Planner and Synthesizer run in parallel**, so an answer costs one LLM round
+  trip, not two. The Planner's output is tiny, so it always finishes first and
+  never adds latency. If it rules a question off-topic or harmful, the
+  Synthesizer's draft is cancelled and a fixed refusal is sent; model-written
+  text never reaches the visitor for those.
+- **The Synthesizer reads the whole knowledge base** (~3k tokens) instead of a
+  lossy keyword-filtered subset; the knowledge base is small enough that
+  filtering only loses answers.
+- **The Verifier is code, not a model**: it drops invented project ids, adds
+  projects the answer names but did not list, adds exact tag matches the model
+  left out, and orders by the real complexity/year fields.
+- **Log traces are written by code** from structured fields (output tokens are
+  latency), and a **hedged request** re-sends a Synthesizer call that is slower
+  than 3s or failed, keeping whichever answers first.
+
+### Evaluation
+
+`backend/evals` scores the pipeline against the strongest simple alternative:
+**one zero-shot call with the whole knowledge base in the prompt**, same model
+and settings. 16 portfolio questions (expected projects, top result, names that
+must appear) and 10 that must be refused (off-topic, injection, harmful,
+including 3 harmful ones that avoid every filter keyword).
+
+| | portfolio | refused | median answer | refusals | cost / question |
+| --- | --- | --- | --- | --- | --- |
+| this pipeline | 16/16 | 10/10 | 2.5s | 0.5s | $0.00019 |
+| zero-shot call | 16/16 | 10/10 | 2.1s | 1.4s | $0.00023 |
+
+Accuracy is equal on this set; answers take ~0.4s longer (they are slightly
+richer, and two parallel calls wait for the slower one), while refusals are 3x
+faster and 20% cheaper overall, since clearly harmful input never reaches a
+model. What the numbers do not show: refusals are fixed text rather than
+model-written, and the project grid is verified against the data. The first
+version of this pipeline (sequential Planner → keyword Retriever → Synthesizer)
+scored 15/16 at a 7.0s median, which is what motivated this design. Latency
+varies by about ±0.5s between runs with the provider.
+
+```bash
+python -m evals.run                     # ~2 cents of OpenRouter credit
+python -m evals.run --engines pipeline --only bomb,fastapi
+```
 
 ```bash
 cd backend
@@ -61,14 +110,19 @@ uvicorn app.main:app --reload         # http://127.0.0.1:8000
 app/
   main.py                # FastAPI app: POST /agent-demo, GET /health
   llm.py                 # OpenRouter chat model factory (LLM_MODEL env)
-  guardrail.py           # input/output guardrails + prompt fencing
+  guardrail.py           # input/output screens, fixed refusals, prompt fencing
   security.py            # shared-secret check, per-IP and global rate limits
   knowledge.py           # loads ../frontend/data as the shared knowledge base
   schemas.py             # pydantic models (double as LLM structured-output schemas)
   agents/
-    planner.py           # LLM agent: question → QueryPlan
+    planner.py           # LLM agent: scope (guard) + intent
     retriever.py         # deterministic scoring (port of retriever.ts)
-    synthesizer.py       # LLM agent: candidates → ranked answer
+    synthesizer.py       # LLM agent: whole knowledge base → answer + project ids
+    verifier.py          # deterministic grounding and ordering of the result
+evals/
+  cases.json             # 26 questions with expected results
+  baseline.py            # the zero-shot single-call baseline
+  run.py                 # scores both engines: accuracy, refusals, latency, cost
 ```
 
 ## How the two connect
@@ -85,10 +139,11 @@ breaks, the LLM tier only upgrades it.
 The LLM key costs money, so the public endpoint is layered (cheapest first):
 
 1. **Shared secret** (`INTERNAL_API_KEY`): only the Next.js proxy can call the backend.
-2. **Input guardrail**: rejects control characters and prompt-injection phrasing before any tokens are spent.
+2. **Input screen**: invalid text, prompt-injection phrasing and clearly harmful requests (weapons, explosives, drugs, violence, cybercrime, fraud, sexual content involving minors) get a fixed refusal before any tokens are spent; self-harm messages get a refusal that points to a crisis line.
 3. **Rate limits**: 6/min and 30/day per IP, 300/day globally, in memory (single process) or optionally Upstash Redis. Fails closed.
-4. **Prompt fencing + output guardrail**: visitor text is fenced as data; summaries are capped, link-stripped and checked for prompt leaks.
-5. **Hard spend cap**: use a dedicated OpenRouter key with a low credit limit.
+4. **Semantic guard**: the Planner classifies every question as portfolio, off-topic, harmful or self-harm; anything but portfolio gets a fixed refusal.
+5. **Prompt fencing + output screen**: visitor text is fenced as data; answers are capped, stripped of links and markdown, and checked for prompt leaks and harmful content.
+6. **Hard spend cap**: use a dedicated OpenRouter key with a low credit limit.
 
 Tests: `cd backend && python -m pytest tests`.
 
