@@ -129,3 +129,27 @@ export function plan(rawQuery: string): QueryPlan {
     trace: `parsed intent → ${parts.join(" · ")}`,
   };
 }
+
+/**
+ * Privacy rule (the offline Planner's guard). Questions about Kevin's
+ * private details are answered with a fixed message instead of a search,
+ * matching what the AI agents say. Phrases, not single words, so questions
+ * like "how does BiasLens address bias?" still go through.
+ */
+const PERSONAL_DATA_PATTERNS: RegExp[] = [
+  /\bhow old\b/i,
+  /\b(his|kevin'?s|your)\s+age\b/i,
+  /\bage\s+of\s+(kevin|him)\b/i,
+  /\b(birthday|birth ?date|date of birth|year of birth|when was (he|kevin) born)\b/i,
+  /\b(his|kevin'?s|home|postal|street)\s+address\b/i,
+  /\b(phone|telephone|mobile|cell)\s+number\b/i,
+  /\b(his|kevin'?s)\s+(phone|telephone|mobile|cell)\b/i,
+  /\b(call|text) (him|kevin)\b/i,
+  /\b(salary|income|how much does (he|kevin) earn)\b/i,
+  /\b(girlfriend|boyfriend|married|relationship status|religion|political views)\b/i,
+  /\b(wie alt|geburtstag|geburtsdatum|adresse|telefonnummer|handynummer|gehalt)\b/i,
+];
+
+export function isPersonalDataRequest(query: string): boolean {
+  return PERSONAL_DATA_PATTERNS.some((pattern) => pattern.test(query));
+}
