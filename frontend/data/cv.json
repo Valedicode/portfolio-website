@@ -71,6 +71,23 @@
       "year": 2026
     },
     {
+      "id": "sjtu-textbook-chapter",
+      "type": "experience",
+      "title": "Technical Lead, Textbook Chapter on Large Models for Audio-Video — Shanghai Jiao Tong University",
+      "description": "Technical lead on the handbook chapter \"Large Models for Processing Audio-Video Modalities\", written with another student under Dr. Kuanyong Qiu. Dr. Qiu set the requirements; Kevin organised and delegated the work and implemented the key technical part. His share covers the chapter introduction, video frame object detection and scene recognition, audio-video fusion, and the BiasLens case study. Recognised as an excellent project on the Shanghai Jiao Tong University Press website; the textbook is not yet published.",
+      "tags": [
+        "research",
+        "llm",
+        "multimodal",
+        "computer-vision",
+        "leadership",
+        "education"
+      ],
+      "featured": true,
+      "period": "2026",
+      "year": 2026
+    },
+    {
       "id": "sjtu",
       "type": "education",
       "title": "Exchange Semester — Shanghai Jiao Tong University",
