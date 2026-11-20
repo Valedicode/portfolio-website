@@ -16,9 +16,9 @@ import type { QueryPlan, SortMode } from "./types";
 const TAG_ALIASES: Record<string, string> = {
   "multi-agent": "multi-agent",
   multiagent: "multi-agent",
-  agent: "multi-agent",
-  agents: "multi-agent",
-  agentic: "multi-agent",
+  agent: "agent",
+  agents: "agent",
+  agentic: "agent",
   llm: "llm",
   llms: "llm",
   gpt: "llm",
@@ -106,6 +106,8 @@ export function plan(rawQuery: string): QueryPlan {
     const canonical = TAG_ALIASES[word];
     if (canonical) {
       tags.add(canonical);
+      // A plain "agent" question covers single- and multi-agent projects alike.
+      if (canonical === "agent") tags.add("multi-agent");
     } else if (!STOP_WORDS.has(word) && word.length > 1) {
       keywords.push(word);
     }
