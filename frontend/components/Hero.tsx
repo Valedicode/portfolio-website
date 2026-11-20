@@ -45,7 +45,7 @@ export default function Hero() {
             View Projects
           </a>
           <a
-            href="/Resume.pdf"
+            href={CV.links.resume}
             download
             className="rounded-lg border border-line px-6 py-3 font-mono text-sm text-fg transition-colors hover:border-accent"
           >

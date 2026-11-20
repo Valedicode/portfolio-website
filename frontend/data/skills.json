@@ -16,7 +16,8 @@
       "TypeScript",
       "JavaScript",
       "Java",
-      "C"
+      "C",
+      "SQL"
     ]
   },
   {
@@ -56,6 +57,7 @@
     ],
     "items": [
       "PyTorch",
+      "ONNX",
       "FinBERT",
       "scikit-learn",
       "Whisper",
@@ -113,6 +115,7 @@
       "PostgreSQL",
       "SQLite",
       "Pydantic",
+      "Keycloak (OAuth2/OIDC)",
       "SQLAlchemy",
       "Alembic",
       "pgvector",
@@ -133,6 +136,7 @@
       "Linux",
       "Conda",
       "Docker",
+      "Vercel",
       "pnpm",
       "uv",
       "pytest",

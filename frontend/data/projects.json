@@ -25,7 +25,7 @@
     "id": "biaslens",
     "type": "project",
     "title": "BiasLens",
-    "description": "Explainable, human-in-the-loop pipeline that flags possible bias patterns in short-form video, built on Gemma 4. National finalist and Outstanding Work Award at the Gemma 4 Developer Competition 2026 (GDG Shanghai), presented at Google I/O Connect China. Kevin built the full multi-agent system: the LangGraph pipeline, two Gemma 4 agents (one annotates observable facts neutrally, one proposes evidence-anchored bias patterns), a SQLite-checkpointed state machine that lets human review pause for days, a FastAPI backend and a Next.js reviewer UI. Works on a Sino-German corpus of Douyin and TikTok videos.",
+    "description": "Explainable, human-in-the-loop bias analysis of short-form video on Gemma 4, over a 14k-video German/Chinese corpus from TikTok and Douyin. National finalist and Outstanding Work Award at the Gemma 4 Developer Competition 2026 (GDG Shanghai), presented at Google I/O Connect China. As system architect in a 3-person team, built the full system: a LangGraph state machine with two Gemma 4 agents and two human review gates, local CV/audio preprocessing (YOLOv8, Whisper), a FastAPI backend and a Next.js reviewer UI.",
     "tags": [
       "multi-agent",
       "llm",
@@ -132,7 +132,7 @@
     "id": "scrumix",
     "type": "project",
     "title": "ScrumiX",
-    "description": "AI-powered Scrum management system that enhances agile team productivity through intelligent automation and AI-agent assistance. Next.js frontend talking to a FastAPI backend that orchestrates the business logic and AI workflows.",
+    "description": "B.Sc. thesis at RWTH Aachen (grade 1.7): an AI-assisted Scrum management platform, designed and built end to end. FastAPI REST backend on PostgreSQL (SQLAlchemy, Alembic migrations, pgvector semantic search), JWT and Keycloak OAuth2/OIDC authentication with role-based access control, four role-specific AI agents, a Next.js/TypeScript frontend and Docker Compose deployment.",
     "tags": [
       "multi-agent",
       "llm",
@@ -140,7 +140,8 @@
       "fastapi",
       "full-stack",
       "python",
-      "typescript"
+      "typescript",
+      "postgresql"
     ],
     "featured": true,
     "year": 2025,
@@ -153,14 +154,17 @@
   {
     "id": "resume-agent",
     "type": "project",
-    "title": "Resume Agent",
-    "description": "Autonomous human-in-the-loop AI agent that rewrites and optimizes resumes against a target job description. Covers automated JD scraping, PDF resume parsing, gap analysis, iterative rewriting, and user-guided refinement.",
+    "title": "JobWriterAI",
+    "description": "Multi-agent job-application assistant with supervisor, resume, job-description, scoring and writer agents and human-in-the-loop review, on a FastAPI + LangGraph backend with a Next.js frontend. Currently distilling the scoring agent into a small student model trained on 7,993 resume–job pairs labelled by a frozen teacher model.",
     "tags": [
       "multi-agent",
       "llm",
       "langgraph",
       "python",
-      "automation"
+      "automation",
+      "fastapi",
+      "next.js",
+      "ml"
     ],
     "featured": true,
     "year": 2025,
