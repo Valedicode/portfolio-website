@@ -16,13 +16,16 @@ const ITEM_Y = 104;
 /** Items beyond this many are listed as chips below the graph. */
 const GRAPH_MAX = 5;
 /**
- * Labels alternate between two rows below the nodes. Five labels in one row
- * sit 60 units apart, less than a 10-character label at 10px mono (60
+ * Nodes (and their labels) alternate between two rows. Five labels in one
+ * row sit 60 units apart, less than a 10-character label at 10px mono (60
  * units), so neighbours touched or overlapped. Staggered, labels in the same
  * row are 120 units apart, which leaves at least 60 units between them for
- * every current label, the same rhythm on every card.
+ * every current label, the same rhythm on every card. Second-row nodes sit
+ * lower so each edge runs all the way down to its own label.
  */
-const LABEL_ROWS = [ITEM_Y + 20, ITEM_Y + 35];
+const ROW_OFFSET = 15;
+const LABEL_GAP = 20;
+const nodeY = (index: number) => ITEM_Y + (index % 2) * ROW_OFFSET;
 
 /** Evenly spaces n items across the bottom of the viewBox. */
 function itemX(index: number, total: number): number {
@@ -50,6 +53,7 @@ function ClusterGraph({
     >
       {items.map((item, i) => {
         const x = itemX(i, items.length);
+        const y = nodeY(i);
         const delay = 0.15 + i * 0.07;
         return (
           <g key={item}>
@@ -57,7 +61,7 @@ function ClusterGraph({
               x1={HUB.x}
               y1={HUB.y}
               x2={x}
-              y2={ITEM_Y}
+              y2={y}
               className="skill-graph-edge"
               stroke="var(--graph-stroke)"
               strokeWidth="1.8"
@@ -68,7 +72,7 @@ function ClusterGraph({
             />
             <motion.circle
               cx={x}
-              cy={ITEM_Y}
+              cy={y}
               r="5.5"
               className="skill-graph-node"
               fill="var(--graph-node)"
@@ -76,11 +80,11 @@ function ClusterGraph({
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.2, delay: delay + 0.1 }}
-              style={{ transformOrigin: `${x}px ${ITEM_Y}px` }}
+              style={{ transformOrigin: `${x}px ${y}px` }}
             />
             <motion.text
               x={x}
-              y={LABEL_ROWS[i % LABEL_ROWS.length]}
+              y={y + LABEL_GAP}
               textAnchor="middle"
               fill="var(--muted)"
               fontSize="10"
