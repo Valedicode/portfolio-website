@@ -40,6 +40,15 @@ logger = logging.getLogger("agent-demo")
 app = FastAPI(title="Portfolio Agent Backend", version="1.1.0")
 
 
+TRACE_MAX_CHARS = 140
+
+
+def _clip(trace: str) -> str:
+    """Keeps model-written log lines one line long, whatever the model does."""
+    line = " ".join(trace.split())
+    return line if len(line) <= TRACE_MAX_CHARS else line[: TRACE_MAX_CHARS - 1] + "…"
+
+
 @app.get("/health")
 def health() -> dict:
     return {"status": "ok", "llm_configured": llm_configured()}
@@ -76,9 +85,9 @@ def agent_demo(body: AgentDemoRequest, request: Request) -> AgentDemoResponse:
         raise HTTPException(status_code=502, detail="LLM pipeline failed")
 
     return AgentDemoResponse(
-        plannerTrace=query_plan.trace,
+        plannerTrace=_clip(query_plan.trace),
         retrieverTrace=retrieval.trace,
-        synthesizerTrace=synthesis.trace,
+        synthesizerTrace=_clip(synthesis.trace),
         summary=summary,
         matchedIds=synthesis.matched_ids,
     )

@@ -8,13 +8,34 @@
  * pipeline.
  */
 const BACKEND_URL = process.env.AGENT_BACKEND_URL ?? "http://127.0.0.1:8000";
-const BACKEND_TIMEOUT_MS = 11_000;
+// Two sequential LLM calls of up to 12s each (backend/app/llm.py) plus overhead.
+const BACKEND_TIMEOUT_MS = 28_000;
+
+/** Vercel function limit in seconds; must exceed BACKEND_TIMEOUT_MS. */
+export const maxDuration = 30;
 const MAX_BODY_CHARS = 1_000;
 
 function clientIp(request: Request): string {
   const real = request.headers.get("x-real-ip");
   if (real) return real.trim();
   return request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "";
+}
+
+/**
+ * Warm-up ping. The free backend host sleeps when idle and takes a while to
+ * wake, so the demo calls this on page load: by the time a visitor asks a
+ * question, the backend is usually up. Hits only the free /health endpoint.
+ */
+export async function GET(): Promise<Response> {
+  try {
+    const res = await fetch(`${BACKEND_URL}/health`, {
+      signal: AbortSignal.timeout(BACKEND_TIMEOUT_MS),
+      cache: "no-store",
+    });
+    return Response.json({ awake: res.ok }, { status: res.ok ? 200 : 503 });
+  } catch {
+    return Response.json({ awake: false }, { status: 503 });
+  }
 }
 
 export async function POST(request: Request): Promise<Response> {

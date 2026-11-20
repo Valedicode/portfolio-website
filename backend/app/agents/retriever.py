@@ -64,9 +64,19 @@ def retrieve(plan: QueryPlan) -> RetrievalResult:
         candidates = _scan_pool(base, plan)
         widened = bool(candidates)
 
+    # "Most complex/recent ..." questions are about an ordering, not a topic.
+    # If the leftover keywords match nothing, rank the whole pool instead of
+    # returning nothing.
+    ranked_all = False
+    if not candidates and plan.sort != "relevance":
+        candidates = [ScoredEntry(entry=e, score=0) for e in pool]
+        ranked_all = True
+
     scanned = len(base) if widened else len(pool)
     plural = "" if len(candidates) == 1 else "s"
     widened_note = " (widened: type filter too strict)" if widened else ""
+    if ranked_all:
+        widened_note = f" (no topic match: ranking all by {plan.sort})"
     return RetrievalResult(
         candidates=candidates,
         trace=(

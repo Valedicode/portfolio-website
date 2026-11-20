@@ -16,42 +16,40 @@ function compare(a: KnowledgeEntry, b: KnowledgeEntry, plan: QueryPlan): number 
   return 0; // relevance: keep score order from the Retriever
 }
 
+/** "A", "A and B", "A, B and C". */
+function joinNatural(items: string[]): string {
+  if (items.length <= 1) return items.join("");
+  return `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
+}
+
 function summarize(results: KnowledgeEntry[], plan: QueryPlan): string {
   if (results.length === 0) {
-    return "Nothing in the knowledge base matches that — try one of the example prompts.";
+    return "I couldn't find anything in Kevin's portfolio that matches that. Try asking about a technology, a kind of project, or his experience.";
   }
 
   const projects = results.filter((r) => r.type === "project");
-  const topic = plan.tags.length > 0 ? plan.tags.join(" + ") : plan.keywords.join(" ");
-  const topicSuffix = topic ? ` related to “${topic}”` : "";
+  const topicWords = plan.tags.length > 0 ? plan.tags : plan.keywords;
+  const topic = topicWords.length > 0 ? ` related to ${joinNatural(topicWords)}` : "";
+  // Name the top results so the answer is useful on its own, even when no
+  // projects matched and the grid below stays empty.
+  const named = joinNatural(results.slice(0, 3).map((r) => r.title));
 
   if (plan.sort === "complexity" && projects.length > 0) {
-    return `Most complex system: ${projects[0].title} — plus ${
-      results.length - 1
-    } more result${results.length === 2 ? "" : "s"} ranked by complexity.`;
+    const rest = projects.length - 1;
+    return `Kevin's most complex system is ${projects[0].title}.${
+      rest > 0 ? ` The grid below shows ${rest} more, ranked by complexity.` : ""
+    }`;
   }
   if (plan.sort === "recency") {
-    return `Most recent first: ${results
-      .slice(0, 3)
-      .map((r) => r.title)
-      .join(", ")}${results.length > 3 ? ", …" : "."}`;
+    return `Starting with the most recent, Kevin's work includes ${named}.`;
   }
-
-  const kinds: string[] = [];
-  if (projects.length > 0) kinds.push(`${projects.length} project${projects.length === 1 ? "" : "s"}`);
-  const other = results.length - projects.length;
-  if (other > 0) kinds.push(`${other} other entr${other === 1 ? "y" : "ies"}`);
-
-  // When no projects matched, the grid below stays empty — name the
-  // results here so the answer is still useful on its own.
   if (projects.length === 0) {
-    return `Found ${kinds.join(" and ")}${topicSuffix}: ${results
-      .slice(0, 3)
-      .map((r) => r.title)
-      .join("; ")}${results.length > 3 ? "; …" : "."}`;
+    return `Here's what matches${topic}: ${named}.`;
   }
-
-  return `Found ${kinds.join(" and ")}${topicSuffix}.`;
+  const count = `${projects.length} project${projects.length === 1 ? "" : "s"}`;
+  return `Kevin has ${count}${topic}, including ${joinNatural(
+    projects.slice(0, 3).map((p) => p.title)
+  )}.`;
 }
 
 /** Ranks candidates, trims to the strongest, and writes the final answer. */

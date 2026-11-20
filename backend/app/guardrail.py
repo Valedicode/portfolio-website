@@ -18,7 +18,7 @@ from __future__ import annotations
 import re
 import unicodedata
 
-MAX_SUMMARY_CHARS = 400
+MAX_SUMMARY_CHARS = 700  # room for a fluent 2-4 sentence answer
 
 _INJECTION_PATTERNS = [
     r"ignore (all |any |the )?(previous|prior|above|earlier) (instructions|prompts?|rules)",

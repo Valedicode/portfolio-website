@@ -63,10 +63,19 @@ export function retrieve(plan: QueryPlan): RetrievalResult {
     widened = candidates.length > 0;
   }
 
+  // "Most complex/recent ..." questions are about an ordering, not a topic.
+  // If the leftover keywords match nothing, rank the whole pool instead of
+  // returning nothing.
+  let note = widened ? " (widened: type filter too strict)" : "";
+  if (candidates.length === 0 && plan.sort !== "relevance") {
+    candidates = pool.map((entry) => ({ entry, score: 0 }));
+    note = ` (no topic match: ranking all by ${plan.sort})`;
+  }
+
   const scanned = widened ? KNOWLEDGE_BASE.length : pool.length;
   return {
     candidates,
-    trace: `scanned ${scanned} entries${widened ? " (widened: type filter too strict)" : ""} → ${
+    trace: `scanned ${scanned} entries${note} → ${
       candidates.length
     } candidate${candidates.length === 1 ? "" : "s"} (tag +${WEIGHT_TAG}, title +${WEIGHT_TITLE}, text +${WEIGHT_TEXT})`,
   };

@@ -7,11 +7,13 @@ Three independent layers, checked in this order:
 2. Per-IP limits (per minute and per day).
 3. A global daily cap, a circuit breaker for distributed abuse.
 
-Counters live in Upstash Redis (REST) so they survive serverless instances.
-Without Upstash configured, a process-local fallback is used for local dev
-only; on Vercel that would be meaningless, so it fails closed instead.
-Any limiter failure also fails closed: the frontend falls back to its free
-rule-based pipeline, so the cost of being strict is nothing.
+Counters are process-local by default, which is correct for the intended
+deployment: a single long-running process (Render). Upstash Redis (REST) is
+optional and only needed when the backend runs as multiple instances or on
+serverless, where in-memory counts would be split and reset; on Vercel the
+backend refuses to run without it. Any limiter failure fails closed: the
+frontend falls back to its free rule-based pipeline, so being strict costs
+nothing.
 """
 
 from __future__ import annotations
@@ -39,12 +41,17 @@ def _int_env(name: str, default: int) -> int:
         return default
 
 
+def is_production() -> bool:
+    """True on a hosting platform (each sets its own marker env var)."""
+    return bool(os.getenv("RENDER") or os.getenv("VERCEL"))
+
+
 def require_internal_key(request: Request) -> None:
     """Rejects requests that did not come through the Next.js proxy."""
     expected = os.getenv("INTERNAL_API_KEY", "")
     if not expected:
         # Unset key == open endpoint. Only acceptable outside production.
-        if os.getenv("VERCEL"):
+        if is_production():
             raise HTTPException(status_code=503, detail="Backend not configured")
         return
     given = request.headers.get("x-internal-key", "")
@@ -103,13 +110,13 @@ def _counter() -> _MemoryCounter | _UpstashCounter:
     if url and token:
         return _UpstashCounter(url, token)
     if os.getenv("VERCEL"):
-        raise RuntimeError("Upstash is required in production")
+        raise RuntimeError("Upstash is required on serverless")
     return _memory
 
 
 def enforce_limits(ip: str) -> None:
     """Raises 429/503 when a limit is exceeded or the limiter is unavailable."""
-    per_min = _int_env("RATE_LIMIT_PER_MINUTE", 5)
+    per_min = _int_env("RATE_LIMIT_PER_MINUTE", 6)
     per_day = _int_env("RATE_LIMIT_PER_DAY", 30)
     global_day = _int_env("GLOBAL_DAILY_CAP", 300)
     today = datetime.now(timezone.utc).strftime("%Y%m%d")

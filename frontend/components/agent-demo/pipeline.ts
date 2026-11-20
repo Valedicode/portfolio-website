@@ -2,11 +2,11 @@
  * Runs the full Planner → Retriever → Synthesizer pipeline.
  *
  * Two engines produce the same `PipelineRun` shape:
- *  - `runRulePipeline`  — Tier 1: deterministic, fully client-side, instant.
- *  - `runLlmPipeline`   — Tier 2: calls /api/agent-demo, which Next.js
- *    proxies to the Python LangChain backend (see /backend). On any
- *    failure or slowness it falls back to Tier 1, so the demo never
- *    shows an error to the visitor.
+ *  - `runLlmPipeline`   — the demo's engine: calls /api/agent-demo, which
+ *    Next.js proxies to the Python LangChain backend (see /backend).
+ *  - `runRulePipeline`  — deterministic, fully client-side, instant. Used
+ *    only as the fallback when the LLM path fails, is slow, or is rate
+ *    limited, so the demo never shows an error to the visitor.
  */
 import { PROJECTS } from "@/lib/knowledge";
 import { plan } from "./planner";
@@ -14,7 +14,13 @@ import { retrieve } from "./retriever";
 import { synthesize } from "./synthesizer";
 import type { PipelineRun } from "./types";
 
-const LLM_TIMEOUT_MS = 12_000;
+/** Slightly above the proxy's own backend timeout (app/api/agent-demo/route.ts). */
+const LLM_TIMEOUT_MS = 30_000;
+
+/** Fire-and-forget: wakes a sleeping backend before the first question. */
+export function warmUpBackend(): void {
+  fetch("/api/agent-demo", { method: "GET" }).catch(() => {});
+}
 
 export function runRulePipeline(query: string): PipelineRun {
   const queryPlan = plan(query);

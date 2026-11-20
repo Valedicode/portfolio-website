@@ -1,0 +1,25 @@
+# Render Blueprint for the agent backend (FastAPI, single process).
+# Render clones the whole repo, so the backend reads ../frontend/data directly.
+# Secrets are marked sync: false and entered in the Render dashboard.
+services:
+  - type: web
+    name: portfolio-agent-backend
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    # One worker on purpose: the in-memory rate limiter must see every request.
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT --workers 1
+    healthCheckPath: /health
+    autoDeploy: true
+    buildFilter:
+      paths:
+        - backend/**
+        - frontend/data/**
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.8"
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: INTERNAL_API_KEY
+        sync: false

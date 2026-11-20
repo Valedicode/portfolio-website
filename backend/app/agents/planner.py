@@ -28,6 +28,19 @@ If it is unrelated to the portfolio, return empty tags and keywords.
 
 Only use tags from this list: {tags}
 
+Keywords are matched literally against project titles and descriptions, so \
+only include concrete topic words (technologies, domains, project names). \
+Leave out words that describe the ordering or the question itself, such \
+as "complex", "recent", "best", "system", "project" or "work". For broad \
+questions like "your most complex system", "latest work" or "where has \
+Kevin worked", leave tags and keywords empty so every matching entry gets \
+ranked.
+
+Types: use ["experience"] for jobs, work history or where Kevin worked; \
+["education"] for studies, degrees or universities; ["skill"] for skills \
+or tech stack; ["project"] for projects or things he built. Use null only \
+when the question spans several kinds.
+
 Sort mode: use "complexity" for questions about the most complex/advanced/\
 impressive work, "recency" for recent/latest work, otherwise "relevance".\
 """

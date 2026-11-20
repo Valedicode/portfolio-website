@@ -9,7 +9,6 @@ frontend/*.tsbuildinfo
 backend/__pycache__/
 backend/**/__pycache__/
 backend/.venv/
-backend/data/
 backend/*.egg-info/
 
 # --- env files ---

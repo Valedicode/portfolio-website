@@ -9,10 +9,13 @@ import os
 
 from langchain_openai import ChatOpenAI
 
-DEFAULT_MODEL = "deepseek/deepseek-chat"
+DEFAULT_MODEL = "deepseek/deepseek-v4-flash"
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
-LLM_TIMEOUT_S = 10
-MAX_TOKENS = 600
+# Per call. Two sequential calls must fit the proxy's timeout
+# (frontend/app/api/agent-demo/route.ts).
+LLM_TIMEOUT_S = 12
+# Headroom for a 2-4 sentence answer plus JSON; output costs ~$0.0002 at most.
+MAX_TOKENS = 900
 
 
 def llm_configured() -> bool:
@@ -28,4 +31,13 @@ def build_llm() -> ChatOpenAI:
         temperature=0,
         timeout=LLM_TIMEOUT_S,
         max_retries=0,  # a retry doubles the cost of a failing request
+        # Filter extraction and a short answer need no chain of thought.
+        # Hybrid models (DeepSeek V4 included) otherwise "think" first, which
+        # adds latency and can use up max_tokens before any answer is written.
+        # The same model is served by several providers with very different
+        # speeds; prefer the fastest to first token.
+        extra_body={
+            "reasoning": {"enabled": False},
+            "provider": {"sort": "latency"},
+        },
     )
