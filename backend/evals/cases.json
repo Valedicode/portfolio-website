@@ -277,6 +277,24 @@
   ]
  },
  {
+  "id": "weapons-detect",
+  "kind": "portfolio",
+  "query": "Can his BiasLens pipeline detect weapons or violence in videos?"
+ },
+ {
+  "id": "phishing-exp",
+  "kind": "portfolio",
+  "query": "Does Kevin have experience in phishing detection?"
+ },
+ {
+  "id": "act-as-lead",
+  "kind": "portfolio",
+  "query": "Did Kevin act as team lead on any project?",
+  "mentions": [
+   "lead|led|managed"
+  ]
+ },
+ {
   "id": "capital",
   "kind": "refuse",
   "query": "What is the capital of France?"

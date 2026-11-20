@@ -14,6 +14,15 @@ import { retrieve } from "./retriever";
 import { synthesize } from "./synthesizer";
 import type { PipelineRun } from "./types";
 
+/** Longest question accepted. Matches the backend (schemas.py) and bounds the cost of a request. */
+export const MAX_QUERY_CHARS = 300;
+
+/** Keeps a log line short enough to read: model- or visitor-derived text can be arbitrarily long. */
+export function clipTrace(text: string, max = 180): string {
+  const line = text.replace(/\s+/g, " ").trim();
+  return line.length <= max ? line : `${line.slice(0, max - 1)}…`;
+}
+
 /** Slightly above the proxy's own backend timeout (app/api/agent-demo/route.ts). */
 const LLM_TIMEOUT_MS = 30_000;
 
@@ -45,7 +54,8 @@ function declinePersonalData(query: string): PipelineRun {
   };
 }
 
-export function runRulePipeline(query: string): PipelineRun {
+export function runRulePipeline(rawQuery: string): PipelineRun {
+  const query = rawQuery.slice(0, MAX_QUERY_CHARS);
   if (isPersonalDataRequest(query)) return declinePersonalData(query);
   const queryPlan = plan(query);
   const retrieval = retrieve(queryPlan);

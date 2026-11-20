@@ -117,7 +117,11 @@ export function plan(rawQuery: string): QueryPlan {
   // Compact, log-style trace, e.g. "filter: tag=multi-agent · type=project · sort=recency"
   const parts: string[] = [];
   if (tags.size > 0) parts.push(`tag=${[...tags].join(",")}`);
-  if (keywords.length > 0) parts.push(`keywords=${keywords.join(",")}`);
+  if (keywords.length > 0) {
+    const shown = keywords.slice(0, 6).join(",");
+    const more = keywords.length > 6 ? ` +${keywords.length - 6} more` : "";
+    parts.push(`keywords=${shown}${more}`);
+  }
   if (types.length > 0) parts.push(`type=${types.join(",")}`);
   parts.push(`sort=${sort}`);
 

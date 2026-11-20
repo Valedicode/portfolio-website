@@ -3,6 +3,7 @@
 /**
  * Short narrative bio plus a few real stat callouts, sourced from data/cv.json.
  */
+import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { CV, STATS } from "@/lib/knowledge";
 import SectionHeading from "./SectionHeading";
@@ -30,6 +31,23 @@ export default function About() {
         </motion.div>
 
         <div className="grid content-start gap-4 sm:grid-cols-3 lg:grid-cols-1">
+          <motion.div
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.25 }}
+            className="mx-auto w-full max-w-xs overflow-hidden rounded-xl border border-line bg-white sm:col-span-3 lg:col-span-1"
+          >
+            <Image
+              src="/ID_uni.jpeg"
+              alt={`Portrait of ${CV.name}`}
+              width={744}
+              height={993}
+              sizes="(min-width: 1024px) 320px, 80vw"
+              className="h-auto w-full"
+              priority={false}
+            />
+          </motion.div>
           {STATS.map((stat, i) => (
             <motion.div
               key={stat.label}

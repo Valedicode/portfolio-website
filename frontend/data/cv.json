@@ -7,7 +7,7 @@
   "links": {
     "github": "https://github.com/Valedicode",
     "linkedin": "https://www.linkedin.com/in/chongkevinha/",
-    "resume": "/CV.pdf"
+    "resume": "/Resume.pdf"
   },
   "bio": [
     "I'm a Computer Science M.Sc. student at RWTH Aachen University (B.Sc. completed in 2025) and a working student AI developer at Eka Labs, where I build the cloud backend of an in-car voice assistant. I completed an exchange semester at Shanghai Jiao Tong University and am currently at CUHK-Shenzhen until the end of December.",
@@ -31,7 +31,7 @@
       "Coding: building solutions for everyday problems, such as HanziSave for learning Chinese characters and FixRay for repairs"
     ],
     "age": "Kevin does not share his age or other personal details such as his address or phone number.",
-    "contact": "Visitors can use the contact section on the page or download the CV. The email address is shown there."
+    "contact": "Visitors can use the contact section on the page or download the resume. The email address is shown there."
   },
   "stats": [
     {
@@ -44,7 +44,7 @@
       "id": "eka-labs",
       "type": "experience",
       "title": "Working Student, AI Developer — Eka Labs GmbH",
-      "description": "Edge AI for automotive and industry. Implement features and fixes in the cloud backend of a multi-domain in-car voice assistant where an LLM planner routes requests to weather, knowledge, phone and audio domains, and ground answers in provider data. Built offline worldwide reverse geocoding without third-party APIs, replay logged in-car failures to debug production issues, and benchmark multilingual embedding models and ONNX backends for few-shot retrieval.",
+      "description": "Edge AI for automotive and industry. Implement features and fixes in the cloud backend of a multi-domain in-car voice assistant, where an LLM planner routes requests to weather, knowledge, phone and audio domains; correct misrouted requests and ground answers in provider data. Built offline worldwide reverse geocoding without third-party APIs, debug production issues by replaying logged in-car failures, benchmark multilingual embedding models and ONNX backends for few-shot retrieval, and research small decision models that replace LLM calls in the cloud and on the car's head unit.",
       "tags": [
         "llm",
         "multi-agent",
@@ -74,7 +74,7 @@
       "id": "gemma-competition",
       "type": "experience",
       "title": "National Finalist & Outstanding Work Award — Gemma 4 Developer Competition 2026 (GDG Shanghai)",
-      "description": "BiasLens reached the national finals of the Gemma 4 Developer Competition 2026, organised by GDG Shanghai, and received the Outstanding Work Award, presented live at Google I/O Connect China. Kevin built the full multi-agent system end to end. The project was initiated and supervised by Dr. Kuanyong Qiu (Shanghai Jiao Tong University), with teammate Tang Chenghao (East China Normal University) leading data cleaning and manual review.",
+      "description": "BiasLens reached the national finals of the Gemma 4 Developer Competition 2026, organised by GDG Shanghai, and received the Outstanding Work Award, presented live at Google I/O Connect China. Built the full multi-agent system end to end as system architect. Initiated and supervised by Dr. Kuanyong Qiu (Shanghai Jiao Tong University), with teammate Tang Chenghao (East China Normal University) leading data cleaning and manual review.",
       "tags": [
         "multi-agent",
         "llm",
@@ -89,7 +89,7 @@
       "id": "sjtu-textbook-chapter",
       "type": "experience",
       "title": "Technical Lead, Textbook Chapter on Large Models for Audio-Video — Shanghai Jiao Tong University",
-      "description": "Technical lead on the handbook chapter \"Large Models for Processing Audio-Video Modalities\", written with another student under Dr. Kuanyong Qiu. Dr. Qiu set the requirements; Kevin organised and delegated the work and implemented the key technical part. His share covers the chapter introduction, video frame object detection and scene recognition, audio-video fusion, and the BiasLens case study. Recognised as an excellent project on the Shanghai Jiao Tong University Press website; the textbook is not yet published.",
+      "description": "Technical lead on the handbook chapter \"Large Models for Processing Audio-Video Modalities\", written with another student under Dr. Kuanyong Qiu, who set the requirements. Organised and delegated the work and wrote the key technical sections: the chapter introduction, video frame object detection and scene recognition, audio-video fusion, and the BiasLens case study. Recognised as an excellent project on the Shanghai Jiao Tong University Press website; the textbook is not yet published. The DH LLM Course was created as work associated with this project.",
       "tags": [
         "research",
         "llm",
@@ -127,7 +127,7 @@
       ],
       "featured": true,
       "period": "2025 — expected 2028",
-      "year": 2027
+      "year": 2028
     },
     {
       "id": "aachen-investment-club",

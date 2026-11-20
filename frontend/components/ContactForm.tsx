@@ -105,6 +105,16 @@ export default function ContactForm() {
           onSubmit={handleSubmit}
           className="space-y-4"
         >
+          {/* Honeypot: hidden from people, filled in by bots. Formspree
+              silently discards submissions where _gotcha has a value. */}
+          <input
+            type="text"
+            name="_gotcha"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            className="hidden"
+          />
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
               <label htmlFor="contact-name" className="sr-only">

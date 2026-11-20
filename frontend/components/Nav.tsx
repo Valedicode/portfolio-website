@@ -4,6 +4,7 @@
  * Fixed top nav with anchor links, the theme toggle, and a small status
  * pill that reflects what the demo's agents are doing right now.
  */
+import { CV } from "@/lib/knowledge";
 import { useAgents } from "./agent-demo/AgentContext";
 import ThemeToggle from "./ThemeToggle";
 
@@ -58,11 +59,11 @@ export default function Nav() {
             {status === "working" ? "3 agents active" : "3 agents idle"}
           </span>
           <a
-            href="/CV.pdf"
+            href={CV.links.resume}
             download
             className="hidden rounded-lg border border-line px-3 py-1.5 font-mono text-xs text-muted transition-colors hover:border-accent hover:text-fg sm:block"
           >
-            CV ↓
+            Resume ↓
           </a>
           <ThemeToggle />
         </div>

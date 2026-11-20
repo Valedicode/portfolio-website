@@ -36,17 +36,17 @@ export default function ResumeSection() {
           transition={{ duration: 0.3 }}
           className="h-fit rounded-xl border border-line bg-panel p-6"
         >
-          <p className="font-mono text-xs tracking-widest text-accent">CV.pdf</p>
+          <p className="font-mono text-xs tracking-widest text-accent">Resume.pdf</p>
           <p className="mt-2 text-sm text-muted">
-            Full curriculum vitae — education, experience, projects, and skills
+            One-page resume: education, experience, selected projects and skills
             in one document.
           </p>
           <a
-            href="/CV.pdf"
+            href={CV.links.resume}
             download
             className="mt-5 inline-block rounded-lg bg-accent px-6 py-3 font-mono text-sm font-medium text-on-accent transition-colors hover:bg-accent-bright"
           >
-            Download CV ↓
+            Download Resume ↓
           </a>
         </motion.div>
 
