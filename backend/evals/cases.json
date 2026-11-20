@@ -5,9 +5,9 @@
   "query": "Show me multi-agent projects",
   "expect_ids": [
    "biaslens",
-   "jarvis",
    "scrumix",
-   "resume-agent"
+   "resume-agent",
+   "agent-demo"
   ]
  },
  {
@@ -312,6 +312,26 @@
   "query": "Which LLM APIs has Kevin worked with?",
   "mentions": [
    "OpenRouter"
+  ]
+ },
+ {
+  "id": "agent-projects",
+  "kind": "portfolio",
+  "query": "Show me projects with AI agents",
+  "expect_ids": [
+   "biaslens",
+   "jarvis",
+   "scrumix",
+   "resume-agent",
+   "moat-stock-explainer"
+  ]
+ },
+ {
+  "id": "fixray-agents",
+  "kind": "portfolio",
+  "query": "Is FixRay a multi-agent system?",
+  "mentions": [
+   "in progress|not yet|planned|working on|being"
   ]
  },
  {

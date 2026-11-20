@@ -48,8 +48,11 @@ export const STATS: { label: string; value: string }[] = [
   { label: "Projects built", value: String(PROJECTS.length) },
   ...cv.stats,
   {
-    label: "Multi-agent systems built",
-    value: String(PROJECTS.filter((p) => p.tags.includes("multi-agent")).length),
+    // Single-agent (tag "agent") and multi-agent projects both count.
+    label: "Agent systems built",
+    value: String(
+      PROJECTS.filter((p) => p.tags.includes("agent") || p.tags.includes("multi-agent")).length
+    ),
   },
 ];
 
