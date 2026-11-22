@@ -90,7 +90,7 @@ has since grown with cases for skill accuracy.
 The LLM key costs money and the endpoint is public, so protection is layered
 (cheapest first):
 
-1. **Shared secret** (`INTERNAL_API_KEY`): only the Next.js proxy can call the backend.
+1. **Shared secret** (`INTERNAL_API_KEY`): only the Next.js proxy can call the backend, and the proxy only accepts questions from the site's own pages (same-origin check), so another website cannot spend the quota through its visitors.
 2. **Input screen**: invalid text, prompt-injection phrasing and clear requests to do harm (weapons, explosives, drugs, violence, cybercrime, fraud, sexual content involving minors) get a fixed refusal before any tokens are spent; self-harm messages get a refusal that points to a crisis line. It matches intent, not single words, so questions like "does he know phishing detection?" still go through.
 3. **Rate limits**: 6/min and 30/day per IP, 300/day globally, in memory (single process) or optionally Upstash Redis. Fails closed.
 4. **Semantic guard**: the Planner classifies every question as portfolio, off-topic, harmful or self-harm; anything but portfolio gets a fixed refusal.
