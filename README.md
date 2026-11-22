@@ -92,7 +92,7 @@ The LLM key costs money and the endpoint is public, so protection is layered
 
 1. **Shared secret** (`INTERNAL_API_KEY`): only the Next.js proxy can call the backend.
 2. **Input screen**: invalid text, prompt-injection phrasing and clear requests to do harm (weapons, explosives, drugs, violence, cybercrime, fraud, sexual content involving minors) get a fixed refusal before any tokens are spent; self-harm messages get a refusal that points to a crisis line. It matches intent, not single words, so questions like "does he know phishing detection?" still go through.
-3. **Rate limits**: 6/min and 30/day per IP, 300/day globally, in memory (single process) or optionally Upstash Redis. Fails closed.
+3. **Rate limits**: 6/min and 30/day per IP, 300/day globally, in memory (single process) or optionally Upstash Redis. Fails closed. The site owner skips them with `ADMIN_KEY` (stored in the browser by opening `/#admin=<key>` once); those requests are not counted.
 4. **Semantic guard**: the Planner classifies every question as portfolio, off-topic, harmful or self-harm; anything but portfolio gets a fixed refusal.
 5. **Privacy rule**: age, address, phone number and similar details are never shared, by the AI agents or by the offline fallback.
 6. **Prompt fencing and output screen**: visitor text is fenced as data; questions are capped at 300 characters; answers are capped, stripped of links and markdown, and checked for prompt leaks and harmful content.
@@ -198,6 +198,7 @@ back to its client-side rule-based pipeline, so the demo never breaks.
 | `backend/.env` | `OPENROUTER_API_KEY` | Enables the LangChain agents |
 | `backend/.env` | `LLM_MODEL` | OpenRouter model id (default `deepseek/deepseek-v4-flash`) |
 | both `.env` files | `INTERNAL_API_KEY` | Shared secret between proxy and backend (required in production) |
+| `backend/.env` | `ADMIN_KEY` | Lets the owner skip the rate limits (optional) |
 | `backend/.env` | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | Shared rate-limit counters (only for serverless or multi-instance) |
 | `backend/.env` | `RATE_LIMIT_PER_MINUTE`, `RATE_LIMIT_PER_DAY`, `GLOBAL_DAILY_CAP` | Limits (optional) |
 | `backend/.env` | `KNOWLEDGE_DIR` | Override knowledge base location (optional) |
