@@ -172,6 +172,22 @@ def test_planner_verdict_replaces_the_draft(monkeypatch, scope):
     assert body["matchedIds"] == []
 
 
+def test_admin_key_skips_the_limits(monkeypatch):
+    monkeypatch.setenv("GLOBAL_DAILY_CAP", "0")  # every counted request is over the cap
+    monkeypatch.setenv("ADMIN_KEY", "owner")
+    monkeypatch.setattr(app_main, "plan", _fake_planner())
+    monkeypatch.setattr(app_main, "synthesize", _fake_synth(["jarvis"], "Jarvis."))
+
+    def ask(**extra):
+        return client.post("/agent-demo", json={"query": "Tell me about Jarvis"}, headers={**HEADERS, **extra})
+
+    assert ask().status_code == 503
+    assert ask(**{"X-Admin-Key": "wrong"}).status_code == 503
+    assert ask(**{"X-Admin-Key": "owner"}).status_code == 200
+    monkeypatch.delenv("ADMIN_KEY")  # unset key must not match an empty header
+    assert ask(**{"X-Admin-Key": ""}).status_code == 503
+
+
 def test_planner_and_synthesizer_run_in_parallel(monkeypatch):
     import time
 
