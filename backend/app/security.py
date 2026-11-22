@@ -7,6 +7,9 @@ Three independent layers, checked in this order:
 2. Per-IP limits (per minute and per day).
 3. A global daily cap, a circuit breaker for distributed abuse.
 
+The site owner skips layers 2 and 3 by sending ADMIN_KEY (see `is_admin`);
+those requests are not counted, so testing never uses up visitors' quota.
+
 Counters are process-local by default, which is correct for the intended
 deployment: a single long-running process (Render). Upstash Redis (REST) is
 optional and only needed when the backend runs as multiple instances or on
@@ -57,6 +60,17 @@ def require_internal_key(request: Request) -> None:
     given = request.headers.get("x-internal-key", "")
     if not hmac.compare_digest(given.encode(), expected.encode()):
         raise HTTPException(status_code=401, detail="Unauthorized")
+
+
+def is_admin(request: Request) -> bool:
+    """True when the request carries ADMIN_KEY: the site owner skips the limits.
+
+    Unset key == no admin. A wrong key is simply a normal, limited visitor.
+    The OpenRouter credit limit still caps what an admin can spend.
+    """
+    expected = os.getenv("ADMIN_KEY", "")
+    given = request.headers.get("x-admin-key", "")
+    return bool(expected) and hmac.compare_digest(given.encode(), expected.encode())
 
 
 def client_ip(request: Request) -> str:

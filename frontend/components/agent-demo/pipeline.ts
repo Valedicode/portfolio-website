@@ -26,8 +26,30 @@ export function clipTrace(text: string, max = 180): string {
 /** Slightly above the proxy's own backend timeout (app/api/agent-demo/route.ts). */
 const LLM_TIMEOUT_MS = 30_000;
 
+/**
+ * Owner only: the key that lets the backend skip its rate limits (ADMIN_KEY
+ * in backend/.env). Opening the site once as `/#admin=<key>` stores it in this
+ * browser and removes it from the address bar. The backend verifies the key,
+ * so a wrong or missing one just means normal limits.
+ */
+function adminKey(): string | null {
+  try {
+    // Only the characters secrets.token_urlsafe produces, so a crafted link
+    // cannot store a value that is invalid as a request header.
+    const fromHash = /^#admin=([\w-]+)$/.exec(window.location.hash)?.[1];
+    if (fromHash) {
+      localStorage.setItem("adminKey", fromHash);
+      history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+    return localStorage.getItem("adminKey");
+  } catch {
+    return null; // storage blocked: behave like any visitor
+  }
+}
+
 /** Fire-and-forget: wakes a sleeping backend before the first question. */
 export function warmUpBackend(): void {
+  adminKey(); // on page load, so a key in the address bar is stored and hidden at once
   fetch("/api/agent-demo", { method: "GET" }).catch(() => {});
 }
 
@@ -75,9 +97,13 @@ interface LlmResponse {
 
 export async function runLlmPipeline(query: string): Promise<PipelineRun> {
   try {
+    const key = adminKey();
     const res = await fetch("/api/agent-demo", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        ...(key ? { "X-Admin-Key": key } : {}),
+      },
       body: JSON.stringify({ query }),
       signal: AbortSignal.timeout(LLM_TIMEOUT_MS),
     });

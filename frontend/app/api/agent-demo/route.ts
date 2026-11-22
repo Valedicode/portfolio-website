@@ -68,6 +68,9 @@ export async function POST(request: Request): Promise<Response> {
   };
   const key = process.env.INTERNAL_API_KEY;
   if (key) headers["X-Internal-Key"] = key;
+  // The owner's browser sends this; the backend checks it and skips the limits.
+  const adminKey = request.headers.get("x-admin-key");
+  if (adminKey) headers["X-Admin-Key"] = adminKey;
 
   try {
     const upstream = await fetch(`${BACKEND_URL}/agent-demo`, {
