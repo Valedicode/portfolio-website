@@ -57,8 +57,11 @@ export default function AgentDemo() {
   const playStages = useCallback(
     (run: PipelineRun) => {
       setPendingRun(run);
-      // A declined question leaves the project grid as it was.
-      const gridRun = run.declined ? null : run;
+      // Only an answer that names projects filters the grid. A declined
+      // question, or an answer about jobs, studies or Kevin himself, has no
+      // project ids and would otherwise empty the grid to "0 matches".
+      const gridRun =
+        run.declined || run.synthesis.projectIds.length === 0 ? null : run;
       if (prefersReducedMotion) {
         setStage(3);
         setRun(gridRun);
