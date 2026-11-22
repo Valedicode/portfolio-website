@@ -10,6 +10,10 @@ agent-network hero, a skills node graph, a project grid and a working
 small team of agents answers in plain language, filters the project grid to
 match, and shows each agent's work in a live log.
 
+There is also a **play mode**: switch it on in the nav and a small 3D Planner
+agent appears that you can walk around the page (WASD or arrow keys, a
+joystick on touch screens). It comments on each section as it passes through.
+
 What makes the demo more than a chatbot wrapper:
 
 - **A real multi-agent design, measured against the simple alternative.** A
@@ -22,7 +26,7 @@ What makes the demo more than a chatbot wrapper:
 - **It never breaks.** If the backend is asleep, rate limited or down, a
   client-side rule-based pipeline answers instead.
 
-Stack: Next.js, TypeScript, Tailwind v4 and Framer Motion on Vercel; Python,
+Stack: Next.js, TypeScript, Tailwind v4, Framer Motion and Three.js on Vercel; Python,
 FastAPI and LangChain on Render; DeepSeek through OpenRouter.
 
 ## How the agents work
@@ -108,6 +112,11 @@ audited.
   and the demo's staged reveal.
 - The demo section is lazy-loaded via `next/dynamic` so it doesn't block
   initial paint. The hero canvas is plain 2D canvas, no WebGL.
+- Play mode is opt-in: Three.js is only downloaded when it is switched on, and
+  it falls back to the flat mascot image where WebGL is unavailable. Its
+  speech bubbles are also announced through an `aria-live` region, and with
+  `prefers-reduced-motion` it keeps the walking the visitor steers and drops
+  the decorative motion.
 - Semantic landmarks, labeled inputs, an `aria-live` log panel, and
   keyboard-operable controls throughout.
 
