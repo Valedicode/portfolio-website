@@ -5,6 +5,7 @@ import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import Nav from "@/components/Nav";
+import PlayMode from "@/components/play-mode/PlayMode";
 import ProjectGrid from "@/components/ProjectGrid";
 import ResumeSection from "@/components/ResumeSection";
 import SkillsGraph from "@/components/SkillsGraph";
@@ -28,6 +29,8 @@ export default function Home() {
         <ContactForm />
       </main>
       <Footer />
+      {/* Opt-in: renders nothing until the nav's play toggle is switched on. */}
+      <PlayMode />
     </AgentProvider>
   );
 }

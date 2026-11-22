@@ -1,11 +1,12 @@
 "use client";
 
 /**
- * Fixed top nav with anchor links, the theme toggle, and a small status
- * pill that reflects what the demo's agents are doing right now.
+ * Fixed top nav with anchor links, the play-mode and theme toggles, and a
+ * small status pill that reflects what the demo's agents are doing right now.
  */
 import { CV } from "@/lib/knowledge";
 import { useAgents } from "./agent-demo/AgentContext";
+import PlayModeToggle from "./play-mode/PlayModeToggle";
 import ThemeToggle from "./ThemeToggle";
 
 const LINKS = [
@@ -29,7 +30,8 @@ export default function Nav() {
           kevin<span className="text-accent">.</span>ha
         </a>
 
-        <ul className="hidden items-center gap-6 md:flex">
+        {/* Gaps tighten between md and lg so the play toggle fits on one line. */}
+        <ul className="hidden items-center gap-4 md:flex lg:gap-6">
           {LINKS.map(({ href, label }) => (
             <li key={href}>
               <a
@@ -42,7 +44,7 @@ export default function Nav() {
           ))}
         </ul>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 md:gap-2 lg:gap-3">
           {/* Agent status pill — a small detail that rewards attention */}
           <span
             className="hidden items-center gap-2 rounded-full border border-line px-3 py-1.5 font-mono text-xs text-muted sm:flex"
@@ -65,6 +67,7 @@ export default function Nav() {
           >
             Resume ↓
           </a>
+          <PlayModeToggle />
           <ThemeToggle />
         </div>
       </nav>
