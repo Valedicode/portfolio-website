@@ -38,7 +38,25 @@ export async function GET(): Promise<Response> {
   }
 }
 
+/**
+ * True when the question comes from this site's own pages. Without this any
+ * other website could make its visitors' browsers post questions here, each
+ * from a fresh IP, and use up the demo's daily quota. Browsers set both
+ * headers themselves; a page script cannot change them.
+ */
+function sameOrigin(request: Request): boolean {
+  const site = request.headers.get("sec-fetch-site");
+  if (site) return site === "same-origin";
+  // Older browsers, and plain-http testing over the LAN, send no Sec-Fetch-Site.
+  const origin = request.headers.get("origin") ?? "";
+  return origin.replace(/^https?:\/\//, "") === request.headers.get("host");
+}
+
 export async function POST(request: Request): Promise<Response> {
+  if (!sameOrigin(request)) {
+    return Response.json({ detail: "Forbidden" }, { status: 403 });
+  }
+
   const raw = await request.text();
   if (raw.length > MAX_BODY_CHARS) {
     return Response.json({ detail: "Payload too large" }, { status: 413 });
@@ -50,6 +68,9 @@ export async function POST(request: Request): Promise<Response> {
   };
   const key = process.env.INTERNAL_API_KEY;
   if (key) headers["X-Internal-Key"] = key;
+  // The owner's browser sends this; the backend checks it and skips the limits.
+  const adminKey = request.headers.get("x-admin-key");
+  if (adminKey) headers["X-Admin-Key"] = adminKey;
 
   try {
     const upstream = await fetch(`${BACKEND_URL}/agent-demo`, {

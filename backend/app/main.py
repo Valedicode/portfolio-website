@@ -41,7 +41,7 @@ from .guardrail import REFUSALS, GuardrailViolation, Verdict, check_input, check
 from .knowledge import knowledge_base
 from .llm import build_llm, llm_configured
 from .schemas import AgentDemoRequest, AgentDemoResponse
-from .security import client_ip, enforce_limits, require_internal_key
+from .security import client_ip, enforce_limits, is_admin, require_internal_key
 
 load_dotenv()
 
@@ -119,7 +119,8 @@ async def agent_demo(body: AgentDemoRequest, request: Request) -> AgentDemoRespo
         logger.info("input declined: %s", violation)
         return _declined(violation.verdict, f"input screen: {violation} → declined, no model called")
 
-    await run_in_threadpool(enforce_limits, client_ip(request))
+    if not is_admin(request):
+        await run_in_threadpool(enforce_limits, client_ip(request))
 
     llm = build_llm()
     started = time.perf_counter()

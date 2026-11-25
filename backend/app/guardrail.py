@@ -57,6 +57,9 @@ _INJECTION_PATTERNS = [
     r"\bdeveloper mode (on|enabled|activated)\b",
     r"</?\s*(system|assistant|instructions?)\s*>",
     r"\[\s*(system|inst)\s*\]",
+    # The fence tag itself (see wrap_untrusted). Closing it early would let the
+    # rest of the visitor's text pose as instructions outside the fence.
+    r"visitor_question",
 ]
 
 # The input screen blocks only clear requests to *do* something harmful: an

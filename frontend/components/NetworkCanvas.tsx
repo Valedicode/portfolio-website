@@ -111,6 +111,10 @@ export default function NetworkCanvas() {
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
+      // Phones fire `resize` every time the URL bar hides or shows while
+      // scrolling. The canvas box does not change then (the hero is svh-sized),
+      // so keep the network instead of rebuilding it mid-scroll.
+      if (rect.width === width && rect.height === height) return;
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       width = rect.width;
       height = rect.height;
@@ -118,6 +122,8 @@ export default function NetworkCanvas() {
       canvas.height = Math.round(height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       nodes = createNodes(width, height);
+      // Resizing clears the canvas, and without the loop nothing repaints it.
+      if (prefersReducedMotion) drawFrame(0);
     };
 
     const drawFrame = (time: number) => {
@@ -157,21 +163,33 @@ export default function NetworkCanvas() {
       ctx.globalAlpha = 1;
     };
 
+    let lastTime = 0;
     const step = (time: number) => {
+      // Speeds are tuned per 60 Hz frame. Scaling by elapsed time keeps the
+      // drift the same on 120 Hz phones and in low-power mode (30 Hz); the cap
+      // stops a jump after the tab was in the background.
+      const frames = lastTime ? Math.min((time - lastTime) / (1000 / 60), 3) : 1;
+      lastTime = time;
       for (const node of nodes) {
-        node.x += node.vx;
-        node.y += node.vy;
-        if (node.x < 0 || node.x > width) node.vx *= -1;
-        if (node.y < 0 || node.y > height) node.vy *= -1;
+        node.x += node.vx * frames;
+        node.y += node.vy * frames;
+        // Turn back only when heading further out, so a node past the edge
+        // (after an uneven frame) cannot flip back and forth out there.
+        if ((node.x < 0 && node.vx < 0) || (node.x > width && node.vx > 0)) node.vx *= -1;
+        if ((node.y < 0 && node.vy < 0) || (node.y > height && node.vy > 0)) node.vy *= -1;
       }
-      cursorNode.x += (mouse.x - cursorNode.x) * 0.08;
-      cursorNode.y += (mouse.y - cursorNode.y) * 0.08;
+      const ease = Math.min(1, 0.08 * frames);
+      cursorNode.x += (mouse.x - cursorNode.x) * ease;
+      cursorNode.y += (mouse.y - cursorNode.y) * ease;
 
       drawFrame(time);
       rafId = requestAnimationFrame(step);
     };
 
     const onPointerMove = (e: PointerEvent) => {
+      // Mouse only: a scrolling finger would drag the links along with it and
+      // leave them stuck where it lifted.
+      if (e.pointerType !== "mouse") return;
       const rect = canvas.getBoundingClientRect();
       mouse.x = e.clientX - rect.left;
       mouse.y = e.clientY - rect.top;
@@ -190,9 +208,8 @@ export default function NetworkCanvas() {
     resize();
     window.addEventListener("resize", resize);
 
-    if (prefersReducedMotion) {
-      drawFrame(0);
-    } else {
+    // With reduced motion, resize() has already painted the one still frame.
+    if (!prefersReducedMotion) {
       window.addEventListener("pointermove", onPointerMove);
       rafId = requestAnimationFrame(step);
     }

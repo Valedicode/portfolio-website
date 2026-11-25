@@ -23,3 +23,5 @@ services:
         sync: false
       - key: INTERNAL_API_KEY
         sync: false
+      - key: ADMIN_KEY
+        sync: false

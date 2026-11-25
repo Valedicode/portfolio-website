@@ -10,6 +10,10 @@ agent-network hero, a skills node graph, a project grid and a working
 small team of agents answers in plain language, filters the project grid to
 match, and shows each agent's work in a live log.
 
+There is also a **play mode**: switch it on in the nav and a small 3D Planner
+agent appears that you can walk around the page (WASD or arrow keys, a
+joystick on touch screens). It comments on each section as it passes through.
+
 What makes the demo more than a chatbot wrapper:
 
 - **A real multi-agent design, measured against the simple alternative.** A
@@ -22,7 +26,7 @@ What makes the demo more than a chatbot wrapper:
 - **It never breaks.** If the backend is asleep, rate limited or down, a
   client-side rule-based pipeline answers instead.
 
-Stack: Next.js, TypeScript, Tailwind v4 and Framer Motion on Vercel; Python,
+Stack: Next.js, TypeScript, Tailwind v4, Framer Motion and Three.js on Vercel; Python,
 FastAPI and LangChain on Render; DeepSeek through OpenRouter.
 
 ## How the agents work
@@ -90,9 +94,9 @@ has since grown with cases for skill accuracy.
 The LLM key costs money and the endpoint is public, so protection is layered
 (cheapest first):
 
-1. **Shared secret** (`INTERNAL_API_KEY`): only the Next.js proxy can call the backend.
+1. **Shared secret** (`INTERNAL_API_KEY`): only the Next.js proxy can call the backend, and the proxy only accepts questions from the site's own pages (same-origin check), so another website cannot spend the quota through its visitors.
 2. **Input screen**: invalid text, prompt-injection phrasing and clear requests to do harm (weapons, explosives, drugs, violence, cybercrime, fraud, sexual content involving minors) get a fixed refusal before any tokens are spent; self-harm messages get a refusal that points to a crisis line. It matches intent, not single words, so questions like "does he know phishing detection?" still go through.
-3. **Rate limits**: 6/min and 30/day per IP, 300/day globally, in memory (single process) or optionally Upstash Redis. Fails closed.
+3. **Rate limits**: 6/min and 30/day per IP, 300/day globally, in memory (single process) or optionally Upstash Redis. Fails closed. The site owner skips them with `ADMIN_KEY` (stored in the browser by opening `/#admin=<key>` once); those requests are not counted.
 4. **Semantic guard**: the Planner classifies every question as portfolio, off-topic, harmful or self-harm; anything but portfolio gets a fixed refusal.
 5. **Privacy rule**: age, address, phone number and similar details are never shared, by the AI agents or by the offline fallback.
 6. **Prompt fencing and output screen**: visitor text is fenced as data; questions are capped at 300 characters; answers are capped, stripped of links and markdown, and checked for prompt leaks and harmful content.
@@ -108,6 +112,11 @@ audited.
   and the demo's staged reveal.
 - The demo section is lazy-loaded via `next/dynamic` so it doesn't block
   initial paint. The hero canvas is plain 2D canvas, no WebGL.
+- Play mode is opt-in: Three.js is only downloaded when it is switched on, and
+  it falls back to the flat mascot image where WebGL is unavailable. Its
+  speech bubbles are also announced through an `aria-live` region, and with
+  `prefers-reduced-motion` it keeps the walking the visitor steers and drops
+  the decorative motion.
 - Semantic landmarks, labeled inputs, an `aria-live` log panel, and
   keyboard-operable controls throughout.
 
@@ -198,6 +207,7 @@ back to its client-side rule-based pipeline, so the demo never breaks.
 | `backend/.env` | `OPENROUTER_API_KEY` | Enables the LangChain agents |
 | `backend/.env` | `LLM_MODEL` | OpenRouter model id (default `deepseek/deepseek-v4-flash`) |
 | both `.env` files | `INTERNAL_API_KEY` | Shared secret between proxy and backend (required in production) |
+| `backend/.env` | `ADMIN_KEY` | Lets the owner skip the rate limits (optional) |
 | `backend/.env` | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | Shared rate-limit counters (only for serverless or multi-instance) |
 | `backend/.env` | `RATE_LIMIT_PER_MINUTE`, `RATE_LIMIT_PER_DAY`, `GLOBAL_DAILY_CAP` | Limits (optional) |
 | `backend/.env` | `KNOWLEDGE_DIR` | Override knowledge base location (optional) |
